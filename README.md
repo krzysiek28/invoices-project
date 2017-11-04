@@ -1,6 +1,5 @@
 # invoices project
 
-faktura.pl :
 FUNKCJONALNOŚĆ:
 
 * rodzaje dokumentów(pojedyncze/cykliczne):
