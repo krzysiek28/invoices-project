@@ -45,6 +45,7 @@ TECHNOLOGIE:
 * https://www.slf4j.org/
 * https://github.com/svenkubiak/jBCrypt
 * http://sparkjava.com/
+* PDFBox (chyba najlepszy), iText, FOP, Flying Saucer
 
 WZORCE:
 
