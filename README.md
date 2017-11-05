@@ -38,6 +38,8 @@ ZALEŻNOŚCI:
 - facture HAS ONE seller, client
 - facture HAS MANY product
 
+WZORCE:
+- MVC z DAO
 TECHNOLOGIE:
 
 * http://freemarker.apache.org/
