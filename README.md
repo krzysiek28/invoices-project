@@ -32,7 +32,7 @@ user, facture, product, client(implementuje firm), seller(implementuje firm), my
 INTERFEJSY:
 firm
 
-ZALEŻNOŚCI: (w rubym sie tak pisze)
+ZALEŻNOŚCI: 
 -user HAS MANY facture, client, product, bank accounnt
 -user HAS ONE firm
 
