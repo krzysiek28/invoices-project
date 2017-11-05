@@ -26,7 +26,7 @@ faktura ma:
 - data, miejsce, 
 - pozycje
 - zapłata
------------------------------------------------
+
 KLASY:
 user, facture, product, client(implementuje firm), seller(implementuje firm), myfirm(implementuje firm), bank account
 INTERFEJSY:
@@ -38,7 +38,7 @@ user HAS ONE firm
 
 facture HAS ONE seller, client
 facture HAS MANY product
------------------------------------------------
+
 TECHNOLOGIE
 http://freemarker.apache.org/
 https://www.slf4j.org/
