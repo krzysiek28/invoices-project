@@ -37,11 +37,11 @@ ZALEŻNOŚCI:
 
 -user HAS MANY facture, client, product, bank accounnt
 -user HAS ONE firm
-
 -facture HAS ONE seller, client
 -facture HAS MANY product
 
-TECHNOLOGIE
+TECHNOLOGIE:
+
 *http://freemarker.apache.org/
 *https://www.slf4j.org/
 *https://github.com/svenkubiak/jBCrypt
