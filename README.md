@@ -28,11 +28,13 @@ faktura ma:
 - zapłata
 
 KLASY:
+
 user, facture, product, client(implementuje firm), seller(implementuje firm), myfirm(implementuje firm), bank account
 INTERFEJSY:
 firm
 
 ZALEŻNOŚCI: 
+
 -user HAS MANY facture, client, product, bank accounnt
 -user HAS ONE firm
 
