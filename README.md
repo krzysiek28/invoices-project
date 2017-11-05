@@ -38,11 +38,14 @@ ZALEŻNOŚCI:
 - facture HAS ONE seller, client
 - facture HAS MANY product
 
-WZORCE:
-- MVC z DAO
+
 TECHNOLOGIE:
 
 * http://freemarker.apache.org/
 * https://www.slf4j.org/
 * https://github.com/svenkubiak/jBCrypt
 * http://sparkjava.com/
+
+WZORCE:
+
+- MVC z DAO
