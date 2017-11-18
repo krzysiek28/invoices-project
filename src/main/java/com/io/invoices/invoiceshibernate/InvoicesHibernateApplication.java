@@ -1,5 +1,7 @@
 package com.io.invoices.invoiceshibernate;
 
+import com.io.invoices.invoiceshibernate.bankAccount.BankAccount;
+import com.io.invoices.invoiceshibernate.bankAccount.BankAccountService;
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.firm.FirmService;
 import com.io.invoices.invoiceshibernate.firmUsers.FirmUsers;
@@ -23,6 +25,8 @@ public class InvoicesHibernateApplication implements CommandLineRunner{
 	UserService userService;
 	@Autowired
 	FirmUsersService firmUsersService;
+	@Autowired
+	BankAccountService bankAccountService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(InvoicesHibernateApplication.class, args);
@@ -44,5 +48,8 @@ public class InvoicesHibernateApplication implements CommandLineRunner{
 		firmUsers.add(new FirmUsers(users.get(0),firms.get(0)));
 		firmUsers.add(new FirmUsers(users.get(1),firms.get(0)));
 		firmUsersService.addAllUsersToFirm(firmUsers);
+
+		bankAccountService.addBankAccount(new BankAccount("2131 2343 2141",users.get(0)));
+		bankAccountService.addBankAccount(new BankAccount("2222 3333 1232",users.get(0)));
 	}
 }
