@@ -34,22 +34,22 @@ public class InvoicesHibernateApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... strings) throws Exception {
-		List<Firm> firms = new ArrayList<>();
-		firms.add(new Firm("Valo","232-323-21","Kraków","432 434 324","valo@gmail.com"));
-		firms.add(new Firm("Mak","232-888-21","Warszawa","132 434 324","mak@gmail.com"));
-		firmService.addFirms(firms);
-
-		List<User> users = new ArrayList<>();
-		users.add(new User("Anna Kowalska","anna@gmail.com","anna123"));
-		users.add(new User("Bartłomiej Kluska","klucha@gmail.com","kluchy123"));
-		userService.addUsers(users);
-
-		List<FirmUsers> firmUsers = new ArrayList<>();
-		firmUsers.add(new FirmUsers(users.get(0),firms.get(0)));
-		firmUsers.add(new FirmUsers(users.get(1),firms.get(0)));
-		firmUsersService.addAllUsersToFirm(firmUsers);
-
-		bankAccountService.addBankAccount(new BankAccount("2131 2343 2141",users.get(0)));
-		bankAccountService.addBankAccount(new BankAccount("2222 3333 1232",users.get(0)));
+//		List<Firm> firms = new ArrayList<>();
+//		firms.add(new Firm("Valo","232-323-21","Kraków","432 434 324","valo@gmail.com"));
+//		firms.add(new Firm("Mak","232-888-21","Warszawa","132 434 324","mak@gmail.com"));
+//		firmService.addFirms(firms);
+//
+//		List<User> users = new ArrayList<>();
+//		users.add(new User("anna@gmail.com","anna123"));
+//		users.add(new User("klucha@gmail.com","kluchy123"));
+//		userService.addUsers(users);
+//
+//		List<FirmUsers> firmUsers = new ArrayList<>();
+//		firmUsers.add(new FirmUsers(users.get(0),firms.get(0)));
+//		firmUsers.add(new FirmUsers(users.get(1),firms.get(0)));
+//		firmUsersService.addAllUsersToFirm(firmUsers);
+//
+//		bankAccountService.addBankAccount(new BankAccount("2131 2343 2141",users.get(0)));
+//		bankAccountService.addBankAccount(new BankAccount("2222 3333 1232",users.get(0)));
 	}
 }

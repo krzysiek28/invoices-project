@@ -3,21 +3,19 @@ package com.io.invoices.invoiceshibernate.factureProduct;
 import com.io.invoices.invoiceshibernate.facture.Facture;
 import com.io.invoices.invoiceshibernate.product.Product;
 import com.io.invoices.invoiceshibernate.user.User;
-import org.springframework.data.repository.cdi.Eager;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Eager
+@Entity
 public class FactureProduct {
     @Id
     @GeneratedValue
     private Integer id;
-    //todo make relation
+    @OneToOne //todo make relation
     private Facture facture;
-    //todo make relation
+    @OneToOne //todo make relation
     private User user;
-    //todo make relation
+    @ManyToOne //todo make relation
     private Product product;
 
     public FactureProduct(){}

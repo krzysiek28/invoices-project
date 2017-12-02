@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping (value = "/Account")
+@RequestMapping (value = "/account")
 public class BankAccountController {
     @Autowired
     BankAccountService bankAccountService;

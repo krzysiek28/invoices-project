@@ -8,19 +8,20 @@ import com.io.invoices.invoiceshibernate.user.User;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Facture {
     @Id
     @GeneratedValue
     private Integer id;
-    //todo make relation
+    @ManyToOne
     private User user;
-    //todo make relation
+    @ManyToOne
     private Firm firm;
-    //todo make relation
+    @ManyToOne
     private FirmUsers firmUsers;
-    //todo make relation
+    @ManyToOne
     private Client client;
     private String name;
     private String place;

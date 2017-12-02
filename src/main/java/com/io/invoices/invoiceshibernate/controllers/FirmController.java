@@ -20,7 +20,4 @@ public class FirmController {
     public List<Firm> getFirms(){
         return firmService.getFirms();
     }
-
-
-
 }

@@ -2,16 +2,14 @@ package com.io.invoices.invoiceshibernate.product;
 
 import com.io.invoices.invoiceshibernate.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue
     private Integer id;
-    //todo make relation
+    @ManyToOne (fetch = FetchType.EAGER)
     private User user;
     private String name;
 

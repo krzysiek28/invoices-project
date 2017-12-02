@@ -2,19 +2,20 @@ package com.io.invoices.invoiceshibernate.client;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.user.User;
+import org.springframework.data.repository.cdi.Eager;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Client {
     @Id
     @GeneratedValue
     private Integer id;
-    //todo make relation
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-    //todo make relation
+    //@OneToMany(fetch = FetchType.EAGER)
+    //@JoinColumn(name="")
+    @OneToOne //todo do poprawy na @OneToMany
     private Firm firm;
 
     public Client(){}
