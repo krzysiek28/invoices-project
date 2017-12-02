@@ -18,49 +18,55 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private DataSource dataSource;
-//
-//    @Bean
-//    public JdbcTemplate jdbcTemplate(){
-//        return new JdbcTemplate(dataSource);
-//    }
-//
-//    @Bean
-//    public DriverManagerDataSource dataSource(){
-//        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-//        driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
-//        driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
-//        driverManagerDataSource.setUsername("postgres");
-//        driverManagerDataSource.setPassword("postgres");
-//        return driverManagerDataSource;
-//    }
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
+    public JdbcTemplate jdbcTemplate(){
+        return new JdbcTemplate(dataSource);
+    }
+
+    @Bean
+    public DriverManagerDataSource dataSource(){
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+        driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
+        driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/invoices");
+        driverManagerDataSource.setUsername("postgres");
+        driverManagerDataSource.setPassword("postgres");
+        return driverManagerDataSource;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        super.configure(http);
         http.authorizeRequests()
                 .antMatchers("/log") // jakie strony sa dodane
-                .access("hasRole('ROLE_ADMIN')")
+                .access("hasRole('ROLE_USER')")
                 .and().formLogin()
                 .and().logout().logoutSuccessUrl("/")
                 .and().csrf().disable();
+        http.formLogin()
+                .loginPage("/login.html")
+                .loginProcessingUrl("/perform_login")
+                .defaultSuccessUrl("/homepage.html",true)
+                .failureUrl("/login.html?error=true");
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select email,password,enabled from users where email=?")
+                .authoritiesByUsernameQuery("select email,role from user_roles where email=?");
+                //.authoritiesByUsernameQuery("select email, role from user_roles where username=?");
     }
 
 /*    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username,password, enabled from users where username=?")
-                .authoritiesByUsernameQuery("select username, role from user_roles where username=?");
-    }*/
-
-    @Autowired
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         super.configure(auth);
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("USER");
         auth.inMemoryAuthentication().withUser("user").password("pass").roles("USER");
-    }
+    }*/
 
 
 }

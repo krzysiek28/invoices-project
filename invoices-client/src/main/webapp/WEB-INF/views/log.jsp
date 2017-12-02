@@ -40,7 +40,6 @@
     <!-- naval with buttons -->
     <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/logout'">Wyloguj się</button>
-        <button type="button" class="btn btn-secondary" >Stwórz konto</button>
     </div>
 </nav>
 

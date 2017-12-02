@@ -27,4 +27,9 @@ public class MyController {
         return "log";
     }
 
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String registerPage() {
+        return "registrationPage";
+    }
+
 }

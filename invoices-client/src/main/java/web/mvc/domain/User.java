@@ -8,7 +8,7 @@ public class User {
     private Integer id;
     private String name;
     private String email;
-    private String password; //toDo: hasło do zakodowania
+    private String password;
 
     public User(){}
 
