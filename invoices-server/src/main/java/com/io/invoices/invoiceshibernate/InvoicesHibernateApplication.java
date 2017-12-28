@@ -34,7 +34,7 @@ public class InvoicesHibernateApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... strings) throws Exception {
-		List<Firm> firms = new ArrayList<>();
+	/*	List<Firm> firms = new ArrayList<>();
 		firms.add(new Firm("Valo","232-323-21","Kraków","432 434 324","valo@gmail.com"));
 		firms.add(new Firm("Mak","232-888-21","Warszawa","132 434 324","mak@gmail.com"));
 		firmService.addFirms(firms);
@@ -51,5 +51,6 @@ public class InvoicesHibernateApplication implements CommandLineRunner{
 
 		bankAccountService.addBankAccount(new BankAccount("2131 2343 2141",users.get(0)));
 		bankAccountService.addBankAccount(new BankAccount("2222 3333 1232",users.get(0)));
+		*/
 	}
 }

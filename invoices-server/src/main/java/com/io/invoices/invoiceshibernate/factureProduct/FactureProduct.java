@@ -5,27 +5,27 @@ import com.io.invoices.invoiceshibernate.product.Product;
 import com.io.invoices.invoiceshibernate.user.User;
 import org.springframework.data.repository.cdi.Eager;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Eager
+@Entity
 public class FactureProduct {
     @Id
     @GeneratedValue
     private Integer id;
-    //todo make relation
+    @ManyToOne
+    @JoinColumn(name="facture_id", nullable=false)
     private Facture facture;
-    //todo make relation
-    private User user;
-    //todo make relation
+    @OneToOne(fetch = FetchType.LAZY)
     private Product product;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public FactureProduct(){}
 
-    public FactureProduct(Facture facture, User user, Product product) {
+    public FactureProduct(Facture facture, Product product, User user) {
         this.facture = facture;
-        this.user = user;
         this.product = product;
+        this.user = user;
     }
 
     public Integer getId() {
@@ -44,20 +44,20 @@ public class FactureProduct {
         this.facture = facture;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Product getProduct() {
         return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

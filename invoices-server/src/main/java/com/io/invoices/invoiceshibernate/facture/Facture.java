@@ -5,23 +5,22 @@ import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.firmUsers.FirmUsers;
 import com.io.invoices.invoiceshibernate.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Facture {
     @Id
     @GeneratedValue
     private Integer id;
-    //todo make relation
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private User user;
     //todo make relation
-    private Firm firm;
+ //   private Firm firm;
     //todo make relation
-    private FirmUsers firmUsers;
+    //private FirmUsers firmUsers;
     //todo make relation
-    private Client client;
+    //private Client client;
     private String name;
     private String place;
     private Float price;
@@ -30,9 +29,9 @@ public class Facture {
 
     public Facture(User user, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
         this.user = user;
-        this.firm = firm;
-        this.firmUsers = firmUsers;
-        this.client = client;
+      //  this.firm = firm;
+        //this.firmUsers = firmUsers;
+        //this.client = client;
         this.name = name;
         this.place = place;
         this.price = price;
@@ -53,7 +52,7 @@ public class Facture {
     public void setUser(User user) {
         this.user = user;
     }
-
+/*
     public Firm getFirm() {
         return firm;
     }
@@ -77,7 +76,7 @@ public class Facture {
     public void setClient(Client client) {
         this.client = client;
     }
-
+*/
     public String getName() {
         return name;
     }

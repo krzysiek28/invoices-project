@@ -3,18 +3,17 @@ package com.io.invoices.invoiceshibernate.client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Client {
     @Id
     @GeneratedValue
     private Integer id;
-    //todo make relation
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private User user;
-    //todo make relation
+    @OneToOne(fetch = FetchType.LAZY)
     private Firm firm;
 
     public Client(){}
