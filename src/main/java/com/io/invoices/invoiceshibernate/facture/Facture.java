@@ -2,10 +2,11 @@ package com.io.invoices.invoiceshibernate.facture;
 
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
-import com.io.invoices.invoiceshibernate.firmUsers.FirmUsers;
+import com.io.invoices.invoiceshibernate.userFirm.FirmUsers;
 import com.io.invoices.invoiceshibernate.user.User;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Facture {
@@ -15,12 +16,12 @@ public class Facture {
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
     private User user;
-    //todo make relation
- //   private Firm firm;
-    //todo make relation
-    //private FirmUsers firmUsers;
-    //todo make relation
-    //private Client client;
+    @OneToMany
+    private Set<Firm> firm;
+    @OneToMany
+    private Set<FirmUsers> userFirm;
+    @OneToMany
+    private Set<Client> client;
     private String name;
     private String place;
     private Float price;
@@ -30,7 +31,7 @@ public class Facture {
     public Facture(User user, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
         this.user = user;
       //  this.firm = firm;
-        //this.firmUsers = firmUsers;
+        //this.userFirm = userFirm;
         //this.client = client;
         this.name = name;
         this.place = place;
@@ -52,27 +53,27 @@ public class Facture {
     public void setUser(User user) {
         this.user = user;
     }
-/*
-    public Firm getFirm() {
+
+    public Set<Firm> getFirms() {
         return firm;
     }
-
+/*
     public void setFirm(Firm firm) {
         this.firm = firm;
     }
-
-    public FirmUsers getFirmUsers() {
-        return firmUsers;
+*/
+    public Set<FirmUsers> getFirmUsers() {
+        return userFirm;
     }
-
-    public void setFirmUsers(FirmUsers firmUsers) {
-        this.firmUsers = firmUsers;
+/*
+    public void setFirmUsers(FirmUsers userFirm) {
+        this.userFirm = userFirm;
     }
-
-    public Client getClient() {
+*/
+    public Set<Client> getClient() {
         return client;
     }
-
+/*
     public void setClient(Client client) {
         this.client = client;
     }

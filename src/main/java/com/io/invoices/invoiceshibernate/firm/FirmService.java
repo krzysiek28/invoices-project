@@ -1,7 +1,6 @@
 package com.io.invoices.invoiceshibernate.firm;
 
-import com.io.invoices.invoiceshibernate.firmUsers.FirmUsers;
-import com.io.invoices.invoiceshibernate.firmUsers.FirmUsersRepository;
+import com.io.invoices.invoiceshibernate.userFirm.FirmUsersRepository;
 import com.io.invoices.invoiceshibernate.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

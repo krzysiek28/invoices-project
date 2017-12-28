@@ -1,4 +1,4 @@
-package com.io.invoices.invoiceshibernate.firmUsers;
+package com.io.invoices.invoiceshibernate.userFirm;
 
 import org.springframework.data.repository.CrudRepository;
 

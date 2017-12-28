@@ -1,20 +1,13 @@
 package com.io.invoices.invoiceshibernate;
 
-import com.io.invoices.invoiceshibernate.bankAccount.BankAccount;
 import com.io.invoices.invoiceshibernate.bankAccount.BankAccountService;
-import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.firm.FirmService;
-import com.io.invoices.invoiceshibernate.firmUsers.FirmUsers;
-import com.io.invoices.invoiceshibernate.firmUsers.FirmUsersService;
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.userFirm.FirmUsersService;
 import com.io.invoices.invoiceshibernate.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class InvoicesHibernateApplication implements CommandLineRunner{
@@ -44,10 +37,10 @@ public class InvoicesHibernateApplication implements CommandLineRunner{
 		users.add(new User("Bartłomiej Kluska","klucha@gmail.com","kluchy123"));
 		userService.addUsers(users);
 
-		List<FirmUsers> firmUsers = new ArrayList<>();
-		firmUsers.add(new FirmUsers(users.get(0),firms.get(0)));
-		firmUsers.add(new FirmUsers(users.get(1),firms.get(0)));
-		firmUsersService.addAllUsersToFirm(firmUsers);
+		List<FirmUsers> userFirm = new ArrayList<>();
+		userFirm.add(new FirmUsers(users.get(0),firms.get(0)));
+		userFirm.add(new FirmUsers(users.get(1),firms.get(0)));
+		firmUsersService.addAllUsersToFirm(userFirm);
 
 		bankAccountService.addBankAccount(new BankAccount("2131 2343 2141",users.get(0)));
 		bankAccountService.addBankAccount(new BankAccount("2222 3333 1232",users.get(0)));
