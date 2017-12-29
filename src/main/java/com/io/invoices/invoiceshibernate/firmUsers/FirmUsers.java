@@ -1,4 +1,4 @@
-package com.io.invoices.invoiceshibernate.userFirm;
+package com.io.invoices.invoiceshibernate.firmUsers;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.user.User;

@@ -1,12 +1,10 @@
 package com.io.invoices.invoiceshibernate.facture;
 
 import com.io.invoices.invoiceshibernate.client.Client;
-import com.io.invoices.invoiceshibernate.firm.Firm;
-import com.io.invoices.invoiceshibernate.userFirm.FirmUsers;
+import com.io.invoices.invoiceshibernate.firmUsers.FirmUsers;
 import com.io.invoices.invoiceshibernate.user.User;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Facture {
@@ -28,7 +26,7 @@ public class Facture {
 
     public Facture(User user, FirmUsers firmUsers, Client client, String name, String place, Float price) {
         this.user = user;
-        //this.userFirm = userFirm;
+        //this.firmUsers = firmUsers;
         //this.client = client;
         this.name = name;
         this.place = place;
@@ -60,8 +58,8 @@ public class Facture {
         return userFirm;
     }
 /*
-    public void setFirmUsers(FirmUsers userFirm) {
-        this.userFirm = userFirm;
+    public void setFirmUsers(FirmUsers firmUsers) {
+        this.firmUsers = firmUsers;
     }
 
     public Set<Client> getClient() {
