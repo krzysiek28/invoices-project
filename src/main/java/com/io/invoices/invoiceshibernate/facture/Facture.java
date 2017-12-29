@@ -16,21 +16,18 @@ public class Facture {
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
     private User user;
-    @OneToMany
-    private Set<Firm> firm;
-    @OneToMany
-    private Set<FirmUsers> userFirm;
-    @OneToMany
-    private Set<Client> client;
+    @OneToOne
+    private FirmUsers userFirm;
+    @OneToOne
+    private Client client;
     private String name;
     private String place;
     private Float price;
 
     public Facture(){}
 
-    public Facture(User user, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
+    public Facture(User user, FirmUsers firmUsers, Client client, String name, String place, Float price) {
         this.user = user;
-      //  this.firm = firm;
         //this.userFirm = userFirm;
         //this.client = client;
         this.name = name;
@@ -54,26 +51,23 @@ public class Facture {
         this.user = user;
     }
 
-    public Set<Firm> getFirms() {
-        return firm;
-    }
 /*
     public void setFirm(Firm firm) {
         this.firm = firm;
     }
 */
-    public Set<FirmUsers> getFirmUsers() {
+    public FirmUsers getFirmUsers() {
         return userFirm;
     }
 /*
     public void setFirmUsers(FirmUsers userFirm) {
         this.userFirm = userFirm;
     }
-*/
+
     public Set<Client> getClient() {
         return client;
     }
-/*
+
     public void setClient(Client client) {
         this.client = client;
     }
