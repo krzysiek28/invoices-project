@@ -2,7 +2,7 @@ package com.io.invoices.invoiceshibernate.factureProduct;
 
 import com.io.invoices.invoiceshibernate.facture.Facture;
 import com.io.invoices.invoiceshibernate.product.Product;
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.Users;
 
 import javax.persistence.*;
 
@@ -14,15 +14,15 @@ public class FactureProduct {
     @OneToOne //todo make relation
     private Facture facture;
     @OneToOne //todo make relation
-    private User user;
+    private Users users;
     @ManyToOne //todo make relation
     private Product product;
 
     public FactureProduct(){}
 
-    public FactureProduct(Facture facture, User user, Product product) {
+    public FactureProduct(Facture facture, Users users, Product product) {
         this.facture = facture;
-        this.user = user;
+        this.users = users;
         this.product = product;
     }
 
@@ -42,12 +42,12 @@ public class FactureProduct {
         this.facture = facture;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     public Product getProduct() {

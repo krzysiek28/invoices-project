@@ -23,9 +23,9 @@ public class BankAccountController {
     @Autowired
     UserService userService;
 
-    @GetMapping (value = "/{name}")
-    public List<BankAccount> getBankAccountByUserName(@PathVariable String name){
-        return bankAccountService.getBankAccountByName(name);
-    }
+//    @GetMapping (value = "/{name}")
+//    public List<BankAccount> getBankAccountByUserName(@PathVariable String name){
+//        return bankAccountService.getBankAccountByName(name);
+//    }
 
 }

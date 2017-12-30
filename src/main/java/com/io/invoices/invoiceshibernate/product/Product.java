@@ -1,6 +1,6 @@
 package com.io.invoices.invoiceshibernate.product;
 
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.Users;
 
 import javax.persistence.*;
 
@@ -10,13 +10,13 @@ public class Product {
     @GeneratedValue
     private Integer id;
     @ManyToOne (fetch = FetchType.EAGER)
-    private User user;
+    private Users users;
     private String name;
 
     public Product(){}
 
-    public Product(User user, String name) {
-        this.user = user;
+    public Product(Users users, String name) {
+        this.users = users;
         this.name = name;
     }
 
@@ -28,12 +28,12 @@ public class Product {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     public String getName() {

@@ -3,7 +3,7 @@ package com.io.invoices.invoiceshibernate.facture;
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.firmUsers.FirmUsers;
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.Users;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +16,7 @@ public class Facture {
     @GeneratedValue
     private Integer id;
     @ManyToOne
-    private User user;
+    private Users users;
     @ManyToOne
     private Firm firm;
     @ManyToOne
@@ -29,8 +29,8 @@ public class Facture {
 
     public Facture(){}
 
-    public Facture(User user, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
-        this.user = user;
+    public Facture(Users users, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
+        this.users = users;
         this.firm = firm;
         this.firmUsers = firmUsers;
         this.client = client;
@@ -47,12 +47,12 @@ public class Facture {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     public Firm getFirm() {

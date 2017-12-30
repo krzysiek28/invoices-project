@@ -1,8 +1,7 @@
 package com.io.invoices.invoiceshibernate.client;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
-import com.io.invoices.invoiceshibernate.user.User;
-import org.springframework.data.repository.cdi.Eager;
+import com.io.invoices.invoiceshibernate.user.Users;
 
 import javax.persistence.*;
 
@@ -12,7 +11,7 @@ public class Client {
     @GeneratedValue
     private Integer id;
     @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
+    private Users users;
     //@OneToMany(fetch = FetchType.EAGER)
     //@JoinColumn(name="")
     @OneToOne //todo do poprawy na @OneToMany
@@ -20,8 +19,8 @@ public class Client {
 
     public Client(){}
 
-    public Client(User user, Firm firm) {
-        this.user = user;
+    public Client(Users users, Firm firm) {
+        this.users = users;
         this.firm = firm;
     }
 
@@ -33,12 +32,12 @@ public class Client {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     public Firm getFirm() {

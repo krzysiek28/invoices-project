@@ -1,8 +1,7 @@
 package com.io.invoices.invoiceshibernate.firm;
 
-import com.io.invoices.invoiceshibernate.firmUsers.FirmUsers;
 import com.io.invoices.invoiceshibernate.firmUsers.FirmUsersRepository;
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +37,9 @@ public class FirmService {
         firmRepository.delete(id);
     }
 
-    public List<User> findFirmUsersByFirm_Name(String name){
-        List<User> firmUsers = new ArrayList<>();
-        firmUsersRepository.findFirmUsersByFirm_Name(name).forEach(e -> firmUsers.add(e.getUser()));
+    public List<Users> findFirmUsersByFirm_Name(String name){
+        List<Users> firmUsers = new ArrayList<>();
+        firmUsersRepository.findFirmUsersByFirm_Name(name).forEach(e -> firmUsers.add(e.getUsers()));
         return firmUsers;
     }
 
