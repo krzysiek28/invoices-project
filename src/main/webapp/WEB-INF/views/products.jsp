@@ -30,10 +30,10 @@
                 <a class="nav-link" href="#" onclick="window.location.href='/createfacture'" >Stwórz fakturę </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="window.location.href='/products'">Twoje produkty</a>
+                <a class="nav-link" href="#">Pricing</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="window.location.href='/clients'">Twoi klienci</a>
+                <a class="nav-link disabled" href="#">Disabled</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,7 +59,7 @@
 </nav>
 
 
-baza faktur
+Tutaj jest baza produktów, można dodać nowy
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
