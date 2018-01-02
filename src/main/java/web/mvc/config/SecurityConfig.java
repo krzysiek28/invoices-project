@@ -49,14 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        super.configure(http);
-        http.authorizeRequests()
-                .antMatchers("/log")
+        http
+                .authorizeRequests()
+                .antMatchers("/logged")
                 .access("hasRole('ROLE_USER')")
-                .and().formLogin().loginPage("/login")
+                .and().formLogin().loginPage("/loginPage")
                 .usernameParameter("email").passwordParameter("password")
                 /*.loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/",true)
-                .failureUrl("/login.jsp?error=true")*/
+                .failureUrl("/loginPage.jsp?error=true")*/
                 .and().logout().logoutSuccessUrl("/")
                 .and().csrf().disable();
     }

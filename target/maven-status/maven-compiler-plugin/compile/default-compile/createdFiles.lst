@@ -1,0 +1,14 @@
+web\mvc\domain\FactureProduct.class
+web\mvc\domain\BankAccount.class
+web\mvc\config\MyWebApplicationInitializer.class
+web\mvc\domain\Product.class
+web\mvc\MyController.class
+web\mvc\domain\User.class
+web\mvc\config\SecurityConfig.class
+web\mvc\config\WebConfiguration.class
+web\mvc\User.class
+web\mvc\domain\FirmUsers.class
+web\mvc\domain\Firm.class
+web\mvc\domain\Client.class
+web\mvc\config\SpringSecurityInitializer.class
+web\mvc\domain\Facture.class

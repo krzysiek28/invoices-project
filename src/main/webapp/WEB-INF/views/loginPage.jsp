@@ -17,8 +17,8 @@
     <div class="login-container">
         <div class="login-card">
             <div class="login-form">
-                <c:url var="loginUrl" value="/login" />
-                <form action="${loginUrl}" method="post" class="form-horizontal">
+                <c:url var="loginUrl" value="/loginPage" />
+                <form action="/login" method="post" class="form-horizontal">
                     <c:if test="${param.error != null}">
                         <div class="alert alert-danger">
                             <p>Invalid username and password.</p>

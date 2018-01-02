@@ -49,7 +49,7 @@
     </div>
     <!-- naval with buttons -->
     <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-secondary" name="login" onclick="window.location.href='/log'">Zaloguj się</button>
+        <button type="button" class="btn btn-secondary" name="login" onclick="window.location.href='/loginPage'">Zaloguj się</button>
         <button type="button" class="btn btn-secondary" name="signup" onclick="window.location.href='/registrationPage'">Stwórz konto</button>
     </div>
 </nav>

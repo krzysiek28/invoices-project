@@ -27,14 +27,19 @@ public class MyController {
         return "homePage";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/loginPage")
     public String loginPage() {
-        return "login";
+        return "loginPage";
     }
 
-    @RequestMapping(value = "/log")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loggedPage() {
+        return "logged";
+    }
+
+    @RequestMapping(value = "/logged")
     public String logPage() {
-        return "log";
+        return "logged";
     }
 
     @RequestMapping(value = "/registrationPage")
