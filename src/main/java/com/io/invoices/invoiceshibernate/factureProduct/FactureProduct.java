@@ -2,7 +2,7 @@ package com.io.invoices.invoiceshibernate.factureProduct;
 
 import com.io.invoices.invoiceshibernate.facture.Facture;
 import com.io.invoices.invoiceshibernate.product.Product;
-import com.io.invoices.invoiceshibernate.user.Users;
+import com.io.invoices.invoiceshibernate.user.User;
 
 import javax.persistence.*;
 
@@ -15,15 +15,15 @@ public class FactureProduct {
     @JoinColumn(name="facture_id", nullable=false)
     private Facture facture;
     @OneToOne(fetch = FetchType.LAZY)
-    private Users users;
+    private User user;
     @OneToOne(fetch = FetchType.LAZY)
     private Product product;
 
     public FactureProduct(){}
 
-    public FactureProduct(Facture facture, Users users, Product product) {
+    public FactureProduct(Facture facture, User user, Product product) {
         this.facture = facture;
-        this.users = users;
+        this.user = user;
         this.product = product;
     }
 
@@ -43,12 +43,12 @@ public class FactureProduct {
         this.facture = facture;
     }
 
-    public Users getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Product getProduct() {

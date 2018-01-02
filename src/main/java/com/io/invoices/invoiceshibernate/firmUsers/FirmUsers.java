@@ -1,7 +1,7 @@
 package com.io.invoices.invoiceshibernate.firmUsers;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
-import com.io.invoices.invoiceshibernate.user.Users;
+import com.io.invoices.invoiceshibernate.user.User;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,14 +14,14 @@ public class FirmUsers {
     @GeneratedValue
     private Integer id;
     @ManyToOne
-    private Users users;
+    private User user;
     @ManyToOne
     private Firm firm;
 
     public FirmUsers(){}
 
-    public FirmUsers(Users users, Firm firm) {
-        this.users = users;
+    public FirmUsers(User user, Firm firm) {
+        this.user = user;
         this.firm = firm;
     }
 
@@ -33,12 +33,12 @@ public class FirmUsers {
         this.id = id;
     }
 
-    public Users getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Firm getFirm() {

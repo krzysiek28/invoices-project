@@ -3,21 +3,23 @@ package com.io.invoices.invoiceshibernate.user;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity
-public class Users {
+@Table(name="\"user\"")
+public class User {
 
     @Id
     private String email;
     private String password;
 
-    public Users(String email, String password) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public Users(){}
+    public User(){}
 
     public String getEmial() {
         return email;

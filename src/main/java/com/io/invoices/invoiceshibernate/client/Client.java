@@ -1,7 +1,7 @@
 package com.io.invoices.invoiceshibernate.client;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
-import com.io.invoices.invoiceshibernate.user.Users;
+import com.io.invoices.invoiceshibernate.user.User;
 
 import javax.persistence.*;
 
@@ -12,14 +12,14 @@ public class Client {
     private Integer id;
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    private Users users;
+    private User user;
     @OneToOne(fetch = FetchType.LAZY)
     private Firm firm;
 
     public Client(){}
 
-    public Client(Users users, Firm firm) {
-        this.users = users;
+    public Client(User user, Firm firm) {
+        this.user = user;
         this.firm = firm;
     }
 
@@ -31,12 +31,12 @@ public class Client {
         this.id = id;
     }
 
-    public Users getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Firm getFirm() {

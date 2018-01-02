@@ -32,9 +32,9 @@ public class InvoicesHibernateApplication implements CommandLineRunner{
 		firms.add(new Firm("Mak","232-888-21","Warszawa","132 434 324","mak@gmail.com"));
 		firmService.addFirms(firms);
 
-		List<Users> users = new ArrayList<>();
-		users.add(new Users("anna@gmail.com","anna123"));
-		users.add(new Users("klucha@gmail.com","kluchy123"));
+		List<User> users = new ArrayList<>();
+		users.add(new User("anna@gmail.com","anna123"));
+		users.add(new User("klucha@gmail.com","kluchy123"));
 		userService.addUsers(users);
 
 		List<FirmUsers> firmUsers = new ArrayList<>();

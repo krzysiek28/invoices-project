@@ -12,21 +12,21 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public void addUser(Users users){
+    public void addUser(User user){
+        userRepository.save(user);
+    }
+
+    public void addUsers(List<User> users){
         userRepository.save(users);
     }
 
-    public void addUsers(List<Users> users){
-        userRepository.save(users);
-    }
-
-//    public Users getUserById(Integer id){
+//    public User getUserById(Integer id){
 //        return userRepository.findOne(id);
 //    }
 
-    public List<Users> getUsers(){
-        List<Users> users = new ArrayList<>();
-        Iterable<Users> iterable = userRepository.findAll();
+    public List<User> getUsers(){
+        List<User> users = new ArrayList<>();
+        Iterable<User> iterable = userRepository.findAll();
         iterable.forEach(e -> users.add(e));
         return users;
     }
