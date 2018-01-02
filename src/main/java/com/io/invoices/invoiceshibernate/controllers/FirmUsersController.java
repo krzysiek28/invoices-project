@@ -1,7 +1,7 @@
 package com.io.invoices.invoiceshibernate.controllers;
 
 import com.io.invoices.invoiceshibernate.firm.FirmService;
-import com.io.invoices.invoiceshibernate.firmUsers.FirmUsersService;
+import com.io.invoices.invoiceshibernate.userFirm.UserFirmService;
 import com.io.invoices.invoiceshibernate.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import java.util.List;
 public class FirmUsersController {
 
     @Autowired
-    private FirmUsersService firmUsersService;
+    private UserFirmService userFirmService;
 
     @Autowired
     private FirmService firmService;

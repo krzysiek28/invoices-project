@@ -1,4 +1,4 @@
-package com.io.invoices.invoiceshibernate.firmUsers;
+package com.io.invoices.invoiceshibernate.userFirm;
 
 import com.io.invoices.invoiceshibernate.firm.FirmService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FirmUsersService {
+public class UserFirmService {
     @Autowired
-    FirmUsersRepository firmUsersRepository;
+    UserFirmRepository userFirmRepository;
     @Autowired
     FirmService firmService;
 
-    public void addAllUsersToFirm(List<FirmUsers> firmUsers){
-        firmUsersRepository.save(firmUsers);
+    public void addAllUsersToFirm(List<UserFirm> userFirmUsers){
+        userFirmRepository.save(userFirmUsers);
     }
 }

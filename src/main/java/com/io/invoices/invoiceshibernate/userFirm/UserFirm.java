@@ -1,4 +1,4 @@
-package com.io.invoices.invoiceshibernate.firmUsers;
+package com.io.invoices.invoiceshibernate.userFirm;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.user.User;
@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class FirmUsers {
+public class UserFirm {
     @Id
     @GeneratedValue
     private Integer id;
@@ -18,9 +18,9 @@ public class FirmUsers {
     @ManyToOne
     private Firm firm;
 
-    public FirmUsers(){}
+    public UserFirm(){}
 
-    public FirmUsers(User user, Firm firm) {
+    public UserFirm(User user, Firm firm) {
         this.user = user;
         this.firm = firm;
     }
