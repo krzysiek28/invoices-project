@@ -51,13 +51,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        super.configure(http);
         http
                 .authorizeRequests()
-                .antMatchers("/logged")
+                .antMatchers("/")
                 .access("hasRole('ROLE_USER')")
                 .and().formLogin().loginPage("/loginPage")
                 .usernameParameter("email").passwordParameter("password")
-                /*.loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/",true)
-                .failureUrl("/loginPage.jsp?error=true")*/
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/logged",true)
+                .failureUrl("/loginPage.jsp?error=true")
                 .and().logout().logoutSuccessUrl("/")
                 .and().csrf().disable();
     }
