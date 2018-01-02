@@ -17,19 +17,28 @@ public class User {
     private String email;
     private String password;
 
-    public User(String email, String password) {
+    public User(String name, String email, String password) {
+        this.name = name;
         this.email = email;
         this.password = password;
     }
 
     public User(){}
 
-    public String getEmial() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
         return email;
     }
 
-    public void setEmial(String emial) {
-        this.email = emial;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

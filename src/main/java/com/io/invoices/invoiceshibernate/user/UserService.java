@@ -20,9 +20,9 @@ public class UserService {
         userRepository.save(users);
     }
 
-//    public User getUserById(Integer id){
-//        return userRepository.findOne(id);
-//    }
+    public User getUserById(Integer id) {
+        return userRepository.findOne(id);
+    }
 
     public List<User> getUsers(){
         List<User> users = new ArrayList<>();
