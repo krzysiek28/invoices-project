@@ -5,10 +5,7 @@ import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.firmUsers.FirmUsers;
 import com.io.invoices.invoiceshibernate.user.Users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Facture {
@@ -16,12 +13,11 @@ public class Facture {
     @GeneratedValue
     private Integer id;
     @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private Users users;
-    @ManyToOne
-    private Firm firm;
-    @ManyToOne
+    @OneToOne
     private FirmUsers firmUsers;
-    @ManyToOne
+    @OneToOne
     private Client client;
     private String name;
     private String place;
@@ -29,9 +25,9 @@ public class Facture {
 
     public Facture(){}
 
-    public Facture(Users users, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
+    public Facture(Users users, FirmUsers firmUsers, Client client, String name, String place, Float price) {
         this.users = users;
-        this.firm = firm;
+
         this.firmUsers = firmUsers;
         this.client = client;
         this.name = name;
@@ -53,14 +49,6 @@ public class Facture {
 
     public void setUsers(Users users) {
         this.users = users;
-    }
-
-    public Firm getFirm() {
-        return firm;
-    }
-
-    public void setFirm(Firm firm) {
-        this.firm = firm;
     }
 
     public FirmUsers getFirmUsers() {

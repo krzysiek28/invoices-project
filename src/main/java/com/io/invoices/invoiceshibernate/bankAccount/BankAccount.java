@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class BankAccount {
     @Id
     private String bankAccount;
-    @ManyToOne //Todo verify relaction bankAccount->users
+    @ManyToOne
     private Users users;
 
     BankAccount(){}

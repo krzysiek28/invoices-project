@@ -9,7 +9,8 @@ public class Product {
     @Id
     @GeneratedValue
     private Integer id;
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private Users users;
     private String name;
 

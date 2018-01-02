@@ -11,11 +11,12 @@ public class FactureProduct {
     @Id
     @GeneratedValue
     private Integer id;
-    @OneToOne //todo make relation
+    @ManyToOne
+    @JoinColumn(name="facture_id", nullable=false)
     private Facture facture;
-    @OneToOne //todo make relation
+    @OneToOne(fetch = FetchType.LAZY)
     private Users users;
-    @ManyToOne //todo make relation
+    @OneToOne(fetch = FetchType.LAZY)
     private Product product;
 
     public FactureProduct(){}

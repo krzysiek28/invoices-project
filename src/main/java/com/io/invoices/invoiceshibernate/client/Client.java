@@ -10,11 +10,10 @@ public class Client {
     @Id
     @GeneratedValue
     private Integer id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private Users users;
-    //@OneToMany(fetch = FetchType.EAGER)
-    //@JoinColumn(name="")
-    @OneToOne //todo do poprawy na @OneToMany
+    @OneToOne(fetch = FetchType.LAZY)
     private Firm firm;
 
     public Client(){}
