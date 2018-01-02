@@ -10,6 +10,6 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/log">powrot</a>
+<a href="/logged">tutaj tworzymy fakture w formularzu</a>
 </body>
 </html>

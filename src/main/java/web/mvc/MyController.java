@@ -42,6 +42,16 @@ public class MyController {
         return "logged";
     }
 
+    @RequestMapping(value = "/products")
+    public String productsPage() {
+        return "products";
+    }
+
+    @RequestMapping(value = "/clients")
+    public String clientsPage() {
+        return "clients";
+    }
+
     @RequestMapping(value = "/registrationPage")
     public String register() {
         return "registrationPage";
