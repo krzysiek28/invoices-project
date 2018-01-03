@@ -39,4 +39,12 @@ public class UserService {
         user.setName(users.get(0).getName());
         userRepository.save(user);
     }
+
+    public void deleteUser(String userName) {
+        List<User> users = userRepository.findByName(userName);
+        if (users.isEmpty()) {
+            throw new IllegalArgumentException("User does not exist!");
+        }
+        userRepository.delete(users.get(0).getId());
+    }
 }
