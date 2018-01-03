@@ -2,10 +2,12 @@ package com.io.invoices.invoiceshibernate.facture;
 
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
+import com.io.invoices.invoiceshibernate.product.Product;
 import com.io.invoices.invoiceshibernate.user.User;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 public class Facture {
@@ -19,20 +21,27 @@ public class Facture {
     private Firm userFirm;
     @OneToOne
     private Client client;
+    @OneToMany
+    private List<Product> products;
     private String number;
     private String place;
     private Date issueDate;
     private Date paymentDate;
+    private String issuer;
 
-    public Facture(User user, Firm userFirm, Client client, String number, String place, Date issueDate, Date paymentDate) {
-
+    public Facture(User user, Firm userFirm, Client client, List<Product> products, String number, String place, Date issueDate, Date paymentDate, String issuer) {
         this.user = user;
         this.userFirm = userFirm;
         this.client = client;
+        this.products = products;
         this.number = number;
         this.place = place;
         this.issueDate = issueDate;
         this.paymentDate = paymentDate;
+        this.issuer = issuer;
+    }
+
+    public Facture() {
     }
 
     public Integer getId() {
@@ -67,6 +76,14 @@ public class Facture {
         this.client = client;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
     public String getNumber() {
         return number;
     }
@@ -97,6 +114,14 @@ public class Facture {
 
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public String getIssuer() {
+        return issuer;
+    }
+
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
     }
 
 

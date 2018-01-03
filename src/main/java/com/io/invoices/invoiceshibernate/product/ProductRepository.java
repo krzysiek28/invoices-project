@@ -2,5 +2,9 @@ package com.io.invoices.invoiceshibernate.product;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface ProductRepository extends CrudRepository<Product, Integer>{
+import java.util.List;
+
+public interface ProductRepository extends CrudRepository<Product, String>{
+
+    public List<Product> findProductByUserName(String userName);
 }
