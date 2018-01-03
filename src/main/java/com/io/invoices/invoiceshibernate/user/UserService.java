@@ -3,7 +3,6 @@ package com.io.invoices.invoiceshibernate.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -12,27 +11,20 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public void addUser(User user){
-        userRepository.save(user);
+    public void addUser(User user) {
+        if (userRepository.findByName(user.getName()).isEmpty()) {
+            userRepository.save(user);
+            return;
+        }
+        throw new IllegalArgumentException("User already exists!");
     }
 
-    public void addUsers(List<User> users){
-        userRepository.save(users);
+    public User getUser(String name) {
+        List<User> users = userRepository.findByName(name);
+        if (users.isEmpty()) {
+            throw new IllegalArgumentException("User does not exist!");
+        }
+        return users.get(0);
     }
-
-    public User getUserById(Integer id) {
-        return userRepository.findOne(id);
-    }
-
-    public List<User> getUsers(){
-        List<User> users = new ArrayList<>();
-        Iterable<User> iterable = userRepository.findAll();
-        iterable.forEach(e -> users.add(e));
-        return users;
-    }
-
-//    public void deleteUserById(Integer id){
-//        userRepository.delete(id);
-//    }
 
 }
