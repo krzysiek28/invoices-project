@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        super.configure(http);
         http
                 .authorizeRequests()
-                .antMatchers("/")
+                .antMatchers("/products","/homeLogged","/logged","/clients","/createfacture")
                 .access("hasRole('ROLE_USER')")
                 .and().formLogin().loginPage("/loginPage")
                 .usernameParameter("email").passwordParameter("password")

@@ -32,6 +32,9 @@ public class MyController {
         return "loginPage";
     }
 
+    @RequestMapping(value = "/homeLogged")
+    public String homeLoged() {return "homeLogged";}
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loggedPage() {
         return "logged";
@@ -39,7 +42,7 @@ public class MyController {
 
     @RequestMapping(value = "/logged")
     public String logPage() {
-        return "logged";
+        return "homeLogged";
     }
 
     @RequestMapping(value = "/products")
@@ -69,18 +72,12 @@ public class MyController {
         List<User> userList = jdbcTemplate.query("select * from users", new BeanPropertyRowMapper<>(User.class));
         modelMap.addAttribute("users",userList);
 
-        return "homePage";
+        return "homeLogged";
     }
 
     @RequestMapping(value = "/createfacture")
     public String createf() {
         return "createfacture";
     }
-
-    @RequestMapping(value = "/userdata")
-    public String goToUserData() {
-        return "userdata";
-    }
-
 
 }

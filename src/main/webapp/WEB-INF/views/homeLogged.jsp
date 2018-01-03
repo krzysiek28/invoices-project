@@ -49,6 +49,28 @@
     </div>
 </nav>
 
+<!-- SLIDER -->
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="static/images/img1.jpg" alt="First slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="static/images/img2.jpg" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="static/images/img4.jpg" alt="Third slide">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 
 baza faktur
 
@@ -60,7 +82,7 @@ baza faktur
 
 
 <%--<c:if test="${pageContext.request.userPrincipal.name != null}">--%>
-    <%--<h2>Welcome : ${pageContext.request.userPrincipal.emial}</h2>--%>
+<%--<h2>Welcome : ${pageContext.request.userPrincipal.emial}</h2>--%>
 <%--</c:if>--%>
 
 </body>
