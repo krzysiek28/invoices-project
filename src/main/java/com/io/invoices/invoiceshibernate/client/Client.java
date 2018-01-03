@@ -2,24 +2,20 @@ package com.io.invoices.invoiceshibernate.client;
 
 import com.io.invoices.invoiceshibernate.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Client {
     @Id
     @GeneratedValue
     private Integer id;
+    private String name;
+    private String additionalData;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    private User owner;
 
     public Client() {
     }
-
-    private String name;
-    private String additionalData;
-    @ManyToOne
-    private User owner;
 
     public Client(String name, String additionalData, User owner) {
         this.name = name;

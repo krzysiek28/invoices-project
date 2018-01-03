@@ -15,22 +15,22 @@ public class ClientController {
     @Autowired
     ClientService clientService;
 
-    @RequestMapping(value = "/{ownerId}/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/{ownerId}/clients", method = RequestMethod.POST)
     public void addClient(@RequestBody Client client, @PathVariable String ownerId) {
         clientService.addClient(ownerId, client);
     }
 
-    @RequestMapping("/{ownerId}/users")
+    @RequestMapping("/{ownerId}/clients")
     public List<Client> getAllClients(@PathVariable String ownerId) {
         return clientService.getAllClients(ownerId);
     }
 
-    @RequestMapping(value = "/{ownerId}/users/{clientId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{ownerId}/clients/{clientId}", method = RequestMethod.PUT)
     public void updateClient(@RequestBody Client client, @PathVariable String clientId) {
         clientService.updateClient(clientId, client);
     }
 
-    @RequestMapping(value = "/{ownerId}/users/{clientId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{ownerId}/clients/{clientId}", method = RequestMethod.DELETE)
     public void deleteClient(@PathVariable String clientId) {
         clientService.deleteClient(clientId);
     }

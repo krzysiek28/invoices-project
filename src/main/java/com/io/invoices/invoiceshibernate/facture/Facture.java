@@ -21,7 +21,7 @@ public class Facture {
     private Firm userFirm;
     @OneToOne
     private Client client;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Product> products;
     private String number;
     private String place;
