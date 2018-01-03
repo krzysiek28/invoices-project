@@ -1,10 +1,11 @@
 package com.io.invoices.invoiceshibernate.facture;
 
+import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.user.User;
 
 import javax.persistence.*;
-import java.util.List;
+import java.sql.Date;
 
 @Entity
 public class Facture {
@@ -12,25 +13,26 @@ public class Facture {
     @GeneratedValue
     private Integer id;
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @OneToOne
     private Firm userFirm;
-    @OneToMany
-    private List<Firm> clients;
-    private String name;
+    @OneToOne
+    private Client client;
+    private String number;
     private String place;
-    private Float price;
+    private Date issueDate;
+    private Date paymentDate;
 
-    public Facture(){}
+    public Facture(User user, Firm userFirm, Client client, String number, String place, Date issueDate, Date paymentDate) {
 
-    public Facture(User user, Firm userFirm, List<Firm> clients, String name, String place, Float price) {
         this.user = user;
         this.userFirm = userFirm;
-        this.clients = clients;
-        this.name = name;
+        this.client = client;
+        this.number = number;
         this.place = place;
-        this.price = price;
+        this.issueDate = issueDate;
+        this.paymentDate = paymentDate;
     }
 
     public Integer getId() {
@@ -57,20 +59,20 @@ public class Facture {
         this.userFirm = userFirm;
     }
 
-    public List<Firm>  getClients() {
-        return clients;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClients(List<Firm>  client) {
-        this.clients = clients;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public String getName() {
-        return name;
+    public String getNumber() {
+        return number;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getPlace() {
@@ -81,13 +83,23 @@ public class Facture {
         this.place = place;
     }
 
-    public Float getPrice() {
-        return price;
+    public Date getIssueDate() {
+        return issueDate;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
     }
+
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+
 }
 
 /*
