@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="\"user\"")
+@Table(name = "\"user\"")
 public class User {
 
     @Id
@@ -19,14 +19,21 @@ public class User {
     private String email;
     @JsonIgnore
     private String password;
-
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
+    public User() {
+    }
 
-    public User(){}
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
