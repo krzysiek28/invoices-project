@@ -1,6 +1,7 @@
 package com.io.invoices.invoiceshibernate.facture;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
+import com.io.invoices.invoiceshibernate.product.Product;
 import com.io.invoices.invoiceshibernate.user.User;
 
 import javax.persistence.*;
@@ -18,16 +19,20 @@ public class Facture {
     private Firm userFirm;
     @OneToMany
     private List<Firm> clients;
+    @OneToMany
+    private List<Product> products;
+
     private String name;
     private String place;
     private Float price;
 
     public Facture(){}
 
-    public Facture(User user, Firm userFirm, List<Firm> clients, String name, String place, Float price) {
+    public Facture(User user, Firm userFirm, List<Firm> clients, List<Product> products, String name, String place, Float price) {
         this.user = user;
         this.userFirm = userFirm;
         this.clients = clients;
+        this.products = products;
         this.name = name;
         this.place = place;
         this.price = price;
@@ -55,6 +60,14 @@ public class Facture {
 
     public void setUserFirm(Firm userFirm) {
         this.userFirm = userFirm;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public List<Firm>  getClients() {
