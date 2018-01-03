@@ -20,4 +20,9 @@ public class UserController {
     public User getUser(@PathVariable String name) {
         return userService.getUser(name);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/{userName}")
+    public void updateUser(@RequestBody User user, @PathVariable String userName) {
+        userService.updateUser(userName, user);
+    }
 }

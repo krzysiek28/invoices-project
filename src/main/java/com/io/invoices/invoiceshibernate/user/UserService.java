@@ -27,4 +27,17 @@ public class UserService {
         return users.get(0);
     }
 
+    public void updateUser(String userName, User user) {
+        List<User> users = userRepository.findByName(userName);
+
+        if (users.isEmpty()) {
+            throw new IllegalArgumentException("User does not exist!");
+        }
+
+        User updatedUser = users.get(0);
+
+        user.setId(users.get(0).getId());
+        user.setName(users.get(0).getName());
+        userRepository.save(user);
+    }
 }
