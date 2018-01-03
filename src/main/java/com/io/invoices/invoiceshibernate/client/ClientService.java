@@ -25,4 +25,22 @@ public class ClientService {
                 .forEach(allClients::add);
         return allClients;
     }
+
+    public void updateClient(String clientId, Client client) {
+        if (!clientRepository.exists(Integer.parseInt(clientId))) {
+            throw new IllegalArgumentException("Client does not exist!");
+        }
+
+        Client oldClient = clientRepository.findOne(Integer.parseInt(clientId));
+        client.setId(oldClient.getId());
+        clientRepository.save(client);
+    }
+
+    public void deleteClient(String clientId) {
+        if (!clientRepository.exists(Integer.parseInt(clientId))) {
+            throw new IllegalArgumentException("Client does not exist!");
+        }
+
+        clientRepository.delete(Integer.parseInt(clientId));
+    }
 }
