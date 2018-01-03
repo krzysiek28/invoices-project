@@ -12,6 +12,10 @@ public class Client {
     @Id
     @GeneratedValue
     private Integer id;
+
+    public Client() {
+    }
+
     private String name;
     private String additionalData;
     @ManyToOne
