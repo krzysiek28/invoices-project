@@ -35,7 +35,6 @@ public class UserService {
         }
 
         User updatedUser = users.get(0);
-
         user.setId(users.get(0).getId());
         user.setName(users.get(0).getName());
         userRepository.save(user);
