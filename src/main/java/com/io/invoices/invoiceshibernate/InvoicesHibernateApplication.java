@@ -2,7 +2,6 @@ package com.io.invoices.invoiceshibernate;
 
 import com.io.invoices.invoiceshibernate.bankAccount.BankAccountService;
 import com.io.invoices.invoiceshibernate.firm.FirmService;
-import com.io.invoices.invoiceshibernate.userFirm.UserFirmService;
 import com.io.invoices.invoiceshibernate.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,8 +15,6 @@ public class InvoicesHibernateApplication implements CommandLineRunner{
 	FirmService firmService;
 	@Autowired
 	UserService userService;
-	@Autowired
-	UserFirmService userFirmService;
 	@Autowired
 	BankAccountService bankAccountService;
 

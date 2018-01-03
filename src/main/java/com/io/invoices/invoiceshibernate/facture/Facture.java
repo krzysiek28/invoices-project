@@ -1,7 +1,7 @@
 package com.io.invoices.invoiceshibernate.facture;
 
 import com.io.invoices.invoiceshibernate.client.Client;
-import com.io.invoices.invoiceshibernate.userFirm.UserFirm;
+import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.user.User;
 
 import javax.persistence.*;
@@ -15,7 +15,7 @@ public class Facture {
     @JoinColumn(name="user_id", nullable=false)
     private User user;
     @OneToOne
-    private UserFirm userFirm;
+    private Firm userFirm;
     @OneToOne
     private Client client;
     private String name;
@@ -24,10 +24,8 @@ public class Facture {
 
     public Facture(){}
 
-    public Facture(User user, UserFirm userFirm, Client client, String name, String place, Float price) {
+    public Facture(User user, Client client, String name, String place, Float price) {
         this.user = user;
-
-        this.userFirm = userFirm;
         this.client = client;
         this.name = name;
         this.place = place;
@@ -48,14 +46,6 @@ public class Facture {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public UserFirm getUserFirm() {
-        return userFirm;
-    }
-
-    public void setUserFirm(UserFirm userFirm) {
-        this.userFirm = userFirm;
     }
 
     public Client getClient() {
