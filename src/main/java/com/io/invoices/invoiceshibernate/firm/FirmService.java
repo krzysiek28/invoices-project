@@ -34,4 +34,12 @@ public class FirmService {
     }
 
 
+    public void updateFirm(String firmId, Firm firm) {
+        Firm old = firmRepository.findOne(Integer.parseInt(firmId));
+        firm.setId(old.getId());
+    }
+
+    public void deleteFirm(String firmId) {
+        firmRepository.delete(Integer.parseInt(firmId));
+    }
 }

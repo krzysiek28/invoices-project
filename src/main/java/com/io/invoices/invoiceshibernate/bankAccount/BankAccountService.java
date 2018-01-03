@@ -22,4 +22,7 @@ public class BankAccountService {
         return bankAccountRepository.findBankAccountByUserName(userName);
     }
 
+    public void deleteAccound(String accountId) {
+        bankAccountRepository.delete(accountId);
+    }
 }

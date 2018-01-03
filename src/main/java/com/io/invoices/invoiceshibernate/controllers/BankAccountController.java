@@ -33,5 +33,10 @@ public class BankAccountController {
         bankAccount.setUser(user);
         bankAccountService.addBankAccount(bankAccount);
     }
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{username}/accounts/{accountId}")
+    public void deleteAccount(@PathVariable String accountId) {
+
+        bankAccountService.deleteAccound(accountId);
+    }
 
 }
