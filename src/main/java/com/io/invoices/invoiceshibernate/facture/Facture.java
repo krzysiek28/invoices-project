@@ -24,8 +24,9 @@ public class Facture {
 
     public Facture(){}
 
-    public Facture(User user, Client client, String name, String place, Float price) {
+    public Facture(User user, Firm userFirm, Client client, String name, String place, Float price) {
         this.user = user;
+        this.userFirm = userFirm;
         this.client = client;
         this.name = name;
         this.place = place;
@@ -46,6 +47,14 @@ public class Facture {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Firm getUserFirm() {
+        return userFirm;
+    }
+
+    public void setUserFirm(Firm userFirm) {
+        this.userFirm = userFirm;
     }
 
     public Client getClient() {
