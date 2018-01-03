@@ -1,5 +1,7 @@
 package com.io.invoices.invoiceshibernate.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="users")
+@Table(name="\"user\"")
 public class User {
 
     @Id
@@ -15,6 +17,7 @@ public class User {
     private Integer id;
     private String name;
     private String email;
+    @JsonIgnore
     private String password;
 
     public User(String name, String email, String password) {
