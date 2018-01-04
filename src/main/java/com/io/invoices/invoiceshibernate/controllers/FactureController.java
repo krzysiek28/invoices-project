@@ -30,26 +30,41 @@ public class FactureController {
     public Facture getFacture(@PathVariable String id) {return factureService.getFacture(id);}
 
     @RequestMapping("/createPdf/{id}")
-    public void createPdf(@PathVariable String id) throws IOException, DocumentException, com.itextpdf.text.DocumentException {
+    public void createPdf(@PathVariable String id, HttpServletResponse response) throws IOException, DocumentException, com.itextpdf.text.DocumentException {
 
         PdfCreator pdfCreator = new PdfCreator(getFacture(id));
         pdfCreator.createPdf();
-    }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/send")
-    public ResponseEntity<byte[]> getPDF(@RequestBody String json) throws IOException {
-        File initialFile = new File("src/main/resources/sample.txt");
+        File initialFile = new File("invoice.pdf");
         InputStream input = new FileInputStream(initialFile);
-        byte[] contents = org.apache.commons.io.IOUtils.toByteArray(input);
+        try {
+            // get your file as InputStream
+            InputStream is = input;
+            // copy it to response's OutputStream
+            org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+        } catch (IOException ex) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = "output.pdf";
-        headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents, headers, HttpStatus.OK);
-        return response;
+            throw new RuntimeException("IOError writing file to output stream");
+        }
     }
+/*
+    @RequestMapping( "/sendPdf")
+    public void getPDF(HttpServletResponse response) throws IOException {
+        File initialFile = new File("invoice.pdf");
+        InputStream input = new FileInputStream(initialFile);
+        try {
+            // get your file as InputStream
+            InputStream is = input;
+            // copy it to response's OutputStream
+            org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+        } catch (IOException ex) {
+
+            throw new RuntimeException("IOError writing file to output stream");
+        }
+    }
+    */
 /*    @RequestMapping(method = RequestMethod.POST, value = "/{ownerId}/factures")
     public void addFacture(@PathVariable String ownerId, @RequestBody Facture facture) {
         factureService.addFacture(ownerId, facture);
