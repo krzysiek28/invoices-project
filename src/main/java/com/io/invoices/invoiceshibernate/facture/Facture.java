@@ -2,7 +2,7 @@ package com.io.invoices.invoiceshibernate.facture;
 
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
-import com.io.invoices.invoiceshibernate.product.Product;
+import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
 import com.io.invoices.invoiceshibernate.user.Usery;
 
 import javax.persistence.*;
@@ -22,14 +22,14 @@ public class Facture {
     @OneToOne
     private Client client;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Product> products;
+    private List<ProductEntry> products;
     private String number;
     private String place;
     private Date issueDate;
     private Date paymentDate;
     private String issuer;
 
-    public Facture(Usery usery, Firm userFirm, Client client, List<Product> products, String number, String place, Date issueDate, Date paymentDate, String issuer) {
+    public Facture(Usery usery, Firm userFirm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer) {
         this.usery = usery;
         this.userFirm = userFirm;
         this.client = client;
@@ -76,11 +76,11 @@ public class Facture {
         this.client = client;
     }
 
-    public List<Product> getProducts() {
+    public List<ProductEntry> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<ProductEntry> products) {
         this.products = products;
     }
 
