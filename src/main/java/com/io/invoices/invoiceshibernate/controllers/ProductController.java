@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/product")
+@RequestMapping(value = "/products")
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -19,22 +19,19 @@ public class ProductController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/{username}/products")
-    public List<Product> getProducts(@PathVariable String username) {
-        return productService.getProducts(username);
+    @RequestMapping("/{userId}")
+    public List<Product> getProducts(@PathVariable String userId) {
+        return productService.getProducts(Integer.parseInt(userId));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{username}/products")
-    public void addBankAccount(@RequestBody Product product, @PathVariable String username) {
-        //todo usery username to authorize
-        Usery usery = userService.getUser(username);
-        product.setUsery(usery);
-        productService.addProduct(product);
+    @RequestMapping(method = RequestMethod.POST, value = "/{userId}")
+    public void addProduct(@RequestBody Product product, @PathVariable String userId) {
+        productService.addProduct(Integer.parseInt(userId), product);
     }
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{username}/products/{productId}")
-    public void deleteAccount(@PathVariable String productId) {
 
-        productService.deleteProduct(productId);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}/{productId}")
+    public void deleteProduct(@PathVariable String productId) {
+        productService.deleteProduct(Integer.parseInt(productId));
     }
 
 }

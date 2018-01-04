@@ -15,15 +15,21 @@ public class ProductService {
     @Autowired
     UserRepository userRepository;
 
-    public void addProduct(Product product) {
+    public void addProduct(Integer userId, Product product) {
+        if (userRepository.exists(userId)) {
+            throw new IllegalArgumentException("Bad product owner id!");
+        }
+
+        product.setUsery(userRepository.findOne(userId));
         productRepository.save(product);
     }
 
-    public List<Product> getProducts(String userName) {
-        return productRepository.findProductByUseryName(userName);
+
+    public List<Product> getProducts(int userId) {
+        return productRepository.findProductByUseryId(userId);
     }
 
-    public void deleteProduct(String productId) {
+    public void deleteProduct(Integer productId) {
         productRepository.delete(productId);
     }
 }
