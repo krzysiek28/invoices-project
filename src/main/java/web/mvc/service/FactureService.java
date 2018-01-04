@@ -23,8 +23,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
+
 import web.mvc.domain.Facture;
 
+@Service
 public class FactureService {
 
     @Autowired
@@ -32,15 +35,34 @@ public class FactureService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public String getOwnerId(String userId){
+        String sqlUser = String.format("SELECT id FROM usery WHERE email = '%s'", userId);
+        return jdbcTemplate.queryForObject(sqlUser, String.class);
+    }
+
     public List<Facture> getFacturesByOwnerID(String userId) throws URISyntaxException, IOException {
         String sqlUser = String.format("SELECT id FROM usery WHERE email = '%s'", userId);
         String id = jdbcTemplate.queryForObject(sqlUser, String.class);
-        URI uri = new URI("http://localhost:8090/"+id+"/factures");
+        URI uri = new URI("http://localhost:8090/factures/"+id+"/factures");
         String data = restTemplate.getForObject(uri, String.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         System.out.println(data);
         return objectMapper.readValue(data,
                 objectMapper.getTypeFactory().constructCollectionType(List.class, Facture.class));
+    }
+
+    public Map<String, String> addClient(String name, String additionalData, String owner) throws URISyntaxException {
+        URI uri = new URI("http://localhost:8090/clients/addclient");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("name", name);
+        map.add("additionalData", additionalData);
+        map.add("owner", owner);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
+        map.add("response", response.getBody());
+        return map.toSingleValueMap();
     }
 }

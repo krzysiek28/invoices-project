@@ -34,6 +34,7 @@ public class MyController {
     @Autowired
     private FactureService factureService;
 
+
     @RequestMapping(value = "/")
     public String homePage(){
         return "homePage";
@@ -44,13 +45,13 @@ public class MyController {
         return "loginPage";
     }
 
-    @RequestMapping(value = "/homeLogged")
-    public String homeLoged() {return "homeLogged";}
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loggedPage() {
-        return "homeLogged";
+        return "redirect:/homeLogged";
     }
+
+    @RequestMapping(value = "/homeLogged")
+    public String homeLoged() {return "homeLogged";}
 
     @RequestMapping(value = "/logged")
     public String logPage(HttpServletRequest request, ModelMap modelMap) {
@@ -66,6 +67,8 @@ public class MyController {
     public String productsPage() {
         return "products";
     }
+
+
 
     @RequestMapping(value = "/clients")
     public String clientsPage(HttpServletRequest request,

@@ -62,9 +62,8 @@ baza faktur
 
         </thead>
         <tbody>
-        <c:forEach var="client" items="${factures}">
+        <c:forEach var="facture" items="${factures}">
             <tr>
-                <td>${facture.name}</td>
                 <td>${facture.place}</td>
             </tr>
         </c:forEach>
