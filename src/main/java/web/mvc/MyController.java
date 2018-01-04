@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import web.mvc.domain.Usery;
 import web.mvc.service.ClientService;
+import web.mvc.service.FactureService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URISyntaxException;
@@ -29,6 +30,9 @@ public class MyController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private FactureService factureService;
 
     @RequestMapping(value = "/")
     public String homePage(){
@@ -49,7 +53,12 @@ public class MyController {
     }
 
     @RequestMapping(value = "/logged")
-    public String logPage() {
+    public String logPage(HttpServletRequest request, ModelMap modelMap) {
+        try {
+            modelMap.addAttribute("factures", factureService.getFacturesByOwnerID(request.getUserPrincipal().getName()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "logged";
     }
 

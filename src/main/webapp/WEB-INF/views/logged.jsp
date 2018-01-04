@@ -51,6 +51,28 @@
 
 
 baza faktur
+<div align="left">
+    <table border="1">
+        <thead>
+        <div>
+            <th>nazwa faktury</th>
+            <th>miejsce</th>
+            <th></th>
+        </div>
+
+        </thead>
+        <tbody>
+        <c:forEach var="client" items="${factures}">
+            <tr>
+                <td>${facture.name}</td>
+                <td>${facture.place}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <br>
+    <br><br>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
