@@ -23,6 +23,11 @@ public class FactureService {
         return factures;
     }
 
+    public Facture getFacture(String id) {
+        Facture facture = factureRepository.findById(Integer.parseInt(id));
+        return facture;
+    }
+
 /*    public void addFacture(String ownerId, Facture facture) {
         if (!userRepository.exists(Integer.parseInt(ownerId)))
             throw new IllegalArgumentException("Usery does not exist!");
