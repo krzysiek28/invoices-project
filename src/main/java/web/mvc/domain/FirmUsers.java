@@ -7,12 +7,12 @@ import javax.persistence.ManyToOne;
 
 public class FirmUsers {
     private Integer id;
-    private User user;
+    private Usery user;
     private Firm firm;
 
     public FirmUsers(){}
 
-    public FirmUsers(User user, Firm firm) {
+    public FirmUsers(Usery user, Firm firm) {
         this.user = user;
         this.firm = firm;
     }
@@ -25,11 +25,11 @@ public class FirmUsers {
         this.id = id;
     }
 
-    public User getUser() {
+    public Usery getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Usery user) {
         this.user = user;
     }
 

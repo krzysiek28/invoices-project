@@ -62,12 +62,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
     }
 
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+//        auth.jdbcAuthentication().dataSource(dataSource)
+//                .usersByUsernameQuery("select email,password,enabled from users where email=?")
+//                .authoritiesByUsernameQuery("select email,role from user_roles where email=?");
+//    }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select email,password,enabled from users where email=?")
-                .authoritiesByUsernameQuery("select email,role from user_roles where email=?");
-                //.authoritiesByUsernameQuery("select email, role from user_roles where username=?");
+                .usersByUsernameQuery("select email,password,enabled from usery where email=?")
+                .authoritiesByUsernameQuery("select email,role from usery where email=?");
     }
 
 }

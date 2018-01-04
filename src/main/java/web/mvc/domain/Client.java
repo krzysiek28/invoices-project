@@ -1,16 +1,18 @@
 package web.mvc.domain;
 
-
 public class Client {
     private Integer id;
-    private User user;
-    private Firm firm;
+    private String name;
+    private String additionalData;
+    private Usery owner;
 
-    public Client(){}
+    public Client() {
+    }
 
-    public Client(User user, Firm firm) {
-        this.user = user;
-        this.firm = firm;
+    public Client(String name, String additionalData, Usery owner) {
+        this.name = name;
+        this.additionalData = additionalData;
+        this.owner = owner;
     }
 
     public Integer getId() {
@@ -21,26 +23,27 @@ public class Client {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getName() {
+        return name;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Firm getFirm() {
-        return firm;
+    public String getAdditionalData() {
+        return additionalData;
     }
 
-    public void setFirm(Firm firm) {
-        this.firm = firm;
+    public void setAdditionalData(String additionalData) {
+        this.additionalData = additionalData;
+    }
+
+    public Usery getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Usery owner) {
+        this.owner = owner;
     }
 }
-
-/*
-        client_id INTEGER NOT NULL,
-        user_id INTEGER NOT NULL,
-        firm_id INTEGER NOT NULL,
-        CONSTRAINT client_pk PRIMARY KEY (client_id, user_id, firm_id)
-*/

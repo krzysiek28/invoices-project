@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 
 public class Facture {
     private Integer id;
-    private User user;
+    private Usery user;
     private Firm firm;
     private FirmUsers firmUsers;
     private Client client;
@@ -17,7 +17,7 @@ public class Facture {
 
     public Facture(){}
 
-    public Facture(User user, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
+    public Facture(Usery user, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
         this.user = user;
         this.firm = firm;
         this.firmUsers = firmUsers;
@@ -35,11 +35,11 @@ public class Facture {
         this.id = id;
     }
 
-    public User getUser() {
+    public Usery getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Usery user) {
         this.user = user;
     }
 

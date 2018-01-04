@@ -2,12 +2,12 @@ package web.mvc.domain;
 
 public class Product {
     private Integer id;
-    private User user;
+    private Usery user;
     private String name;
 
     public Product(){}
 
-    public Product(User user, String name) {
+    public Product(Usery user, String name) {
         this.user = user;
         this.name = name;
     }
@@ -20,11 +20,11 @@ public class Product {
         this.id = id;
     }
 
-    public User getUser() {
+    public Usery getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Usery user) {
         this.user = user;
     }
 

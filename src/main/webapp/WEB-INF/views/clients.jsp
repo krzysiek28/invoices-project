@@ -49,8 +49,34 @@
     </div>
 </nav>
 
+<div align="left">
+    <table border="1">
+        <thead>
+            <div>
+                <th>dane klienta</th>
+                <th>dodatkowe informacje</th>
+            </div>
 
-Tutaj jest baza klientów, można dodać nowego
+        </thead>
+        <tbody>
+            <c:forEach var="client" items="${clients}">
+                <tr>
+                    <td>${client.name}</td>
+                    <td>${client.additionalData}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+    <br>
+    <br><br>
+</div>
+<div align="center">
+    <form action="/clients/addclient" method="post">
+        Dane klienta <input type="text" name="name"><br><br>
+        Dodatkowe informacje <input type="text" name="additionalData"><br><br>
+        <input type="submit" value="add">
+    </form>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

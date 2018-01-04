@@ -4,12 +4,12 @@ public class FactureProduct {
 
     private Integer id;
     private Facture facture;
-    private User user;
+    private Usery user;
     private Product product;
 
     public FactureProduct(){}
 
-    public FactureProduct(Facture facture, User user, Product product) {
+    public FactureProduct(Facture facture, Usery user, Product product) {
         this.facture = facture;
         this.user = user;
         this.product = product;
@@ -31,11 +31,11 @@ public class FactureProduct {
         this.facture = facture;
     }
 
-    public User getUser() {
+    public Usery getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Usery user) {
         this.user = user;
     }
 
