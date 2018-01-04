@@ -49,4 +49,14 @@ public class ClientService {
         clientRepository.findOne(Integer.parseInt(clientId)).setOwner(null);
         clientRepository.delete(Integer.parseInt(clientId));
     }
+    //to testing
+    public List<Client> getClients() {
+        List<Client> allClients = new ArrayList<>();
+        clientRepository.findAll().forEach(allClients::add);
+        return allClients;
+    }
+
+    public void addClienty(Client client){
+        clientRepository.save(client);
+    }
 }

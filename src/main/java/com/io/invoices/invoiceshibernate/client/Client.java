@@ -23,6 +23,12 @@ public class Client {
         this.owner = owner;
     }
 
+    //temp
+    public Client(String name, String additionalData) {
+        this.name = name;
+        this.additionalData = additionalData;
+    }
+
     public Integer getId() {
         return id;
     }
