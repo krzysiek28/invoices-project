@@ -55,6 +55,8 @@
             <div>
                 <th>dane klienta</th>
                 <th>dodatkowe informacje</th>
+                <th>id</th>
+                <th></th>
             </div>
 
         </thead>
@@ -63,6 +65,8 @@
                 <tr>
                     <td>${client.name}</td>
                     <td>${client.additionalData}</td>
+                    <td>${client.owner.id}</td>
+                    <td><a href="/clients/deleteclient/${client.id}">delete</a> </td>
                 </tr>
             </c:forEach>
         </tbody>

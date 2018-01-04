@@ -7,12 +7,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import web.mvc.domain.Usery;
 import web.mvc.service.ClientService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class MyController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loggedPage() {
-        return "logged";
+        return "homeLogged";
     }
 
     @RequestMapping(value = "/logged")
@@ -57,9 +59,10 @@ public class MyController {
     }
 
     @RequestMapping(value = "/clients")
-    public String clientsPage(ModelMap modelMap) {
+    public String clientsPage(HttpServletRequest request,
+                              ModelMap modelMap) {
         try {
-            modelMap.addAttribute("clients", clientService.getClients());
+            modelMap.addAttribute("clients", clientService.getClientsByOwnerID(request.getUserPrincipal().getName()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,12 +70,12 @@ public class MyController {
     }
 
     @RequestMapping(value = "/clients/addclient", method = RequestMethod.POST)
-    public String addActor(@ModelAttribute("name") String name,
+    public String addClient(@ModelAttribute("name") String name,
                            @ModelAttribute("additionalData") String additionalData,
-                           /*@ModelAttribute("owner") web.mvc.domain.Usery owner,*/
+                           HttpServletRequest request,
                            ModelMap modelMap) {
         try {
-            modelMap.addAllAttributes(clientService.addClient(name, additionalData/*, owner*/));
+            modelMap.addAllAttributes(clientService.addClient(name, additionalData, clientService.getOwnerId(request.getUserPrincipal().getName())));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -83,21 +86,6 @@ public class MyController {
     public String register() {
         return "registrationPage";
     }
-
-//    @RequestMapping(value = "/adduser", method = RequestMethod.POST)
-//    public String addusers(@ModelAttribute("email") String email,
-//                           @ModelAttribute("password") String password,
-//                           ModelMap modelMap){ // bo z posta
-//
-//        String sqlUser = String.format("INSERT INTO users(email,password,enabled) VALUES ('%s','%s',true)", email, password);
-//        jdbcTemplate.execute(sqlUser);
-//        String sqlRole = String.format("INSERT INTO user_roles(email,role) VALUES ('%s','%s')",email, "ROLE_USER");
-//        jdbcTemplate.execute(sqlRole);
-//        List<Usery> userList = jdbcTemplate.query("select * from users", new BeanPropertyRowMapper<>(Usery.class));
-//        modelMap.addAttribute("users",userList);
-//
-//        return "homePage";
-//    }
 
     @RequestMapping(value = "/adduser", method = RequestMethod.POST)
     public String addusers(@ModelAttribute("email") String email,
@@ -113,6 +101,19 @@ public class MyController {
 
         return "homePage";
     }
+
+    @RequestMapping(value = "/clients/deleteclient/{id}", method = RequestMethod.GET)
+    public String deleteClient(@PathVariable("id") String id){
+        try {
+            clientService.deleteClientById(id);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/clients";
+    }
+
+//    @RequestMapping(value = "/clients/updateclient/{id}", method = RequestMethod.POST)
+//    public String
 
     @RequestMapping(value = "/createfacture")
     public String createf() {

@@ -1,10 +1,13 @@
 package web.mvc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 public class Usery {
     private Integer id;
     private String name;
     private String email;
     private String password;
+    @JsonIgnoreProperties
     private String role;
     private Boolean enabled;
 
