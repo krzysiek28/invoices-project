@@ -16,18 +16,18 @@ public class UserController {
         userService.addUser(usery);
     }
 
-    @RequestMapping("/{name}")
-    public Usery getUser(@PathVariable String name) {
-        return userService.getUser(name);
+    @RequestMapping("/{userId}")
+    public Usery getUser(@PathVariable String userId) {
+        return userService.getUser(Integer.parseInt(userId));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{userName}")
-    public void updateUser(@RequestBody Usery usery, @PathVariable String userName) {
-        userService.updateUser(userName, usery);
+    @RequestMapping(method = RequestMethod.PUT, value = "/{userId}")
+    public void updateUser(@RequestBody Usery usery, @PathVariable String userId) {
+        userService.updateUser(Integer.parseInt(userId), usery);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{userName}")
-    public void deleteUser(@PathVariable String userName) {
-        userService.deleteUser(userName);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}")
+    public void deleteUser(@PathVariable String userId) {
+        userService.deleteUser(Integer.parseInt(userId));
     }
 }
