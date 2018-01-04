@@ -21,7 +21,7 @@ public class PdfCreator {
     }
 
 
-    public static final String RESULT = "com/io/invoices/invoiceshibernate/invoice.pdf";
+    public static final String RESULT = "invoice.pdf";
     Font font = new Font(Font.FontFamily.HELVETICA, 12,Font.BOLD);
     Facture facture;
 

@@ -21,18 +21,15 @@ public class FactureController {
         return factureService.getAllFactures(ownerId);
     }
 
-    @RequestMapping("/{{id}")
+    @RequestMapping("/{id}")
     public Facture getFacture(@PathVariable String id) {return factureService.getFacture(id);}
 
     @RequestMapping("/createPdf/{id}")
-    public /*@ResponseBody byte[]*/ void createPdf(@PathVariable String id) throws IOException, DocumentException, com.itextpdf.text.DocumentException {
+    public void createPdf(@PathVariable String id) throws IOException, DocumentException, com.itextpdf.text.DocumentException {
 
         PdfCreator pdfCreator = new PdfCreator(getFacture(id));
         pdfCreator.createPdf();
-/*
-        InputStream in = getClass().getResourceAsStream("/invoice.pdf");
-        return IOUtils.toByteArray(in);
-        */
+
     }
 /*    @RequestMapping(method = RequestMethod.POST, value = "/{ownerId}/factures")
     public void addFacture(@PathVariable String ownerId, @RequestBody Facture facture) {
