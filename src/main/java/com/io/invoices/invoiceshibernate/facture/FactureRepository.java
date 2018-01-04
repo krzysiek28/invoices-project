@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface FactureRepository extends CrudRepository<Facture, Integer>{
-    public List<Facture> findByUserId(Integer userId);
+    public List<Facture> findByUseryId(Integer userId);
 }

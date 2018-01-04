@@ -1,6 +1,6 @@
 package com.io.invoices.invoiceshibernate.bankAccount;
 
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.Usery;
 
 import javax.persistence.*;
 
@@ -9,13 +9,13 @@ public class BankAccount {
     @Id
     private String bankAccount;
     @ManyToOne
-    private User user;
+    private Usery usery;
 
     BankAccount(){}
 
-    public BankAccount(String bankAccount, User user) {
+    public BankAccount(String bankAccount, Usery usery) {
         this.bankAccount = bankAccount;
-        this.user = user;
+        this.usery = usery;
     }
 
     public String getBankAccount() {
@@ -26,11 +26,11 @@ public class BankAccount {
         this.bankAccount = bankAccount;
     }
 
-    public User getUser() {
-        return user;
+    public Usery getUsery() {
+        return usery;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsery(Usery usery) {
+        this.usery = usery;
     }
 }

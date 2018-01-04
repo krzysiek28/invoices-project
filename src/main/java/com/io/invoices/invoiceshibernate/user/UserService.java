@@ -11,40 +11,40 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public void addUser(User user) {
-        if (userRepository.findByName(user.getName()).isEmpty()) {
-            userRepository.save(user);
+    public void addUser(Usery usery) {
+        if (userRepository.findByName(usery.getName()).isEmpty()) {
+            userRepository.save(usery);
             return;
         }
-        throw new IllegalArgumentException("User already exists!");
+        throw new IllegalArgumentException("Usery already exists!");
     }
 
-    public User getUser(String name) {
-        List<User> users = userRepository.findByName(name);
-        if (users.isEmpty()) {
-            throw new IllegalArgumentException("User does not exist!");
+    public Usery getUser(String name) {
+        List<Usery> useries = userRepository.findByName(name);
+        if (useries.isEmpty()) {
+            throw new IllegalArgumentException("Usery does not exist!");
         }
-        return users.get(0);
+        return useries.get(0);
     }
 
-    public void updateUser(String userName, User user) {
-        List<User> users = userRepository.findByName(userName);
+    public void updateUser(String userName, Usery usery) {
+        List<Usery> useries = userRepository.findByName(userName);
 
-        if (users.isEmpty()) {
-            throw new IllegalArgumentException("User does not exist!");
+        if (useries.isEmpty()) {
+            throw new IllegalArgumentException("Usery does not exist!");
         }
 
-        User updatedUser = users.get(0);
-        user.setId(users.get(0).getId());
-        user.setName(users.get(0).getName());
-        userRepository.save(user);
+        Usery updatedUsery = useries.get(0);
+        usery.setId(useries.get(0).getId());
+        usery.setName(useries.get(0).getName());
+        userRepository.save(usery);
     }
 
     public void deleteUser(String userName) {
-        List<User> users = userRepository.findByName(userName);
-        if (users.isEmpty()) {
-            throw new IllegalArgumentException("User does not exist!");
+        List<Usery> useries = userRepository.findByName(userName);
+        if (useries.isEmpty()) {
+            throw new IllegalArgumentException("Usery does not exist!");
         }
-        userRepository.delete(users.get(0).getId());
+        userRepository.delete(useries.get(0).getId());
     }
 }

@@ -1,6 +1,5 @@
 package com.io.invoices.invoiceshibernate.client;
 
-import com.io.invoices.invoiceshibernate.user.User;
 import com.io.invoices.invoiceshibernate.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

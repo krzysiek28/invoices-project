@@ -18,10 +18,10 @@ public class FactureController {
         return factureService.getAllFactures(ownerId);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{ownerId}/factures")
+/*    @RequestMapping(method = RequestMethod.POST, value = "/{ownerId}/factures")
     public void addFacture(@PathVariable String ownerId, @RequestBody Facture facture) {
         factureService.addFacture(ownerId, facture);
-    }
+    }*/
 
 
 }

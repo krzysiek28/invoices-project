@@ -3,7 +3,7 @@ package com.io.invoices.invoiceshibernate.facture;
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.product.Product;
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.Usery;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -16,7 +16,7 @@ public class Facture {
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Usery usery;
     @OneToOne
     private Firm userFirm;
     @OneToOne
@@ -29,8 +29,8 @@ public class Facture {
     private Date paymentDate;
     private String issuer;
 
-    public Facture(User user, Firm userFirm, Client client, List<Product> products, String number, String place, Date issueDate, Date paymentDate, String issuer) {
-        this.user = user;
+    public Facture(Usery usery, Firm userFirm, Client client, List<Product> products, String number, String place, Date issueDate, Date paymentDate, String issuer) {
+        this.usery = usery;
         this.userFirm = userFirm;
         this.client = client;
         this.products = products;
@@ -52,12 +52,12 @@ public class Facture {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Usery getUsery() {
+        return usery;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsery(Usery usery) {
+        this.usery = usery;
     }
 
     public Firm getUserFirm() {

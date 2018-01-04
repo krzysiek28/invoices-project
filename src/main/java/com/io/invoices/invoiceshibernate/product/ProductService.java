@@ -20,7 +20,7 @@ public class ProductService {
     }
 
     public List<Product> getProducts(String userName) {
-        return productRepository.findProductByUserName(userName);
+        return productRepository.findProductByUseryName(userName);
     }
 
     public void deleteProduct(String productId) {

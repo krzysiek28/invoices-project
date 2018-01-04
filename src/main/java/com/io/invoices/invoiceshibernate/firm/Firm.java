@@ -1,6 +1,6 @@
 package com.io.invoices.invoiceshibernate.firm;
 
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.Usery;
 
 import javax.persistence.*;
 
@@ -15,7 +15,7 @@ public class Firm {
     private String phone;
     private String email;
     @ManyToOne(cascade = {CascadeType.ALL})
-    private User owner;
+    private Usery owner;
 
     public Firm() {
     }
@@ -28,11 +28,11 @@ public class Firm {
         this.email = email;
     }
 
-    public User getOwner() {
+    public Usery getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(Usery owner) {
         this.owner = owner;
     }
 

@@ -1,6 +1,6 @@
 package com.io.invoices.invoiceshibernate.bankAccount;
 
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.Usery;
 import com.io.invoices.invoiceshibernate.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +20,13 @@ public class BankAccountService {
             throw new IllegalArgumentException("Account owner does not exist!");
         }
 
-        User accountOwner = userRepository.findOne(userId);
-        bankAccount.setUser(accountOwner);
+        Usery accountOwner = userRepository.findOne(userId);
+        bankAccount.setUsery(accountOwner);
         bankAccountRepository.save(bankAccount);
     }
 
     public List<BankAccount> getBankAccounts(Integer userId) {
-        return bankAccountRepository.findBankAccountByUserId(userId);
+        return bankAccountRepository.findBankAccountByUseryId(userId);
     }
 
     public void deleteAccound(String accountId) {

@@ -2,8 +2,6 @@ package com.io.invoices.invoiceshibernate.controllers;
 
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.client.ClientService;
-import com.io.invoices.invoiceshibernate.user.User;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,7 +26,7 @@ public class ClientController {
     @RequestMapping(value = "/addclient", method = RequestMethod.POST)
     public String addClienty(@Valid @ModelAttribute("name") String name,
                              @ModelAttribute("additionalData") String additionalData,
-                             /*@ModelAttribute("owner") User owner,*/
+                             /*@ModelAttribute("owner") Usery owner,*/
                              BindingResult result,
                              ModelMap modelMap){
         if (!result.hasErrors()){

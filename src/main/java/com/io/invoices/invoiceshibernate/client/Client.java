@@ -1,6 +1,6 @@
 package com.io.invoices.invoiceshibernate.client;
 
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.Usery;
 
 import javax.persistence.*;
 
@@ -12,12 +12,12 @@ public class Client {
     private String name;
     private String additionalData;
     @ManyToOne(cascade = {CascadeType.ALL})
-    private User owner;
+    private Usery owner;
 
     public Client() {
     }
 
-    public Client(String name, String additionalData, User owner) {
+    public Client(String name, String additionalData, Usery owner) {
         this.name = name;
         this.additionalData = additionalData;
         this.owner = owner;
@@ -53,11 +53,11 @@ public class Client {
         this.additionalData = additionalData;
     }
 
-    public User getOwner() {
+    public Usery getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(Usery owner) {
         this.owner = owner;
     }
 }
