@@ -34,4 +34,9 @@ public class ProductController {
         productService.deleteProduct(Integer.parseInt(productId));
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "/{userId}/{productId}")
+    public void updateProduct(@RequestBody Product product, @PathVariable String productId) {
+        productService.updateProduct(Integer.parseInt(productId), product);
+    }
+
 }
