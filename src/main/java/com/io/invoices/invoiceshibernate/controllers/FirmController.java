@@ -14,23 +14,23 @@ public class FirmController {
     @Autowired
     private FirmService firmService;
 
-    @RequestMapping ("/firms")
-    public List<Firm> getFirms(){
-        return firmService.getFirms();
+    @RequestMapping("/{ownerId}")
+    public List<Firm> getUserFirms(@PathVariable String ownerId) {
+        return firmService.getFirms(Integer.parseInt(ownerId));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="")
-    public void addFirm(@RequestBody Firm firm) {
-        firmService.addFirm(firm);
+    @RequestMapping(method = RequestMethod.POST, value = "/{ownerId}")
+    public void addFirm(@RequestBody Firm firm, @PathVariable String ownerId) {
+        firmService.addFirm(Integer.parseInt(ownerId), firm);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value="/{firmId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{ownerId}/{firmId}")
     public void updateFirm(@RequestBody Firm firm, @PathVariable String firmId) {
-        firmService.updateFirm(firmId, firm);
+        firmService.updateFirm(Integer.parseInt(firmId), firm);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value="/{firmId}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{ownerId}/{firmId}")
     public void updateFirm(@PathVariable String firmId) {
-        firmService.deleteFirm(firmId);
+        firmService.deleteFirm(Integer.parseInt(firmId));
     }
 }

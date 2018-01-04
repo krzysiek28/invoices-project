@@ -34,9 +34,11 @@ public class ClientService {
             throw new IllegalArgumentException("Client does not exist!");
         }
 
-        Client oldClient = clientRepository.findOne(Integer.parseInt(clientId));
-        client.setId(oldClient.getId());
-        clientRepository.save(client);
+        Client dbClient = clientRepository.findOne(Integer.parseInt(clientId));
+        dbClient.setName(client.getName());
+        dbClient.setAdditionalData(client.getAdditionalData());
+
+        clientRepository.save(dbClient);
     }
 
     public void deleteClient(String clientId) {
@@ -44,6 +46,7 @@ public class ClientService {
             throw new IllegalArgumentException("Client does not exist!");
         }
 
+        clientRepository.findOne(Integer.parseInt(clientId)).setOwner(null);
         clientRepository.delete(Integer.parseInt(clientId));
     }
 }

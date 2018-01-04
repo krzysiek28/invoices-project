@@ -13,29 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping (value = "/bank")
+@RequestMapping (value = "/bankaccounts")
 public class BankAccountController {
     @Autowired
     BankAccountService bankAccountService;
 
-    @Autowired
-    UserService userService;
-
-    @RequestMapping("/{username}/accounts")
-    public List<BankAccount> getBankAccounts(@PathVariable String username) {
-        return bankAccountService.getBankAccounts(username);
+    @RequestMapping("/{userId}")
+    public List<BankAccount> getBankAccounts(@PathVariable String userId) {
+        return bankAccountService.getBankAccounts(Integer.parseInt(userId));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{username}/accounts")
-    public void addBankAccount(@RequestBody BankAccount bankAccount, @PathVariable String username) {
-        //todo user username to authorize
-        User user = userService.getUser(username);
-        bankAccount.setUser(user);
-        bankAccountService.addBankAccount(bankAccount);
+    @RequestMapping(method = RequestMethod.POST, value = "/{userId}")
+    public void addBankAccount(@RequestBody BankAccount bankAccount, @PathVariable String userId) {
+        bankAccountService.addBankAccount(Integer.parseInt(userId), bankAccount);
     }
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{username}/accounts/{accountId}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}/{accountId}")
     public void deleteAccount(@PathVariable String accountId) {
-
         bankAccountService.deleteAccound(accountId);
     }
 

@@ -1,8 +1,8 @@
 package com.io.invoices.invoiceshibernate.firm;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.io.invoices.invoiceshibernate.user.User;
+
+import javax.persistence.*;
 
 @Entity
 public class Firm {
@@ -14,8 +14,11 @@ public class Firm {
     private String place;
     private String phone;
     private String email;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    private User owner;
 
-    public Firm(){}
+    public Firm() {
+    }
 
     public Firm(String name, String nip, String place, String phone, String email) {
         this.name = name;
@@ -23,6 +26,14 @@ public class Firm {
         this.place = place;
         this.phone = phone;
         this.email = email;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public Integer getId() {

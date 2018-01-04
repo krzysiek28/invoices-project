@@ -1,6 +1,6 @@
 package com.io.invoices.invoiceshibernate.firm;
 
-import com.io.invoices.invoiceshibernate.user.User;
+import com.io.invoices.invoiceshibernate.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,33 +13,41 @@ public class FirmService {
     @Autowired
     FirmRepository firmRepository;
 
-    public void addFirm(Firm firm){
+    @Autowired
+    UserRepository userRepository;
+
+    public void addFirm(Integer ownerId, Firm firm) {
+        if (!userRepository.exists(ownerId)) {
+            throw new IllegalArgumentException("Company owner does not exist!");
+        }
+
+        firm.setOwner(userRepository.findOne(ownerId));
         firmRepository.save(firm);
     }
 
-    //method implements only for development
-    public void addFirms(List<Firm> firms){
-        firmRepository.save(firms);
-    }
-
-    public List<Firm> getFirms(){
+    public List<Firm> getFirms(Integer ownerId) {
         List<Firm> firms = new ArrayList<>();
-        Iterable<Firm> iterable = firmRepository.findAll();
-        iterable.forEach(e -> firms.add(e));
+        firmRepository.findByOwnerId(ownerId)
+                .forEach(firms::add);
         return firms;
     }
 
-    public void deleteFirmById(Integer id){
-        firmRepository.delete(id);
+    public void updateFirm(Integer firmId, Firm firm) {
+        Firm dbFirm = firmRepository.findOne(firmId);
+        dbFirm.setEmail(firm.getEmail());
+        dbFirm.setName(firm.getName());
+        dbFirm.setNip(firm.getNip());
+        dbFirm.setPhone(firm.getPhone());
+        dbFirm.setPlace(firm.getPlace());
+        firmRepository.save(dbFirm);
     }
 
+    public void deleteFirm(Integer firmId) {
+        if (!firmRepository.exists(firmId)) {
+            throw new IllegalArgumentException("Company does not exist!");
+        }
 
-    public void updateFirm(String firmId, Firm firm) {
-        Firm old = firmRepository.findOne(Integer.parseInt(firmId));
-        firm.setId(old.getId());
-    }
-
-    public void deleteFirm(String firmId) {
-        firmRepository.delete(Integer.parseInt(firmId));
+        firmRepository.findOne(firmId).setOwner(null);
+        firmRepository.delete(firmId);
     }
 }
