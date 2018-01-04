@@ -40,22 +40,20 @@ public class ClientService {
         clientRepository.save(dbClient);
     }
 
-    public void deleteClient(String clientId) {
+//    public void deleteClient(String clientId) {
+//        if (!clientRepository.exists(Integer.parseInt(clientId))) {
+//            throw new IllegalArgumentException("Client does not exist!");
+//        }
+//
+//        clientRepository.findOne(Integer.parseInt(clientId)).setOwner(null);
+//        clientRepository.delete(Integer.parseInt(clientId));
+//    }
+
+public void deleteClient(String clientId) {
         if (!clientRepository.exists(Integer.parseInt(clientId))) {
             throw new IllegalArgumentException("Client does not exist!");
         }
-
         clientRepository.findOne(Integer.parseInt(clientId)).setOwner(null);
-        clientRepository.delete(Integer.parseInt(clientId));
-    }
-    //to testing
-    public List<Client> getClients() {
-        List<Client> allClients = new ArrayList<>();
-        clientRepository.findAll().forEach(allClients::add);
-        return allClients;
-    }
-
-    public void addClienty(Client client){
-        clientRepository.save(client);
+        clientRepository.deleteClientById(Integer.valueOf(clientId));
     }
 }

@@ -1,6 +1,7 @@
 package com.io.invoices.invoiceshibernate.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ public class Usery {
     private String email;
     @JsonIgnore
     private String password;
+    @JsonIgnoreProperties
     private String role;
     private Boolean enabled;
 

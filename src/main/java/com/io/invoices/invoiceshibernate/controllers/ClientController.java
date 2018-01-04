@@ -2,6 +2,7 @@ package com.io.invoices.invoiceshibernate.controllers;
 
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.client.ClientService;
+import com.io.invoices.invoiceshibernate.user.Usery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -17,20 +18,14 @@ public class ClientController {
     @Autowired
     ClientService clientService;
 
-    //
-    @RequestMapping("/")
-    public List<Client> getClients() {
-        return clientService.getClients();
-    }
-
     @RequestMapping(value = "/addclient", method = RequestMethod.POST)
-    public String addClienty(@Valid @ModelAttribute("name") String name,
+    public String addClient(@Valid @ModelAttribute("name") String name,
                              @ModelAttribute("additionalData") String additionalData,
-                             /*@ModelAttribute("owner") Usery owner,*/
+                             @ModelAttribute("owner") String owner,
                              BindingResult result,
                              ModelMap modelMap){
         if (!result.hasErrors()){
-            clientService.addClienty(new Client(name, additionalData/*, owner*/));
+            clientService.addClient(owner, new Client(name, additionalData));
             return "success";
         } else {
             return "error";
@@ -53,8 +48,18 @@ public class ClientController {
         clientService.updateClient(clientId, client);
     }
 
-    @RequestMapping(value = "/{ownerId}/{clientId}", method = RequestMethod.DELETE)
-    public void deleteClient(@PathVariable String clientId) {
-        clientService.deleteClient(clientId);
+//    @RequestMapping(value = "/{ownerId}/{clientId}", method = RequestMethod.DELETE)
+//    public void deleteClient(@PathVariable String clientId) {
+//        clientService.deleteClient(clientId);
+//    }
+
+    @RequestMapping(value = "/deleteclient/{clientId}", method = RequestMethod.GET)
+    public String deleteClient(@PathVariable("clientId") String clientId) {
+        if(clientId!=null){
+            clientService.deleteClient(clientId);
+            return "success";
+        }else
+            return "error";
     }
+
 }
