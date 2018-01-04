@@ -16,12 +16,25 @@ public class ProductService {
     UserRepository userRepository;
 
     public void addProduct(Integer userId, Product product) {
-        if (userRepository.exists(userId)) {
+        if (!userRepository.exists(userId)) {
             throw new IllegalArgumentException("Bad product owner id!");
         }
 
         product.setUsery(userRepository.findOne(userId));
         productRepository.save(product);
+    }
+
+    public void updateProduct(Integer productId, Product product) {
+        if (!productRepository.exists(productId)) {
+            throw new IllegalArgumentException("Product does not exist!");
+        }
+
+        Product dbProduct = productRepository.findOne(productId);
+        dbProduct.setName(product.getName());
+        dbProduct.setNetUnitPrice(product.getNetUnitPrice());
+        dbProduct.setVatRate(product.getVatRate());
+        dbProduct.setUnit(product.getUnit());
+        productRepository.save(dbProduct);
     }
 
 
