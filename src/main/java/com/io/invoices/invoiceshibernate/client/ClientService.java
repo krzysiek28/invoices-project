@@ -1,6 +1,6 @@
 package com.io.invoices.invoiceshibernate.client;
 
-import com.io.invoices.invoiceshibernate.user.UserRepository;
+import com.io.invoices.invoiceshibernate.firm.FirmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,27 +13,26 @@ public class ClientService {
     ClientRepository clientRepository;
 
     @Autowired
-    UserRepository userRepository;
+    FirmRepository firmRepository;
 
-    public void addClient(String ownerId, Client client) {
-        //todo: sprawdzić czy istnieje, ale niewykluczone że imie i nazwisko moze byc takie samo
-        client.setOwner(userRepository.findOne(Integer.parseInt(ownerId)));
+    public void addClient(Integer ownerId, Client client) {
+        client.setOwner(firmRepository.findOne(ownerId));
         clientRepository.save(client);
     }
 
-    public List<Client> getAllClients(String ownerId) {
+    public List<Client> getAllClients(Integer ownerId) {
         List<Client> allClients = new ArrayList<>();
-        clientRepository.findByOwnerId(Integer.parseInt(ownerId))
+        clientRepository.findByOwnerId(ownerId)
                 .forEach(allClients::add);
         return allClients;
     }
 
-    public void updateClient(String clientId, Client client) {
-        if (!clientRepository.exists(Integer.parseInt(clientId))) {
+    public void updateClient(Integer clientId, Client client) {
+        if (!clientRepository.exists(clientId)) {
             throw new IllegalArgumentException("Client does not exist!");
         }
 
-        Client dbClient = clientRepository.findOne(Integer.parseInt(clientId));
+        Client dbClient = clientRepository.findOne(clientId);
         dbClient.setName(client.getName());
         dbClient.setAdditionalData(client.getAdditionalData());
 
@@ -49,11 +48,11 @@ public class ClientService {
 //        clientRepository.delete(Integer.parseInt(clientId));
 //    }
 
-public void deleteClient(String clientId) {
-        if (!clientRepository.exists(Integer.parseInt(clientId))) {
+    public void deleteClient(Integer clientId) {
+        if (!clientRepository.exists(clientId)) {
             throw new IllegalArgumentException("Client does not exist!");
         }
-        clientRepository.findOne(Integer.parseInt(clientId)).setOwner(null);
-        clientRepository.deleteClientById(Integer.valueOf(clientId));
+        clientRepository.findOne(clientId).setOwner(null);
+        clientRepository.delete(clientId);
     }
 }
