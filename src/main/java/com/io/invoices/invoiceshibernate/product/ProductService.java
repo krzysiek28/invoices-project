@@ -1,6 +1,7 @@
 package com.io.invoices.invoiceshibernate.product;
 
 
+import com.io.invoices.invoiceshibernate.firm.FirmRepository;
 import com.io.invoices.invoiceshibernate.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +14,14 @@ public class ProductService {
     ProductRepository productRepository;
 
     @Autowired
-    UserRepository userRepository;
+    FirmRepository firmRepository;
 
-    public void addProduct(Integer userId, Product product) {
-        if (!userRepository.exists(userId)) {
-            throw new IllegalArgumentException("Bad product owner id!");
+    public void addProduct(Integer firmId, Product product) {
+        if (!firmRepository.exists(firmId)) {
+            throw new IllegalArgumentException("Bad company id!");
         }
 
-        product.setUsery(userRepository.findOne(userId));
+        product.setOwner(firmRepository.findOne(firmId));
         productRepository.save(product);
     }
 
@@ -38,11 +39,12 @@ public class ProductService {
     }
 
 
-    public List<Product> getProducts(int userId) {
-        return productRepository.findProductByUseryId(userId);
+    public List<Product> getProducts(int ownerId) {
+        return productRepository.findProductByOwnerId(ownerId);
     }
 
     public void deleteProduct(Integer productId) {
+        productRepository.findOne(productId).setOwner(null);
         productRepository.delete(productId);
     }
 }
