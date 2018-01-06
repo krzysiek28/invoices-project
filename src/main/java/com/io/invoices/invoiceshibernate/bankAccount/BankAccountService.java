@@ -1,5 +1,7 @@
 package com.io.invoices.invoiceshibernate.bankAccount;
 
+import com.io.invoices.invoiceshibernate.firm.Firm;
+import com.io.invoices.invoiceshibernate.firm.FirmRepository;
 import com.io.invoices.invoiceshibernate.user.Usery;
 import com.io.invoices.invoiceshibernate.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,23 +15,35 @@ public class BankAccountService {
     BankAccountRepository bankAccountRepository;
 
     @Autowired
-    UserRepository userRepository;
+    FirmRepository firmRepository;
 
-    public void addBankAccount(Integer userId, BankAccount bankAccount) {
-        if (!userRepository.exists(userId)) {
-            throw new IllegalArgumentException("Account owner does not exist!");
+    public void addBankAccount(Integer firmId, BankAccount bankAccount) {
+        if (!firmRepository.exists(firmId)) {
+            throw new IllegalArgumentException("Company does not exist!");
         }
 
-        Usery accountOwner = userRepository.findOne(userId);
-        bankAccount.setUsery(accountOwner);
+        Firm owner = firmRepository.findOne(firmId);
+        bankAccount.setFirm(owner);
         bankAccountRepository.save(bankAccount);
     }
 
-    public List<BankAccount> getBankAccounts(Integer userId) {
-        return bankAccountRepository.findBankAccountByUseryId(userId);
+    public List<BankAccount> getBankAccounts(Integer firmId) {
+        return bankAccountRepository.findBankAccountByFirmId(firmId);
     }
 
-    public void deleteAccound(String accountId) {
+    public void deleteAccount(String accountId) {
+        if (!bankAccountRepository.exists(accountId))
+            throw new IllegalArgumentException("Bank account does not exist!");
         bankAccountRepository.delete(accountId);
+    }
+
+    public void updateAccount(String accountId, BankAccount account) {
+        if (!bankAccountRepository.exists(accountId))
+            throw new IllegalArgumentException("Bank account does not exist!");
+
+        BankAccount dbBankAccount = bankAccountRepository.findOne(accountId);
+        dbBankAccount.setBankAccount(account.getBankAccount());
+        dbBankAccount.setAdditionalData(account.getAdditionalData());
+        bankAccountRepository.save(dbBankAccount);
     }
 }

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface BankAccountRepository extends CrudRepository<BankAccount,String>{
 
-    public List<BankAccount> findBankAccountByUseryId(Integer userId);
+    public List<BankAccount> findBankAccountByFirmId(Integer firmId);
 
 }

@@ -1,21 +1,21 @@
 package com.io.invoices.invoiceshibernate.bankAccount;
 
-import com.io.invoices.invoiceshibernate.user.Usery;
+import com.io.invoices.invoiceshibernate.firm.Firm;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class BankAccount {
     @Id
     private String bankAccount;
+    private String additionalData;
     @ManyToOne
-    private Usery usery;
+    private Firm firm;
 
-    BankAccount(){}
+    public BankAccount() {
 
-    public BankAccount(String bankAccount, Usery usery) {
-        this.bankAccount = bankAccount;
-        this.usery = usery;
     }
 
     public String getBankAccount() {
@@ -26,11 +26,19 @@ public class BankAccount {
         this.bankAccount = bankAccount;
     }
 
-    public Usery getUsery() {
-        return usery;
+    public String getAdditionalData() {
+        return additionalData;
     }
 
-    public void setUsery(Usery usery) {
-        this.usery = usery;
+    public void setAdditionalData(String additionalData) {
+        this.additionalData = additionalData;
+    }
+
+    public Firm getFirm() {
+        return firm;
+    }
+
+    public void setFirm(Firm firm) {
+        this.firm = firm;
     }
 }
