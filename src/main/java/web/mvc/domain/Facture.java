@@ -4,33 +4,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.sql.Date;
-import java.util.List;
 
 public class Facture {
     private Integer id;
-    private Usery usery;
-    private Firm userFirm;
+    private Usery user;
+    private Firm firm;
+    private FirmUsers firmUsers;
     private Client client;
-    private List<ProductEntry> products;
-    private String number;
+    private String name;
     private String place;
-    private Date issueDate;
-    private Date paymentDate;
-    private String issuer;
+    private Float price;
 
     public Facture(){}
 
-    public Facture(Usery usery, Firm userFirm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer) {
-        this.usery = usery;
-        this.userFirm = userFirm;
+    public Facture(Usery user, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
+        this.user = user;
+        this.firm = firm;
+        this.firmUsers = firmUsers;
         this.client = client;
-        this.products = products;
-        this.number = number;
+        this.name = name;
         this.place = place;
-        this.issueDate = issueDate;
-        this.paymentDate = paymentDate;
-        this.issuer = issuer;
+        this.price = price;
     }
 
     public Integer getId() {
@@ -41,20 +35,28 @@ public class Facture {
         this.id = id;
     }
 
-    public Usery getUsery() {
-        return usery;
+    public Usery getUser() {
+        return user;
     }
 
-    public void setUsery(Usery usery) {
-        this.usery = usery;
+    public void setUser(Usery user) {
+        this.user = user;
     }
 
-    public Firm getUserFirm() {
-        return userFirm;
+    public Firm getFirm() {
+        return firm;
     }
 
-    public void setUserFirm(Firm userFirm) {
-        this.userFirm = userFirm;
+    public void setFirm(Firm firm) {
+        this.firm = firm;
+    }
+
+    public FirmUsers getFirmUsers() {
+        return firmUsers;
+    }
+
+    public void setFirmUsers(FirmUsers firmUsers) {
+        this.firmUsers = firmUsers;
     }
 
     public Client getClient() {
@@ -65,20 +67,12 @@ public class Facture {
         this.client = client;
     }
 
-    public List<ProductEntry> getProducts() {
-        return products;
+    public String getName() {
+        return name;
     }
 
-    public void setProducts(List<ProductEntry> products) {
-        this.products = products;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPlace() {
@@ -89,30 +83,13 @@ public class Facture {
         this.place = place;
     }
 
-    public Date getIssueDate() {
-        return issueDate;
+    public Float getPrice() {
+        return price;
     }
 
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
+    public void setPrice(Float price) {
+        this.price = price;
     }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public String getIssuer() {
-        return issuer;
-    }
-
-    public void setIssuer(String issuer) {
-        this.issuer = issuer;
-    }
-
 }
 
 /*

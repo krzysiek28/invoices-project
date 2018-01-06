@@ -49,9 +49,9 @@
     </div>
 </nav>
 
-<div align="left">
-    <table border="1">
-        <thead>
+<div>
+    <table class="table" border="1">
+        <thead class="thead-dark">
             <div>
                 <th>dane klienta</th>
                 <th>dodatkowe informacje</th>
@@ -74,11 +74,19 @@
     <br>
     <br><br>
 </div>
-<div align="center">
+<div>
     <form action="/clients/addclient" method="post">
-        Dane klienta <input type="text" name="name"><br><br>
-        Dodatkowe informacje <input type="text" name="additionalData"><br><br>
-        <input type="submit" value="add">
+        <div class="form-row">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Dane klienta" name="name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Dodatkowe informacje" name="additionalData">
+            </div>
+            <div class="col">
+                <input type="submit" value="dodaj">
+            </div>
+        </div>
     </form>
 </div>
 
