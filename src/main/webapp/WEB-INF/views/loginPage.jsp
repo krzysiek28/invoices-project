@@ -40,7 +40,7 @@
                     </c:if>
                     <div class="input-group input-sm">
                         <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-                        <input type="text" class="form-control" id="username" name="email" placeholder="Enter Email" required>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
                     </div>
                     <br/>
                     <div class="input-group input-sm">

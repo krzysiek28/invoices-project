@@ -1,8 +1,6 @@
 package web.mvc;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,28 +9,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
-import web.mvc.domain.Usery;
-import web.mvc.service.ClientService;
-import web.mvc.service.ProductService;
+import web.mvc.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URISyntaxException;
-import java.util.List;
 
 @Controller
 public class MyController {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
-    private ClientService clientService;
-
-    @Autowired
-    private ProductService productService;
+    private UserService userService;
 
     @RequestMapping(value = "/")
     public String homePage(){
@@ -48,7 +37,9 @@ public class MyController {
     public String homeLoged() {return "homeLogged";}
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loggedPage() {
+    public String loggedPage(@ModelAttribute("username") String username,
+                             @ModelAttribute("password") String password) throws URISyntaxException {
+        userService.login(username, password);
         return "homeLogged";
     }
 
@@ -66,17 +57,17 @@ public class MyController {
     public String addusers(@ModelAttribute("email") String email,
                            @ModelAttribute("password") String password,
                            ModelMap modelMap){
-
+/*
         String sqlUser = String.format("INSERT INTO usery(email,password,enabled) VALUES ('%s','%s',true)", email, password);
         jdbcTemplate.execute(sqlUser);
         String sqlRole = String.format("UPDATE usery set role='%s' where email='%s'", "ROLE_USER",email);
         jdbcTemplate.execute(sqlRole);
         List<Usery> userList = jdbcTemplate.query("select * from usery", new BeanPropertyRowMapper<>(Usery.class));
         modelMap.addAttribute("usery",userList);
-
+*/
         return "homePage";
     }
-
+/*
     @RequestMapping(value = "/products")
     public String productsPage(HttpServletRequest request,
                                ModelMap modelMap) {
@@ -87,7 +78,8 @@ public class MyController {
         }
         return "products";
     }
-
+*/
+/*
     @RequestMapping(value = "/products/addproduct", method = RequestMethod.POST)
     public String addProduct(@ModelAttribute("name") String name,
                             @ModelAttribute("netUnitPrice") Float netUnitPrice,
@@ -102,7 +94,8 @@ public class MyController {
         }
         return "redirect:/products";
     }
-
+*/
+/*
     @RequestMapping(value = "/clients")
     public String clientsPage(HttpServletRequest request,
                               ModelMap modelMap) {
@@ -113,7 +106,8 @@ public class MyController {
         }
         return "clients";
     }
-
+*/
+/*
     @RequestMapping(value = "/clients/addclient", method = RequestMethod.POST)
     public String addClient(@ModelAttribute("name") String name,
                            @ModelAttribute("additionalData") String additionalData,
@@ -126,7 +120,8 @@ public class MyController {
         }
         return "redirect:/clients";
     }
-
+*/
+/*
     @RequestMapping(value = "/clients/deleteclient/{id}", method = RequestMethod.GET)
     public String deleteClient(@PathVariable("id") String id){
         try {
@@ -136,7 +131,8 @@ public class MyController {
         }
         return "redirect:/clients";
     }
-
+*/
+/*
     @RequestMapping(value = "/products/deleteproduct/{id}", method = RequestMethod.GET)
     public String deleteProduct(@PathVariable("id") String id){
         try {
@@ -146,7 +142,7 @@ public class MyController {
         }
         return "redirect:/products";
     }
-
+*/
 //    @RequestMapping(value = "/clients/updateclient/{id}", method = RequestMethod.PUT)
 //    public String
 
