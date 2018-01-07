@@ -17,6 +17,10 @@ public class UserService {
         return userRepository.findOne(userId);
     }
 
+    public ApplicationUser getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public void updateUser(Integer userId, ApplicationUser usery) {
         if (!userRepository.exists(userId)) {
             throw new IllegalArgumentException("User with provided id does not exist!");
