@@ -16,6 +16,10 @@ public class ClientService {
     FirmRepository firmRepository;
 
     public void addClient(Integer ownerId, Client client) {
+        if (!firmRepository.exists(ownerId)) {
+            throw new IllegalArgumentException("Bad company id!");
+        }
+
         client.setOwner(firmRepository.findOne(ownerId));
         clientRepository.save(client);
     }

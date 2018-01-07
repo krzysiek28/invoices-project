@@ -1,4 +1,4 @@
-package com.io.invoices.invoiceshibernate.controllers;
+package com.io.invoices.invoiceshibernate.facture;
 
 import com.io.invoices.invoiceshibernate.facture.Facture;
 import com.io.invoices.invoiceshibernate.facture.FactureService;
@@ -21,13 +21,29 @@ public class FactureController {
     @Autowired
     FactureService factureService;
 
-    @RequestMapping("/{ownerId}/factures")
-    public List<Facture> getAllFactures(@PathVariable String ownerId) {
-        return factureService.getAllFactures(ownerId);
+    @RequestMapping("/{firmId}")
+    public List<Facture> getAllFactures(@PathVariable String firmId) {
+        return factureService.getAllFactures(Integer.parseInt(firmId));
     }
 
-    @RequestMapping("/{id}")
-    public Facture getFacture(@PathVariable String id) {return factureService.getFacture(id);}
+    @RequestMapping("/{firmId}/{factureId}")
+    public Facture getFacture(@PathVariable String factureId) {return factureService.getFacture(Integer.parseInt(factureId));}
+
+    @RequestMapping(method = RequestMethod.POST, value = "/{firmId}")
+    public void addFacture(@RequestBody Facture facture, @PathVariable String firmId) {
+        factureService.addFacture(Integer.parseInt(firmId), facture);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{firmId}/{factureId}")
+    public void deleteFacture(@PathVariable String firmId, @PathVariable String factureId) {
+        factureService.deleteFacture(Integer.parseInt(factureId));
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/{firmId}/{factureId}")
+    public void updateFacture(@PathVariable String firmId, @PathVariable String factureId, @RequestBody Facture facture) {
+        factureService.updateFacture(Integer.parseInt(factureId), facture);
+    }
+
 
     @RequestMapping("/createPdf/{id}")
     public void createPdf(@PathVariable String id, HttpServletResponse response) throws IOException, DocumentException, com.itextpdf.text.DocumentException {

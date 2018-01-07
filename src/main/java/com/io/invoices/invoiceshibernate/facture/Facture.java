@@ -3,7 +3,6 @@ package com.io.invoices.invoiceshibernate.facture;
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
-import com.io.invoices.invoiceshibernate.user.Usery;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -15,10 +14,8 @@ public class Facture {
     @GeneratedValue
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Usery usery;
-    @OneToOne
-    private Firm userFirm;
+    @JoinColumn(name = "firm_id", nullable = false)
+    private Firm firm;
     @OneToOne
     private Client client;
     @OneToMany(cascade = CascadeType.ALL)
@@ -29,19 +26,8 @@ public class Facture {
     private Date paymentDate;
     private String issuer;
 
-    public Facture(Usery usery, Firm userFirm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer) {
-        this.usery = usery;
-        this.userFirm = userFirm;
-        this.client = client;
-        this.products = products;
-        this.number = number;
-        this.place = place;
-        this.issueDate = issueDate;
-        this.paymentDate = paymentDate;
-        this.issuer = issuer;
-    }
-
     public Facture() {
+
     }
 
     public Integer getId() {
@@ -52,20 +38,12 @@ public class Facture {
         this.id = id;
     }
 
-    public Usery getUsery() {
-        return usery;
+    public Firm getFirm() {
+        return firm;
     }
 
-    public void setUsery(Usery usery) {
-        this.usery = usery;
-    }
-
-    public Firm getUserFirm() {
-        return userFirm;
-    }
-
-    public void setUserFirm(Firm userFirm) {
-        this.userFirm = userFirm;
+    public void setFirm(Firm firm) {
+        this.firm = firm;
     }
 
     public Client getClient() {

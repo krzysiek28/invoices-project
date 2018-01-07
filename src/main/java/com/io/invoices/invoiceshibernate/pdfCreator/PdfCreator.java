@@ -1,13 +1,11 @@
 package com.io.invoices.invoiceshibernate.pdfCreator;
 
-import com.io.invoices.invoiceshibernate.controllers.FactureController;
 import com.io.invoices.invoiceshibernate.facture.Facture;
 import com.itextpdf.text.*;
 
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 
 
