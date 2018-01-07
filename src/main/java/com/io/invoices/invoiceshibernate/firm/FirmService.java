@@ -1,6 +1,6 @@
 package com.io.invoices.invoiceshibernate.firm;
 
-import com.io.invoices.invoiceshibernate.user.UserRepository;
+import com.io.invoices.invoiceshibernate.user.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class FirmService {
     FirmRepository firmRepository;
 
     @Autowired
-    UserRepository userRepository;
+    ApplicationUserRepository userRepository;
 
     public void addFirm(Integer ownerId, Firm firm) {
         if (!userRepository.exists(ownerId)) {

@@ -2,10 +2,6 @@ package com.io.invoices.invoiceshibernate.product;
 
 
 import com.io.invoices.invoiceshibernate.firm.FirmService;
-import com.io.invoices.invoiceshibernate.product.Product;
-import com.io.invoices.invoiceshibernate.product.ProductService;
-import com.io.invoices.invoiceshibernate.user.Usery;
-import com.io.invoices.invoiceshibernate.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
