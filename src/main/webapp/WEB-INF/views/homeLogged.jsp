@@ -39,7 +39,7 @@
     </div>
     <div class="nick" style="padding-right: 10px; color: white">
         <%--<c:if test="${token != null}">--%>
-            <h4>You are logged as: ${username}</h4>
+            <h6>You are logged as: ${authservice.isLoggedIn()} </h6>
         <%--</c:if>--%>
     </div>
 

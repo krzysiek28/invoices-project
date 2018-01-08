@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import web.mvc.service.UserAuthenticationService;
 import web.mvc.service.UserService;
@@ -38,16 +39,19 @@ public class MyController {
     }
 
     @RequestMapping(value = "/homeLogged")
-    public String homeLoged(ModelMap map) {
-        map.addAttribute("username", userAuthenticationService.getUsername());
+    public String homeLoged(ModelMap model) {
+        model.addAttribute("authservice", userAuthenticationService);
         return "homeLogged";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loggedPage(@ModelAttribute("username") String username,
-                             @ModelAttribute("password") String password) throws URISyntaxException {
+                             @ModelAttribute("password") String password,
+                             SessionStatus status) throws URISyntaxException {
         userService.login(username, password);
-        return "homeLogged";
+        status.setComplete();
+
+        return "redirect:/homeLogged";
     }
 
     @RequestMapping(value = "/logged")
