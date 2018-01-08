@@ -1,5 +1,8 @@
 package web.mvc.service;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -17,7 +20,7 @@ public class FirmService {
     @Autowired
     UserAuthenticationService userAuthenticationService;
 
-    public void getFirms() throws URISyntaxException {
+    public void getFirms() throws URISyntaxException, JSONException {
 
         URI uri = new URI("http://localhost:8090/firms/"+userAuthenticationService.getUserId());
         RestTemplate restTemplate = new RestTemplate();
@@ -25,7 +28,8 @@ public class FirmService {
         headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
-
+        JSONArray obj = new JSONArray(response.getBody());
+        System.out.print(response.getBody());
     }
 
 }

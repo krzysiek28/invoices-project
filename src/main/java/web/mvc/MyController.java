@@ -14,6 +14,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.WebRequest;
+import web.mvc.service.FirmService;
 import web.mvc.service.UserAuthenticationService;
 import web.mvc.service.UserService;
 
@@ -29,6 +30,9 @@ public class MyController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FirmService firmService;
 
     @Autowired
     UserAuthenticationService userAuthenticationService;
@@ -55,6 +59,7 @@ public class MyController {
     public String homeLoged(ModelMap model) throws URISyntaxException, JSONException {
         model.addAttribute("authservice", userAuthenticationService);
         userService.setUserId();
+        firmService.getFirms();
         return "homeLogged";
     }
 
