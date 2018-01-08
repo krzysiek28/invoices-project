@@ -52,8 +52,9 @@ public class MyController {
     }
 
     @RequestMapping(value = "/homeLogged")
-    public String homeLoged(ModelMap model) {
+    public String homeLoged(ModelMap model) throws URISyntaxException {
         model.addAttribute("authservice", userAuthenticationService);
+        userService.getUserId();
         return "homeLogged";
     }
 
@@ -119,7 +120,7 @@ public class MyController {
     public String productsPage(HttpServletRequest request,
                                ModelMap modelMap) {
         try {
-            modelMap.addAttribute("products", productService.getProductsByOwnerID((request.getUserPrincipal().getName())));
+            modelMap.addAttribute("products", productService.getProducts());
         } catch (Exception e) {
             e.printStackTrace();
         }

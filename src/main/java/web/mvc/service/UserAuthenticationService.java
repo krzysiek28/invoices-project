@@ -10,6 +10,7 @@ public class UserAuthenticationService {
 
     private String rawToken = null;
     private String username;
+    private Integer userId;
 
     public void setToken(String token) {
         this.rawToken = token.replaceFirst("Bearer ", "");
@@ -51,5 +52,9 @@ public class UserAuthenticationService {
     public String getRawToken() {
         return this.rawToken;
     }
+
+    public void setUserId(Integer userId){ this.userId=userId; }
+
+    public Integer getUserId(){ return this.userId; }
 }
 

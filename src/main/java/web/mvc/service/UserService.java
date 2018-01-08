@@ -57,4 +57,17 @@ public class UserService {
         userAuthenticationService.setToken(key);
 
     }
+
+    public void getUserId() throws URISyntaxException {
+
+        URI uri = new URI("http://localhost:8090/users/"+userAuthenticationService.getUsername());
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+        String id = response.getBody().substring(6,7);
+        userAuthenticationService.setUserId(Integer.parseInt(id));
+    }
+
 }
