@@ -55,4 +55,14 @@ public class ClientService {
         HttpEntity<String> request = new HttpEntity<String>(clientData, headers);
         ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, Component.class);
     }
+
+    public void deleteClient(int clientId) throws URISyntaxException {
+        Integer companyId = 24;
+        URI uri = new URI("http://localhost:8090/clients/"+companyId+"/"+clientId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+        restTemplateHCCHRF.exchange(uri,HttpMethod.DELETE,request,String.class);
+    }
 }

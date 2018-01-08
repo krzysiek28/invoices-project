@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
@@ -165,40 +162,16 @@ public class MyController {
                             @RequestParam("additionalData") String additionalData,
                             HttpServletRequest request,
                             ModelMap modelMap) throws URISyntaxException, JSONException {
-//        try {
-//            modelMap.addAllAttributes(clientService.addClient(name, additionalData, clientService.getOwnerId(request.getUserPrincipal().getName())));
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
         clientService.addClient(name, additionalData);
         return "redirect:/clients";
     }
 
-/*
-    @RequestMapping(value = "/clients/addclient", method = RequestMethod.POST)
-    public String addClient(@ModelAttribute("name") String name,
-                           @ModelAttribute("additionalData") String additionalData,
-                           HttpServletRequest request,
-                           ModelMap modelMap) {
-        try {
-            modelMap.addAllAttributes(clientService.addClient(name, additionalData, clientService.getOwnerId(request.getUserPrincipal().getName())));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return "redirect:/clients";
-    }
-*/
-/*
     @RequestMapping(value = "/clients/deleteclient/{id}", method = RequestMethod.GET)
-    public String deleteClient(@PathVariable("id") String id){
-        try {
-            clientService.deleteClientById(id);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+    public String deleteClient(@PathVariable("id") String id) throws URISyntaxException {
+        clientService.deleteClient(Integer.parseInt(id));
         return "redirect:/clients";
     }
-*/
+
 /*
     @RequestMapping(value = "/products/deleteproduct/{id}", method = RequestMethod.GET)
     public String deleteProduct(@PathVariable("id") String id){
