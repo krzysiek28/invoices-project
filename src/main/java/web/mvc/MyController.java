@@ -47,8 +47,9 @@ public class MyController {
     }
 
     @RequestMapping(value = "/homeLogged")
-    public String homeLoged(ModelMap model) {
+    public String homeLoged(ModelMap model) throws URISyntaxException {
         model.addAttribute("authservice", userAuthenticationService);
+        userService.getUserId();
         return "homeLogged";
     }
 
