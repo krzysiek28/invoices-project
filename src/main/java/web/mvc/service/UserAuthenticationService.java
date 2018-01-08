@@ -44,6 +44,7 @@ public class UserAuthenticationService {
     }
 
     public void logout() {
+        this.username = null;
         this.rawToken = null;
     }
 
