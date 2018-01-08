@@ -51,7 +51,6 @@ public class ClientService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
         String clientData = new JSONObject().put("name",name).put("additionalData",additionalData).toString();
-        System.out.println(clientData);
         HttpEntity<String> request = new HttpEntity<String>(clientData, headers);
         ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, Component.class);
     }

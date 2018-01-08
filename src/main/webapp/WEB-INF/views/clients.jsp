@@ -11,7 +11,24 @@
 <body>
 <jsp:include page="includes/navigation.jsp" />
 
-<div>
+<div style="width:900px; margin:0 auto; margin-top: 10px;">
+    <form action="/clients/addclient" method="post">
+        <div class="form-row">
+            <div class="col">
+                <input style="width: 800px"type="text" class="form-control" placeholder="Nazwa klienta" name="name">
+                <textarea name="additionalData" class="form-control" placeholder="Dodadtkowe informacje"></textarea>
+
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+                <input type="submit" value="dodaj" class="btn" style="height: 100%;">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div style="width:900px; margin:0 auto; margin-top: 40px;">
     <table class="table" border="1">
         <thead class="thead-dark">
         <div>
@@ -25,8 +42,8 @@
         <c:forEach var="client" items="${clients}">
             <tr>
                 <td>${client.name}</td>
-                <td>${client.additionalData}</td>
-                <td><a href="/clients/deleteclient/${client.id}">delete</a> </td>
+                <td style="white-space: pre-line">${client.additionalData}</td>
+                <td><a href="/clients/deleteclient/${client.id}">usuń</a> </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -34,21 +51,7 @@
     <br>
     <br><br>
 </div>
-<div>
-    <form action="/clients/addclient" method="post">
-        <div class="form-row">
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Dane klienta" name="name">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Dodatkowe informacje" name="additionalData">
-            </div>
-            <div class="col">
-                <input type="submit" value="dodaj">
-            </div>
-        </div>
-    </form>
-</div>
+
 
 <jsp:include page="includes/bootstrap.jsp" />
 </body>
