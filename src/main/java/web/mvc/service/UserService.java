@@ -60,4 +60,16 @@ public class UserService {
         String key = response.getHeaders().get("Authorization").toString();
         System.out.println(key);
     }
+/*
+    public void getUserId(){
+        URI uri = new URI("http://localhost:8090/login");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String requestJson = "{\"username\": \""+username+"\",\"password\": \""+password+"\"}";
+        HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity( uri, request, String.class);
+        String key = response.getHeaders().get("Authorization").get(0).toString();
+    }
+*/
 }
