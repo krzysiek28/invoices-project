@@ -22,6 +22,9 @@ public class UserService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    UserAuthenticationService userAuthenticationService;
+
     public void login(String username, String password) throws URISyntaxException {
 
         URI uri = new URI("http://localhost:8090/login");
@@ -31,7 +34,11 @@ public class UserService {
         HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity( uri, request, String.class);
-        String key = response.getHeaders().get("Authorization").toString();
-        System.out.println(key);
+        String key = response.getHeaders().get("Authorization").get(0).toString();
+        userAuthenticationService.setToken(key);
+    }
+
+    public void logout() {
+        userAuthenticationService.logout();
     }
 }

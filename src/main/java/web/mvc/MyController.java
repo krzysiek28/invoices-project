@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
+import web.mvc.service.UserAuthenticationService;
 import web.mvc.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,9 @@ public class MyController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    UserAuthenticationService userAuthenticationService;
+
     @RequestMapping(value = "/")
     public String homePage(){
         return "homePage";
@@ -34,7 +38,10 @@ public class MyController {
     }
 
     @RequestMapping(value = "/homeLogged")
-    public String homeLoged() {return "homeLogged";}
+    public String homeLoged(ModelMap map) {
+        map.addAttribute("username", userAuthenticationService.getUsername());
+        return "homeLogged";
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loggedPage(@ModelAttribute("username") String username,
