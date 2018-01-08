@@ -3,6 +3,10 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<c:if test="${authservice.isLoggedIn()}">
+    <c:redirect url="/homeLogged" />
+</c:if>
+
 <html lang="en">
 <head>
     <title>Invoices</title>
