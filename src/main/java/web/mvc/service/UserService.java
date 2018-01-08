@@ -44,12 +44,11 @@ public class UserService {
 
     public void register(String email, String username, String password) throws URISyntaxException {
 
-        URI uri = new URI("http://localhost:8090/sign-up");
+        URI uri = new URI("http://localhost:8090/users/sign-up");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String requestJson =
                 "{" +
-                "\"id\": 56," +
                 "\"email\": \""+email+"\"," +
                 "\"enabled\": \"true\"," +
                 "\"username\": \""+username+"\"," +
