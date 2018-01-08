@@ -27,6 +27,24 @@
         <div class="login-card">
             <div class="login-form">
                 <form action="/addUser" method="post">
+                    <c:if test="${param.error != null}">
+                        <c:if test="${param.message == 'email'}">
+                            <div class="alert alert-danger">
+                                <p>Użytkownik o podanym adresie email już istnieje</p>
+                            </div>
+                        </c:if>
+                        <c:if test="${param.message == 'username'}">
+                            <div class="alert alert-danger">
+                                <p>Użytkownik o podanej nazwie już istnieje</p>
+                            </div>
+                        </c:if>
+                        <c:if test="${param.message == other}">
+                            <div class="alert alert-danger">
+                                <p><c:out value="${param.message}"/></p>
+                            </div>
+                        </c:if>
+                    </c:if>
+
                     <div class="input-group input-sm">
                         <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
                         <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" required>
