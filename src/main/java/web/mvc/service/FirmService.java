@@ -1,14 +1,12 @@
 package web.mvc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 @Service
 public class FirmService {
@@ -19,19 +17,15 @@ public class FirmService {
     @Autowired
     UserAuthenticationService userAuthenticationService;
 
-    public void getFirms(){
-        // dodać token od autoryzacji
-        /*
-        URI uri = new URI("http://localhost:8090/firms/"++);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        String requestJson = "{\"username\": \""+username+"\",\"password\": \""+password+"\"}";
-        HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
+    public void getFirms() throws URISyntaxException {
 
-        ResponseEntity<String> response = restTemplate.postForEntity( uri, request, String.class);
-        String key = response.getHeaders().get("Authorization").get(0).toString();
-        userAuthenticationService.setToken(key);
-        */
+        URI uri = new URI("http://localhost:8090/firms/"+userAuthenticationService.getUserId());
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+
     }
 
 }
