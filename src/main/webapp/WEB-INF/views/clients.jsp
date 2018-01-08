@@ -1,4 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<c:if test="${authservice.isLoggedIn() == false}">
+    <c:redirect url="/"/>
+</c:if>
+
 <jsp:include page="includes/header.jsp">
     <jsp:param name="title" value="Klienci" />
 </jsp:include>

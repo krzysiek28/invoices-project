@@ -46,7 +46,8 @@ public class MyController {
     }
 
     @RequestMapping(value = "/loginPage")
-    public String loginPage( SessionStatus status) {
+    public String loginPage(ModelMap model, SessionStatus status) {
+        model.addAttribute("authservice", userAuthenticationService);
         status.setComplete();
         return "loginPage";
     }
@@ -147,6 +148,8 @@ public class MyController {
     @RequestMapping(value = "/clients")
     public String clientsPage(HttpServletRequest request,
                               ModelMap modelMap) {
+        modelMap.addAttribute("authservice", userAuthenticationService);
+
 
         return "clients";
     }
