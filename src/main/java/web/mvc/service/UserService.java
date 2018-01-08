@@ -55,7 +55,7 @@ public class UserService {
         HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
 
         ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST,request, Component.class);
-        String key = response.getHeaders().get("Authorization").toString();
+        String key = response.getHeaders().get("Authorization").get(0).toString();
         userAuthenticationService.setToken(key);
 
     }
