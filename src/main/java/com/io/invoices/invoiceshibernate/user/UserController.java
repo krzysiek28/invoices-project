@@ -59,8 +59,13 @@ public class UserController {
 		else
 			res.sendError(403);
 	}
+	@RequestMapping("/{username}")
+	public ApplicationUser getUserByUsername(@PathVariable String username){
+		ApplicationUser user = userService.getUserByUsername(username);
+		return user;
+	}
 
-	@RequestMapping("/{userId}")
+	@RequestMapping("/id/{userId}")
 	public ApplicationUser getUser(@PathVariable String userId) {
 		return userService.getUser(Integer.parseInt(userId));
 	}
