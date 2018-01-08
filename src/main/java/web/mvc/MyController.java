@@ -70,24 +70,21 @@ public class MyController {
     }
 
     @RequestMapping(value = "/registrationPage")
-    public String register() {
+    public String registrationPage() {
         return "registrationPage";
     }
 
-    @RequestMapping(value = "/adduser", method = RequestMethod.POST)
-    public String addusers(@ModelAttribute("email") String email,
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public String register(@ModelAttribute("email") String email,
+                           @ModelAttribute("username") String username,
                            @ModelAttribute("password") String password,
-                           ModelMap modelMap){
-/*
-        String sqlUser = String.format("INSERT INTO usery(email,password,enabled) VALUES ('%s','%s',true)", email, password);
-        jdbcTemplate.execute(sqlUser);
-        String sqlRole = String.format("UPDATE usery set role='%s' where email='%s'", "ROLE_USER",email);
-        jdbcTemplate.execute(sqlRole);
-        List<Usery> userList = jdbcTemplate.query("select * from usery", new BeanPropertyRowMapper<>(Usery.class));
-        modelMap.addAttribute("usery",userList);
-*/
-        return "homePage";
+                           SessionStatus status) throws URISyntaxException {
+        userService.register( email, username, password);
+        status.setComplete();
+
+        return "homeLogged";
     }
+
 /*
     @RequestMapping(value = "/products")
     public String productsPage(HttpServletRequest request,

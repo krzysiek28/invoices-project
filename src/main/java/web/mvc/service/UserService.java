@@ -41,4 +41,23 @@ public class UserService {
     public void logout() {
         userAuthenticationService.logout();
     }
+
+    public void register(String email, String username, String password) throws URISyntaxException {
+
+        URI uri = new URI("http://localhost:8090/users/sign-up");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String requestJson =
+                "{" +
+                "\"email\": \""+email+"\"," +
+                "\"enabled\": \"true\"," +
+                "\"username\": \""+username+"\"," +
+                "\"password\": \""+password+"\"," +
+                "\"role\":\"USER_ROLE\"}";
+        HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity( uri, request, String.class);
+        String key = response.getHeaders().get("Authorization").toString();
+        System.out.println(key);
+    }
 }
