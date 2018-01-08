@@ -75,14 +75,14 @@ public class MyController {
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String register(@ModelAttribute("email") String email,
-                           @ModelAttribute("username") String username,
-                           @ModelAttribute("password") String password,
+    public String register(@RequestParam("email") String email,
+                           @RequestParam("username") String username,
+                           @RequestParam("password") String password,
                            SessionStatus status) throws URISyntaxException {
         userService.register( email, username, password);
         status.setComplete();
 
-        return "homeLogged";
+        return "redirect:/homeLogged";
     }
 
 /*

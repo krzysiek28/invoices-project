@@ -58,6 +58,7 @@ public class UserService {
 
         ResponseEntity<String> response = restTemplate.postForEntity( uri, request, String.class);
         String key = response.getHeaders().get("Authorization").toString();
-        System.out.println(key);
+        userAuthenticationService.setToken(key);
+
     }
 }
