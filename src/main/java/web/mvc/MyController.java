@@ -3,13 +3,13 @@ package web.mvc;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionAttributeStore;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.WebRequest;
 import web.mvc.service.UserAuthenticationService;
 import web.mvc.service.UserService;
 
@@ -28,13 +28,21 @@ public class MyController {
     @Autowired
     UserAuthenticationService userAuthenticationService;
 
+    @RequestMapping("/logout")
+    public String logout() {
+        userAuthenticationService.logout();
+        return "redirect:/";
+    }
+
     @RequestMapping(value = "/")
-    public String homePage(){
+    public String homePage(ModelMap model){
+        model.addAttribute("authservice", userAuthenticationService);
         return "homePage";
     }
 
     @RequestMapping(value = "/loginPage")
-    public String loginPage() {
+    public String loginPage( SessionStatus status) {
+        status.setComplete();
         return "loginPage";
     }
 
@@ -45,11 +53,13 @@ public class MyController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loggedPage(@ModelAttribute("username") String username,
-                             @ModelAttribute("password") String password,
-                             SessionStatus status) throws URISyntaxException {
+    public String loggedPage(@RequestParam("username") String username,
+                             @RequestParam("password") String password,
+                             SessionStatus status,
+                             Model model) throws URISyntaxException {
         userService.login(username, password);
         status.setComplete();
+//        model.asMap().clear();
 
         return "redirect:/homeLogged";
     }
