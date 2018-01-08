@@ -148,18 +148,14 @@ public class MyController {
         return "redirect:/products";
     }
 */
-/*
+
     @RequestMapping(value = "/clients")
     public String clientsPage(HttpServletRequest request,
                               ModelMap modelMap) {
-        try {
-            modelMap.addAttribute("clients", clientService.getClientsByOwnerID(request.getUserPrincipal().getName()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         return "clients";
     }
-*/
+
 /*
     @RequestMapping(value = "/clients/addclient", method = RequestMethod.POST)
     public String addClient(@ModelAttribute("name") String name,

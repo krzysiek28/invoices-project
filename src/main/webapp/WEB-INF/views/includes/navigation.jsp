@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: arek
@@ -28,9 +29,9 @@
         </ul>
     </div>
     <div class="nick" style="padding-right: 10px; color: white">
-            <h7>Zalogowano jako:
-                <c:out value="${authservice.getUsername()}"/>
-            </h7>
+            <h6>Zalogowano jako:
+                <c:out value="${authservice.username}"/>
+            </h6>
     </div>
 
     <!-- naval with buttons -->
