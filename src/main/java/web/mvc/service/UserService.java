@@ -1,5 +1,7 @@
 package web.mvc.service;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -58,7 +60,7 @@ public class UserService {
 
     }
 
-    public void getUserId() throws URISyntaxException {
+    public void setUserId() throws URISyntaxException, JSONException {
 
         URI uri = new URI("http://localhost:8090/users/"+userAuthenticationService.getUsername());
         RestTemplate restTemplate = new RestTemplate();
@@ -66,8 +68,9 @@ public class UserService {
         headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
-        String id = response.getBody().substring(6,7);
-        userAuthenticationService.setUserId(Integer.parseInt(id));
+        JSONObject obj = new JSONObject(response.getBody());
+        userAuthenticationService.setUserId(obj.getInt("id"));
+
     }
 
 }
