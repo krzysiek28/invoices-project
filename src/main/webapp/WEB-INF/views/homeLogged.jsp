@@ -38,9 +38,9 @@
         </ul>
     </div>
     <div class="nick" style="padding-right: 10px; color: white">
-        <c:if test="${pageContext.request.userPrincipal.name != null}">
-            <h4>You are logged as: ${pageContext.request.userPrincipal.name}</h4>
-        </c:if>
+        <%--<c:if test="${token != null}">--%>
+            <h6>You are logged as: ${authservice.isLoggedIn()} </h6>
+        <%--</c:if>--%>
     </div>
 
     <!-- naval with buttons -->
