@@ -18,6 +18,7 @@ import web.mvc.service.UserAuthenticationService;
 import web.mvc.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 @Controller
@@ -58,10 +59,12 @@ public class MyController {
     }
 
     @RequestMapping(value = "/homeLogged")
-    public String homeLoged(ModelMap model) throws URISyntaxException, JSONException {
+    public String homeLoged(ModelMap model) throws URISyntaxException, JSONException, IOException {
         model.addAttribute("authservice", userAuthenticationService);
-        if (userAuthenticationService.isLoggedIn())
+        if (userAuthenticationService.isLoggedIn()) {
             userService.setUserId();
+            model.addAttribute("firms", firmService.getFirms());
+        }
         return "homeLogged";
     }
 
