@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import web.mvc.domain.Client;
 
@@ -52,7 +54,18 @@ public class ClientService {
         headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
         String clientData = new JSONObject().put("name",name).put("additionalData",additionalData).toString();
         HttpEntity<String> request = new HttpEntity<String>(clientData, headers);
-        ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, Component.class);
+        ResponseEntity<String> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, String.class);
+    }
+
+    public void updateClient(int id, String name, String additionalData) throws URISyntaxException, JSONException, HttpClientErrorException {
+        Integer companyId = 24;
+        URI uri = new URI("http://localhost:8090/clients/"+companyId+"/"+id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
+        String clientData = new JSONObject().put("name",name).put("additionalData",additionalData).toString();
+        HttpEntity<String> request = new HttpEntity<String>(clientData, headers);
+        ResponseEntity<String> response = restTemplateHCCHRF.exchange(uri, HttpMethod.PUT, request, String.class);
     }
 
     public void deleteClient(int clientId) throws URISyntaxException {

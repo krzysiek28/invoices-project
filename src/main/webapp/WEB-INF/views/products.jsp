@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:if test="${authservice.isLoggedIn() == false}">
     <c:redirect url="/"/>
@@ -47,7 +48,7 @@
             <th>Nazwa produktu</th>
             <th>Cena jednostkowa netto</th>
             <th>Jednostka</th>
-            <th>Vat</th>
+            <th>% VAT</th>
             <th></th>
         </div>
 
@@ -58,7 +59,9 @@
                 <td>${product.name}</td>
                 <td>${product.netUnitPrice}</td>
                 <td>${product.unit}</td>
-                <td>${product.vatRate}</td>
+                <td>
+                    <fmt:formatNumber type="number" maxFractionDigits="2" value="${product.vatRate*100}"/>
+                </td>
                 <td><a href="/products/deleteproduct/${product.id}">delete</a></td>
             </tr>
         </c:forEach>

@@ -150,49 +150,12 @@ public class MyController {
         return "redirect:/firms";
     }
 
-    @RequestMapping(value = "/products")
-    public String productsPage(HttpServletRequest request,
-                               ModelMap modelMap) {
-        modelMap.addAttribute("authservice", userAuthenticationService);
-
-//        try {
-//            modelMap.addAttribute("products", productService.getProducts());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        return "products";
-    }
-
-/*
-    @RequestMapping(value = "/products/addproduct", method = RequestMethod.POST)
-    public String addProduct(@ModelAttribute("name") String name,
-                            @ModelAttribute("netUnitPrice") Float netUnitPrice,
-                            @ModelAttribute("unit") String unit,
-                            @ModelAttribute("vatRate") Float vatRate,
-                            HttpServletRequest request,
-                            ModelMap modelMap) {
-        try {
-            modelMap.addAllAttributes(productService.addProduct(name, netUnitPrice, unit, vatRate, productService.getOwnerId(request.getUserPrincipal().getName())));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return "redirect:/products";
-    }
-*/
 
 
 
-/*
-    @RequestMapping(value = "/products/deleteproduct/{id}", method = RequestMethod.GET)
-    public String deleteProduct(@PathVariable("id") String id){
-        try {
-            productService.deleteProductById(id);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return "redirect:/products";
-    }
-*/
+
+
+
 //    @RequestMapping(value = "/clients/updateclient/{id}", method = RequestMethod.PUT)
 //    public String
 

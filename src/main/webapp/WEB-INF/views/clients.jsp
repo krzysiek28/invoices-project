@@ -10,13 +10,54 @@
 </jsp:include>
 <body>
 <jsp:include page="includes/navigation.jsp" />
+<script type="text/javascript" charset="utf-8">
+    function showEdit(id) {
+        var clientId = id;
+        var nameElement = document.getElementById("clientname" + id);
+        var dataElement = document.getElementById("clientdata" + id);
+        var name = nameElement.innerHTML;
+        var data = dataElement.innerHTML;
+        nameElement.innerHTML = "<input id=\"i" + id + "\" style=\"width: 270px\"type=\"text\" class=\"form-control\" value=\"" + name + "\" name=\"name\" required>"
+        dataElement.innerHTML = "<textarea id=\"t" + id + "\"name=\"additionalData\" class=\"form-control\" required=\"true\">" + data + "</textarea>";
+        var button = document.getElementById("clientbutton" + id);
+
+        button.innerHTML = "zapisz";
+
+        setTimeout(function(){
+            button.setAttribute("type","submit");        }, 1);
+
+        button.onclick = function () {
+            var newName = document.getElementById("i" + id).value;
+            var newData = document.getElementById("t" + id).value;
+//            alert(newName);
+//            alert(newData);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/clients/editclient", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            var params = "name="+newName+"&additionalData="+newData+"&id="+id;
+            xhr.send(params);
+            history.go(0);
+            setTimeout(function(){
+                window.location.reload(true);
+            });
+
+
+        }
+    }
+</script>
+
+<c:if test="${param.error != null}">
+    <div  style="width:900px; margin:0 auto; margin-top: 10px;"class="alert alert-danger">
+        <p><c:out value="${param.error}"/></p>
+    </div>
+</c:if>
 
 <div style="width:900px; margin:0 auto; margin-top: 10px;">
     <form action="/clients/addclient" method="post">
         <div class="form-row">
             <div class="col">
-                <input style="width: 800px"type="text" class="form-control" placeholder="Nazwa klienta" name="name">
-                <textarea name="additionalData" class="form-control" placeholder="Dodadtkowe informacje"></textarea>
+                <input style="width: 800px"type="text" class="form-control" placeholder="Nazwa klienta" name="name" required="true">
+                <textarea name="additionalData" class="form-control" placeholder="Dodadtkowe informacje" required="true"></textarea>
 
             </div>
             <div class="col">
@@ -33,15 +74,20 @@
         <thead class="thead-dark">
             <th style="width: 300px">dane klienta</th>
             <th>dodatkowe informacje</th>
-            <th style="width: 50px"></th>
+            <th style="width: 158px"></th>
 
         </thead>
         <tbody>
         <c:forEach var="client" items="${clients}">
             <tr>
-                <td>${client.name}</td>
-                <td style="white-space: pre-line">${client.additionalData}</td>
-                <td><a href="/clients/deleteclient/${client.id}" class="btn btn-info" role="button">usuń</a></td>
+                <form>
+                <td id="clientname${client.id}">${client.name}</td>
+                <td id="clientdata${client.id}" style="white-space: pre-line">${client.additionalData}</td>
+                <td>
+                    <a href="/clients/deleteclient/${client.id}" class="btn btn-info" role="button">usuń</a>
+                    <button id="clientbutton${client.id}" type="button" class="btn btn-info"  onclick="showEdit(${client.id});">edytuj</button>
+                </td>
+                </form>
             </tr>
         </c:forEach>
         </tbody>
@@ -49,6 +95,7 @@
     <br>
     <br><br>
 </div>
+
 
 
 <jsp:include page="includes/bootstrap.jsp" />
