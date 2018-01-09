@@ -58,13 +58,11 @@ public class MyController {
         return "loginPage";
     }
 
+
+
     @RequestMapping(value = "/homeLogged")
     public String homeLoged(ModelMap model) throws URISyntaxException, JSONException, IOException {
         model.addAttribute("authservice", userAuthenticationService);
-        if (userAuthenticationService.isLoggedIn()) {
-            userService.setUserId();
-            model.addAttribute("firms", firmService.getFirms());
-        }
         return "homeLogged";
     }
 
@@ -84,7 +82,7 @@ public class MyController {
 
         }
 
-        return "redirect:/homeLogged";
+        return "redirect:/chooseFirm";
     }
 
     @RequestMapping(value = "/logged")
@@ -126,29 +124,7 @@ public class MyController {
         return "redirect:/homeLogged";
     }
 
-    @RequestMapping(value = "/firms")
-    public String menageFirm(HttpServletRequest request,
-                             ModelMap modelMap) {
-        try {
-            modelMap.addAttribute("firms", firmService.getFirms());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "firms";
-    }
 
-    @RequestMapping(value = "/firms/addfirm", method = RequestMethod.POST)
-    public String addFirm(@RequestParam("email") String email,
-                          @RequestParam("name") String name,
-                          @RequestParam("nip") String nip,
-                          @RequestParam("phone") String phone,
-                          @RequestParam("place") String place,
-                          SessionStatus status) throws URISyntaxException, JSONException {
-        firmService.addFirm(email, name, nip, phone, place);
-        status.setComplete();
-
-        return "redirect:/firms";
-    }
 
 
 

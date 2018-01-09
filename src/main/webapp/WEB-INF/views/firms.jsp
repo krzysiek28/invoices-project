@@ -82,9 +82,9 @@
                     </button>
                 </td>
                 <td align="center">
-                    <button type="button" class="btn btn-primary">
-                        <a href="/firms/deletefirm/${firm.id}" style="color: white">Usuń</a>
-                    </button>
+                    <form action="/firms/deletefirm/${firm.id}" method="post">
+                        <button type="submit" class="btn btn-primary">Usuń</button>
+                    </form>
                 </td>
             </tr>
 
