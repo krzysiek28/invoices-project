@@ -59,7 +59,6 @@ public class MyController {
     public String homeLoged(ModelMap model) throws URISyntaxException, JSONException {
         model.addAttribute("authservice", userAuthenticationService);
         userService.setUserId();
-        firmService.getFirms();
         return "homeLogged";
     }
 
@@ -120,6 +119,29 @@ public class MyController {
         return "redirect:/homeLogged";
     }
 
+    @RequestMapping(value = "/firms")
+    public String menageFirm(HttpServletRequest request,
+                             ModelMap modelMap) {
+        try {
+            modelMap.addAttribute("firms", firmService.getFirms());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "firms";
+    }
+
+    @RequestMapping(value = "/firms/addfirm", method = RequestMethod.POST)
+    public String addFirm(@RequestParam("email") String email,
+                          @RequestParam("name") String name,
+                          @RequestParam("nip") String nip,
+                          @RequestParam("phone") String phone,
+                          @RequestParam("place") String place,
+                          SessionStatus status) throws URISyntaxException, JSONException {
+        firmService.addFirm(email, name, nip, phone, place);
+        status.setComplete();
+
+        return "redirect:/firms";
+    }
 /*
     @RequestMapping(value = "/products")
     public String productsPage(HttpServletRequest request,
