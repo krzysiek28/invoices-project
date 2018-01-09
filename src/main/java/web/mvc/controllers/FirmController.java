@@ -71,4 +71,28 @@ public class FirmController {
 
         return "redirect:/firms";
     }
+
+    @RequestMapping(value = "/firms/updatefirm/{id}", method = RequestMethod.POST)
+    public String updateFirm(@PathVariable("id") String id,
+                             @RequestParam("email") String email,
+                             @RequestParam("name") String name,
+                             @RequestParam("nip") String nip,
+                             @RequestParam("phone") String phone,
+                             @RequestParam("place") String place,
+                          SessionStatus status) throws URISyntaxException, JSONException {
+        firmService.updateFirm(id, email, name, nip, phone, place);
+        status.setComplete();
+
+        return "redirect:/firms";
+    }
+
+
+    @RequestMapping(value = "/firms/deletefirm/{id}", method = RequestMethod.POST)
+    public String updateFirm(@PathVariable("id") String id,
+                             SessionStatus status) throws URISyntaxException, JSONException {
+        firmService.deleteFirm(id);
+        status.setComplete();
+
+        return "redirect:/firms";
+    }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 public class FirmService {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate restTemplateHCCHRF;
 
     @Autowired
     UserAuthenticationService userAuthenticationService;
@@ -53,6 +53,27 @@ public class FirmService {
         jsonObject.put("email", email).put("name", name).put("nip", nip)
                 .put("phone", phone).put("place", place).put("owner_id", userAuthenticationService.getUserId());
         HttpEntity<String> request = new HttpEntity<>(jsonObject.toString(), headers);
-        ResponseEntity<Component> response = restTemplate.exchange(uri, HttpMethod.POST, request, Component.class);
+        ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, Component.class);
+    }
+
+    public void updateFirm(String firmId, String email, String name, String nip, String phone, String place) throws URISyntaxException, JSONException {
+        URI uri = new URI("http://localhost:8090/firms/"+userAuthenticationService.getUserId()+"/"+firmId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + userAuthenticationService.getRawToken());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("email", email).put("name", name).put("nip", nip)
+                .put("phone", phone).put("place", place);
+        HttpEntity<String> request = new HttpEntity<>(jsonObject.toString(), headers);
+        ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.PUT, request, Component.class);
+    }
+
+    public void deleteFirm(String firmId) throws URISyntaxException {
+        URI uri = new URI("http://localhost:8090/firms/"+userAuthenticationService.getUserId()+"/"+firmId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + userAuthenticationService.getRawToken());
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.DELETE, request, Component.class);
     }
 }
