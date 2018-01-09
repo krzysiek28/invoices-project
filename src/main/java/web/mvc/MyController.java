@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
-<<<<<<< HEAD
 import org.springframework.web.context.request.WebRequest;
+
 import web.mvc.service.FirmService;
-=======
 import web.mvc.service.ClientService;
->>>>>>> d9c8393cfb57a58baa702d207a6d269391068f0b
 import web.mvc.service.UserAuthenticationService;
 import web.mvc.service.UserService;
 
@@ -24,6 +22,7 @@ import java.net.URISyntaxException;
 
 @Controller
 public class MyController {
+
 
     @Autowired
     UserAuthenticationService userAuthenticationService;
@@ -34,15 +33,11 @@ public class MyController {
     @Autowired
     private UserService userService;
 
-<<<<<<< HEAD
+
     @Autowired
     private FirmService firmService;
 
-    @Autowired
-    UserAuthenticationService userAuthenticationService;
 
-=======
->>>>>>> d9c8393cfb57a58baa702d207a6d269391068f0b
     @RequestMapping("/logout")
     public String logout() {
         userAuthenticationService.logout();
@@ -128,7 +123,6 @@ public class MyController {
         return "redirect:/homeLogged";
     }
 
-<<<<<<< HEAD
     @RequestMapping(value = "/firms")
     public String menageFirm(HttpServletRequest request,
                              ModelMap modelMap) {
