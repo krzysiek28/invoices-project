@@ -146,10 +146,7 @@ public class MyController {
 
         return "redirect:/firms";
     }
-/*
-=======
 
->>>>>>> d9c8393cfb57a58baa702d207a6d269391068f0b
     @RequestMapping(value = "/products")
     public String productsPage(HttpServletRequest request,
                                ModelMap modelMap) {
@@ -180,32 +177,7 @@ public class MyController {
     }
 */
 
-    @RequestMapping(value = "/clients")
-    public String clientsPage(HttpServletRequest request, ModelMap modelMap) {
-        try {
-            modelMap.addAttribute("authservice", userAuthenticationService);
-            modelMap.addAttribute("clients", clientService.getFirmClients());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        return "clients";
-    }
-
-    @RequestMapping(value = "/clients/addclient", method = RequestMethod.POST)
-    public String addClient(@RequestParam("name") String name,
-                            @RequestParam("additionalData") String additionalData,
-                            HttpServletRequest request,
-                            ModelMap modelMap) throws URISyntaxException, JSONException {
-        clientService.addClient(name, additionalData);
-        return "redirect:/clients";
-    }
-
-    @RequestMapping(value = "/clients/deleteclient/{id}", method = RequestMethod.GET)
-    public String deleteClient(@PathVariable("id") String id) throws URISyntaxException {
-        clientService.deleteClient(Integer.parseInt(id));
-        return "redirect:/clients";
-    }
 
 /*
     @RequestMapping(value = "/products/deleteproduct/{id}", method = RequestMethod.GET)
