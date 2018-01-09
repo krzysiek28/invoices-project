@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import web.mvc.domain.Client;
+import web.mvc.domain.User;
 import web.mvc.service.ClientService;
 import web.mvc.service.UserAuthenticationService;
 
@@ -17,11 +19,17 @@ import java.net.URISyntaxException;
 @Controller
 public class ClientController {
 
-    @Autowired
     UserAuthenticationService userAuthenticationService;
-
-    @Autowired
     ClientService clientService;
+
+    //Zależności są wstrzykiwane przez konstruktor, a nie poprzez wstrzykiwanie pojedyńczych pól przy użyciu @Autowired
+    //Dobrym pomysłem będzie przejście na taki model, jest to bardziej poprawne podejście i umożliwia (chyba) też
+    //załadowanie własnych obiektów clientSerbice i userAtuhenticationService np. do testówx    
+    public ClientController(UserAuthenticationService userAuthenticationService,
+                            ClientService clientService) {
+        this.userAuthenticationService = userAuthenticationService;
+        this.clientService = clientService;
+    }
 
     @RequestMapping(value = "/clients")
     public String clientsPage(HttpServletRequest request, ModelMap modelMap) {
