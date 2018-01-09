@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.WebRequest;
+
+import web.mvc.service.FirmService;
 import web.mvc.service.ClientService;
 import web.mvc.service.UserAuthenticationService;
 import web.mvc.service.UserService;
@@ -20,6 +23,7 @@ import java.net.URISyntaxException;
 @Controller
 public class MyController {
 
+
     @Autowired
     UserAuthenticationService userAuthenticationService;
     @Autowired
@@ -28,6 +32,11 @@ public class MyController {
     private RestTemplate restTemplateHCCHRF;
     @Autowired
     private UserService userService;
+
+
+    @Autowired
+    private FirmService firmService;
+
 
     @RequestMapping("/logout")
     public String logout() {
@@ -114,7 +123,33 @@ public class MyController {
         return "redirect:/homeLogged";
     }
 
+    @RequestMapping(value = "/firms")
+    public String menageFirm(HttpServletRequest request,
+                             ModelMap modelMap) {
+        try {
+            modelMap.addAttribute("firms", firmService.getFirms());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "firms";
+    }
 
+    @RequestMapping(value = "/firms/addfirm", method = RequestMethod.POST)
+    public String addFirm(@RequestParam("email") String email,
+                          @RequestParam("name") String name,
+                          @RequestParam("nip") String nip,
+                          @RequestParam("phone") String phone,
+                          @RequestParam("place") String place,
+                          SessionStatus status) throws URISyntaxException, JSONException {
+        firmService.addFirm(email, name, nip, phone, place);
+        status.setComplete();
+
+        return "redirect:/firms";
+    }
+/*
+=======
+
+>>>>>>> d9c8393cfb57a58baa702d207a6d269391068f0b
     @RequestMapping(value = "/products")
     public String productsPage(HttpServletRequest request,
                                ModelMap modelMap) {
