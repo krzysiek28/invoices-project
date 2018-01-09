@@ -24,7 +24,7 @@ public class ClientController {
 
     //Zależności są wstrzykiwane przez konstruktor, a nie poprzez wstrzykiwanie pojedyńczych pól przy użyciu @Autowired
     //Dobrym pomysłem będzie przejście na taki model, jest to bardziej poprawne podejście i umożliwia (chyba) też
-    //załadowanie własnych obiektów clientSerbice i userAtuhenticationService np. do testówx    
+    //załadowanie własnych obiektów clientSerbice i userAtuhenticationService np. do testówx
     public ClientController(UserAuthenticationService userAuthenticationService,
                             ClientService clientService) {
         this.userAuthenticationService = userAuthenticationService;
