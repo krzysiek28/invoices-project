@@ -22,7 +22,7 @@
             <div class="col">
             </div>
             <div class="col">
-                <input type="submit" value="dodaj" class="btn" style="height: 100%;">
+                <input type="submit" value="dodaj" class="btn btn-info btn-md" style="height: 100%;">
             </div>
         </div>
     </form>
@@ -31,11 +31,9 @@
 <div style="width:900px; margin:0 auto; margin-top: 40px;">
     <table class="table" border="1">
         <thead class="thead-dark">
-        <div>
-            <th>dane klienta</th>
+            <th style="width: 300px">dane klienta</th>
             <th>dodatkowe informacje</th>
-            <th></th>
-        </div>
+            <th style="width: 50px"></th>
 
         </thead>
         <tbody>
@@ -43,7 +41,7 @@
             <tr>
                 <td>${client.name}</td>
                 <td style="white-space: pre-line">${client.additionalData}</td>
-                <td><a href="/clients/deleteclient/${client.id}">usuń</a> </td>
+                <td><a href="/clients/deleteclient/${client.id}" class="btn btn-info" role="button">usuń</a></td>
             </tr>
         </c:forEach>
         </tbody>
