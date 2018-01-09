@@ -3,40 +3,46 @@ package web.mvc;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionAttributeStore;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+<<<<<<< HEAD
 import org.springframework.web.context.request.WebRequest;
 import web.mvc.service.FirmService;
+=======
+import web.mvc.service.ClientService;
+>>>>>>> d9c8393cfb57a58baa702d207a6d269391068f0b
 import web.mvc.service.UserAuthenticationService;
 import web.mvc.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URISyntaxException;
-import java.util.Optional;
 
 @Controller
 public class MyController {
 
     @Autowired
+    UserAuthenticationService userAuthenticationService;
+    @Autowired
+    ClientService clientService;
+    @Autowired
     private RestTemplate restTemplateHCCHRF;
-
     @Autowired
     private UserService userService;
 
+<<<<<<< HEAD
     @Autowired
     private FirmService firmService;
 
     @Autowired
     UserAuthenticationService userAuthenticationService;
 
+=======
+>>>>>>> d9c8393cfb57a58baa702d207a6d269391068f0b
     @RequestMapping("/logout")
     public String logout() {
         userAuthenticationService.logout();
@@ -44,13 +50,14 @@ public class MyController {
     }
 
     @RequestMapping(value = "/")
-    public String homePage(ModelMap model){
+    public String homePage(ModelMap model) {
         model.addAttribute("authservice", userAuthenticationService);
         return "homePage";
     }
 
     @RequestMapping(value = "/loginPage")
-    public String loginPage( SessionStatus status) {
+    public String loginPage(ModelMap model, SessionStatus status) {
+        model.addAttribute("authservice", userAuthenticationService);
         status.setComplete();
         return "loginPage";
     }
@@ -58,7 +65,8 @@ public class MyController {
     @RequestMapping(value = "/homeLogged")
     public String homeLoged(ModelMap model) throws URISyntaxException, JSONException {
         model.addAttribute("authservice", userAuthenticationService);
-        userService.setUserId();
+        if (userAuthenticationService.isLoggedIn())
+            userService.setUserId();
         return "homeLogged";
     }
 
@@ -74,7 +82,8 @@ public class MyController {
         } catch (HttpStatusCodeException exception) {
             JSONObject obj = new JSONObject(exception.getResponseBodyAsString());
             String errorMessage = obj.getString("message");
-            return "redirect:/loginPage?error=yes&message="+errorMessage;
+            return "redirect:/loginPage?error=yes&message=" + errorMessage;
+
         }
 
         return "redirect:/homeLogged";
@@ -102,7 +111,7 @@ public class MyController {
             JSONObject obj = new JSONObject(e.getResponseBodyAsString());
             String errorMessage = obj.getString("message");
             String errorType;
-            switch(errorMessage) {
+            switch (errorMessage) {
                 case "Username already exists!":
                     errorType = "username";
                     break;
@@ -113,12 +122,13 @@ public class MyController {
                     errorType = errorMessage;
                     break;
             }
-            return "redirect:/registrationPage?error=yes&message="+errorType;
+            return "redirect:/registrationPage?error=yes&message=" + errorType;
         }
 
         return "redirect:/homeLogged";
     }
 
+<<<<<<< HEAD
     @RequestMapping(value = "/firms")
     public String menageFirm(HttpServletRequest request,
                              ModelMap modelMap) {
@@ -143,17 +153,22 @@ public class MyController {
         return "redirect:/firms";
     }
 /*
+=======
+
+>>>>>>> d9c8393cfb57a58baa702d207a6d269391068f0b
     @RequestMapping(value = "/products")
     public String productsPage(HttpServletRequest request,
                                ModelMap modelMap) {
-        try {
-            modelMap.addAttribute("products", productService.getProducts());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        modelMap.addAttribute("authservice", userAuthenticationService);
+
+//        try {
+//            modelMap.addAttribute("products", productService.getProducts());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return "products";
     }
-*/
+
 /*
     @RequestMapping(value = "/products/addproduct", method = RequestMethod.POST)
     public String addProduct(@ModelAttribute("name") String name,
@@ -172,37 +187,32 @@ public class MyController {
 */
 
     @RequestMapping(value = "/clients")
-    public String clientsPage(HttpServletRequest request,
-                              ModelMap modelMap) {
+    public String clientsPage(HttpServletRequest request, ModelMap modelMap) {
+        try {
+            modelMap.addAttribute("authservice", userAuthenticationService);
+            modelMap.addAttribute("clients", clientService.getFirmClients());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return "clients";
     }
 
-/*
     @RequestMapping(value = "/clients/addclient", method = RequestMethod.POST)
-    public String addClient(@ModelAttribute("name") String name,
-                           @ModelAttribute("additionalData") String additionalData,
-                           HttpServletRequest request,
-                           ModelMap modelMap) {
-        try {
-            modelMap.addAllAttributes(clientService.addClient(name, additionalData, clientService.getOwnerId(request.getUserPrincipal().getName())));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+    public String addClient(@RequestParam("name") String name,
+                            @RequestParam("additionalData") String additionalData,
+                            HttpServletRequest request,
+                            ModelMap modelMap) throws URISyntaxException, JSONException {
+        clientService.addClient(name, additionalData);
         return "redirect:/clients";
     }
-*/
-/*
+
     @RequestMapping(value = "/clients/deleteclient/{id}", method = RequestMethod.GET)
-    public String deleteClient(@PathVariable("id") String id){
-        try {
-            clientService.deleteClientById(id);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+    public String deleteClient(@PathVariable("id") String id) throws URISyntaxException {
+        clientService.deleteClient(Integer.parseInt(id));
         return "redirect:/clients";
     }
-*/
+
 /*
     @RequestMapping(value = "/products/deleteproduct/{id}", method = RequestMethod.GET)
     public String deleteProduct(@PathVariable("id") String id){
