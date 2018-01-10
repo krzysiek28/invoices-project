@@ -37,6 +37,7 @@ public class FirmController {
         if (userAuthenticationService.isLoggedIn()) {
             userService.setUserId();
             modelMap.addAttribute("firms", firmService.getFirms());
+            modelMap.addAttribute("authservice",userAuthenticationService);
         }
         return "chooseFirm";
     }
@@ -44,6 +45,7 @@ public class FirmController {
     @RequestMapping(value = "/chooseFirm/{id}")
     public String setFirmId(@PathVariable("id") String id){
         userAuthenticationService.setFirmId(Integer.parseInt(id));
+
 
         return "homeLogged";
     }

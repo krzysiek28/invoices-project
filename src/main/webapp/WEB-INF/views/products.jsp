@@ -5,12 +5,46 @@
 <c:if test="${authservice.isLoggedIn() == false}">
     <c:redirect url="/"/>
 </c:if>
-
+<c:if test="${authservice.getFirmId() < 0}">
+    <c:redirect url="/chooseFirm?error=Najpierw wybierz firme"/>
+</c:if>
 <jsp:include page="includes/header.jsp">
     <jsp:param name="title" value="Produkty"/>
 </jsp:include>
-<body>
+<style>
+    #searchPhrase {
+        background-position: 10px 12px; /* Position the search icon */
+        background-repeat: no-repeat; /* Do not repeat the icon image */
+        width: 100%; /* Full-width */
+        font-size: 16px; /* Increase font-size */
+        padding: 12px 20px 12px 40px; /* Add some padding */
+        border: 1px solid #ddd; /* Add a grey border */
+        margin-bottom: 12px; /* Add some space below the input */
+    }
 
+    #searchTable {
+        border-collapse: collapse; /* Collapse borders */
+        width: 100%; /* Full-width */
+        border: 1px solid #ddd; /* Add a grey border */
+        font-size: 18px; /* Increase font-size */
+    }
+
+    #searchTable th, #searchTable td {
+        text-align: left; /* Left-align text */
+        padding: 12px; /* Add padding */
+    }
+
+    #searchTable tr {
+        /* Add a bottom border to all table rows */
+        border-bottom: 1px solid #ddd;
+    }
+
+    #searchTable tr.header, #searchTable tr:hover {
+        /* Add a grey background color to the table header and on hover */
+        background-color: #f1f1f1;
+    }
+</style>
+<body>
 <jsp:include page="includes/navigation.jsp"/>
 
 <c:if test="${param.error != null}">
@@ -18,6 +52,29 @@
         <p><c:out value="${param.error}"/></p>
     </div>
 </c:if>
+
+<script type="text/javascript" charset="utf-8">
+    function searchProducts() {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchPhrase");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("searchTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 
 <div style="width:900px; margin:0 auto; margin-top: 40px;">
     <form action="/products/addproduct" method="post">
@@ -44,8 +101,9 @@
     </form>
 </div>
 
-
 <div style="width:900px; margin:0 auto; margin-top: 20px;">
+    <input type="text" id="searchPhrase" onkeyup="searchProducts()" placeholder="Szukaj produktów">
+
     <table class="table" border="1">
         <thead class="thead-dark">
         <div>
@@ -53,11 +111,11 @@
             <th>Cena jednostkowa netto</th>
             <th>Jednostka</th>
             <th>% VAT</th>
-            <th style="width: 158px"></th>
+            <th style="width: 170px"></th>
         </div>
 
         </thead>
-        <tbody>
+        <tbody id="searchTable">
         <c:forEach var="product" items="${products}">
             <tr>
                 <td>${product.name}</td>

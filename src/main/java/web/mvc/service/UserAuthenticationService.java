@@ -11,7 +11,7 @@ public class UserAuthenticationService {
     private String rawToken = null;
     private String username;
     private Integer userId;
-    private Integer firmId;
+    private Integer firmId = -1;
 
     public void setToken(String token) {
         this.rawToken = token.replaceFirst("Bearer ", "");

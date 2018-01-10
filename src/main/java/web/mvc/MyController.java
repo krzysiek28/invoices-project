@@ -136,7 +136,16 @@ public class MyController {
 //    public String
 
     @RequestMapping(value = "/createfacture")
-    public String createf() {
+    public String createf(ModelMap modelMap) {
+        try {
+            modelMap.addAttribute("clients",clientService.getFirmClients());
+            modelMap.addAttribute("authservice",userAuthenticationService);
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "createfacture";
     }
 

@@ -6,7 +6,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <body>
 <jsp:include page="includes/navigation.jsp" />
-
+<c:if test="${param.error != null}">
+    <div  style="width:900px; margin:0 auto; margin-top: 10px;"class="alert alert-danger">
+        <p><c:out value="${param.error}"/></p>
+    </div>
+</c:if>
 
 <%--list of firm--%>
 <div class="dropdown show" align="center" style="padding: 20px">
