@@ -87,6 +87,7 @@ public class ProductController {
                              HttpServletRequest request,
                              ModelMap modelMap) throws URISyntaxException, JSONException {
         try {
+
             productService.updateProduct(Integer.parseInt(id), name, netUnitPrice, unit, vatRate/100);
         } catch (HttpClientErrorException e) {
             JSONObject obj = new JSONObject(e.getResponseBodyAsString());

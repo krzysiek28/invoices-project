@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${authservice.isLoggedIn() == false}">
@@ -48,47 +48,64 @@
 <body>
 <jsp:include page="includes/navigation.jsp"/>
 
-
+<%--Main form--%>
 <div style="width:900px; margin:0 auto; margin-top: 10px;">
-    <form action="/clients/addclient" method="get">
+    <h3>Wystawianie faktury - Krok 1 - Podstawowe dane</h3>
+    <form action="/createfacture/step2" method="post">
         <div class="form-row">
-            <div class="col">
+            <div class="col" >
+                <div class="row card" style="margin: 2px;">
+
                 <p>Klient:
                     <input id="clientid" type="hidden" name="clientid" value="-1">
-                    <input id="clientname" type="text" class="form-control" placeholder="Nazwa klienta" name="name"
-                           required="true" onchange="resetId();">
-                    <textarea id="clientdata" name="additionalData" class="form-control"
-                              placeholder="Dodadtkowe informacje"
+                    <input id="clientname" type="text" class="form-control" placeholder="Nazwa klienta" name="clientname"
+                           required="true" onchange="resetId();" style="margin: 2px; width: 95%;">
+                    <textarea id="clientdata" name="clientdata" class="form-control"
+                              placeholder="Dodadtkowe informacje" style="overflow-x:hidden; margin: 2px; width: 95%;"
                               required="true" onchange="resetId();"></textarea><br/>
                     <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
-                            data-target="#clientModal">
+                            data-target="#clientModal" style="margin: 2px; width: 95%;">
                         Wybierz klienta z bazy
                     </button>
                 </p>
 
+                </div>
+                <div class="row card" style="margin: 2px;">
 
+                    <p>Konto bankowe:
+                        <input id="accountnumber" type="text" class="form-control" placeholder="Numer konta" name="accountnumber"
+                               required="true" style="margin: 2px; width: 95%;" readonly="true" value="example">
+                        <textarea id="accountdata" name="accountdata" class="form-control"
+                                  placeholder="Dodadtkowe dane konta" style="overflow-x:hidden; margin: 2px; width: 95%;"
+                                  required="true" readonly="true">example</textarea><br/>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                                data-target="#accountModal" style="margin: 2px; width: 95%;">
+                            Wybierz konto bankowe
+                        </button>
+                    </p>
+
+                </div>
             </div>
-            <div class="col">
+            <div class="col card" style="margin: 2px;">
                 <p>Dane faktury:
                     <input id="invoiceNumber" type="text" class="form-control" placeholder="Numer faktury"
-                           name="invoiceNumber"
+                           name="invoicenumber"
                            required="true">
                     <input id="invoicePlace" type="text" class="form-control" placeholder="Miejsce wystawienia faktury"
-                           name="invoicePlace"
+                           name="invoiceplace"
                            required="true">
                 <p>Data wystawienia:
-                    <input id="invoiceIssueDate" type="date" class="form-control" name="invoiceIssueDate"
+                    <input id="invoiceIssueDate" type="date" class="form-control" name="invoiceissuedate"
                            required="true" onchange="checkDates();"></p>
                 </p>
                 <p>Data płatności:
-                    <input id="invoicePaymentDate" type="date" class="form-control" name="invoicePaymentDate"
+                    <input id="invoicePaymentDate" type="date" class="form-control" name="invoicepaymentdate"
                            required="true" onchange="checkDates();"></p>
                 </p>
             </div>
         </div>
-        <div class="form-row">
-            <p>d</p><Br/>
-            <input type="submit" value="dodaj" class="btn btn-primary btn-md" style="height: 100%;">
+        <div class="form-row card" style="margin: 5px;">
+                <input type="submit" value="Przejdź do kolejnego kroku" class="btn btn-primary btn-block" style= width: 98%; height: 98%;">
         </div>
     </form>
 </div>
@@ -133,32 +150,50 @@
                         </tbody>
                     </table>
                 </div>
-                <%--<form action="/firms/updatefirm/${firm.id}" method="post">--%>
-                <%--<div class="form-row">--%>
-                <%--<div class="form-group col-md-6">--%>
-                <%--<input type="email" class="form-control" placeholder="Email" name="email" required="true">--%>
-                <%--</div>--%>
-                <%--<div class="form-group col-md-6">--%>
-                <%--<input type="text" class="form-control" placeholder="Nazwa" name="name" required="true">--%>
-                <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-row">--%>
-                <%--<div class="form-group col-md-6">--%>
-                <%--<input class="form-control" placeholder="Nip" name="nip" type="text" pattern="^((\d{3}-\d{3}-\d{2}-\d{2})|(\d{3}-\d{2}-\d{2}-\d{3}))$"  title="Wymagany format to: xxx-xxx-xx-xx lub xxx-xx-xx-xxx" required="true">--%>
-                <%--</div>--%>
-                <%--<div class="form-group col-md-6">--%>
-                <%--<input class="form-control" placeholder="Telefon" name="phone" type="text" pattern="^(?:\(?\+?48)?(?:[-\.\(\)\s]*(\d)){9}\)?$" title="Przykładowe numery telefonów w poprawnym formacie: 123123123; 123 123 123; 123-123-123; 12 123 12 12; 12-123-12-12; +48 123 123 123; +48-123-123-123; +48123123123" required="true">--%>
-                <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                <%--<input type="text" class="form-control" placeholder="Lokalizacja" name="place" required="true">--%>
-                <%--</div>--%>
-                <%--<div class="modal-footer">--%>
-                <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>--%>
-                <%--<button type="submit" class="btn btn-primary" >Edytuj</button>--%>
-                <%--</div>--%>
-                <%--</form>--%>
-                <%----%>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bank accounts modal -->
+<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Wybierz konto bankowe</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pre-scrollable">
+                    <%----%>
+                    <table class="table">
+                        <thead>
+                        <th style="width: 300px">numer konta bankowego</th>
+                        <th>dodatkowe dane</th>
+                        <th></th>
+
+                        </thead>
+                        <tbody>
+                        <c:forEach var="client" items="${accounts}">
+                            <tr>
+                                <td id="account${accounts.bankAccount}">${accounts.bankAccount}</td>
+                                <td id="accountdata${accounts.bankAccount}">${accounts.additionalData}</td>
+                                <td>
+                                    <button id="accountbutton${client.id}" type="button" class="btn btn-primary btn-xs"
+                                            onclick="selectAccount(${accounts.bankAccount});" data-dismiss="modal"
+                                            data-target="#accountModal"
+                                    >wybierz
+                                    </button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>
@@ -167,6 +202,7 @@
 
 <jsp:include page="includes/bootstrap.jsp"/>
 
+<%--javascript controller--%>
 <script type="text/javascript" charset="utf-8">
     function searchClients() {
         // Declare variables
@@ -192,7 +228,7 @@
     function selectClient(id) {
         var selectedName = document.getElementById("clientname" + id).innerHTML;
         var selectedData = document.getElementById("clientdata" + id).innerHTML;
-        alert(id + selectedName + selectedData);
+//        alert(id + selectedName + selectedData);
 
         document.getElementById("clientname").value = selectedName;
         document.getElementById("clientdata").value = selectedData;
