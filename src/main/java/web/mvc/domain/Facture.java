@@ -1,30 +1,33 @@
 package web.mvc.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import java.sql.Date;
+import java.util.List;
 
 public class Facture {
     private Integer id;
-    private Usery user;
     private Firm firm;
-    private FirmUsers firmUsers;
     private Client client;
-    private String name;
+    private List<ProductEntry> products;
+    private String number;
     private String place;
-    private Float price;
+    private Date issueDate;
+    private Date paymentDate;
+    private String issuer;
 
-    public Facture(){}
+    public Facture(Integer id, Firm firm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer) {
 
-    public Facture(Usery user, Firm firm, FirmUsers firmUsers, Client client, String name, String place, Float price) {
-        this.user = user;
+        this.id = id;
         this.firm = firm;
-        this.firmUsers = firmUsers;
         this.client = client;
-        this.name = name;
+        this.products = products;
+        this.number = number;
         this.place = place;
-        this.price = price;
+        this.issueDate = issueDate;
+        this.paymentDate = paymentDate;
+        this.issuer = issuer;
+    }
+
+    public Facture() {
     }
 
     public Integer getId() {
@@ -35,28 +38,12 @@ public class Facture {
         this.id = id;
     }
 
-    public Usery getUser() {
-        return user;
-    }
-
-    public void setUser(Usery user) {
-        this.user = user;
-    }
-
     public Firm getFirm() {
         return firm;
     }
 
     public void setFirm(Firm firm) {
         this.firm = firm;
-    }
-
-    public FirmUsers getFirmUsers() {
-        return firmUsers;
-    }
-
-    public void setFirmUsers(FirmUsers firmUsers) {
-        this.firmUsers = firmUsers;
     }
 
     public Client getClient() {
@@ -67,12 +54,20 @@ public class Facture {
         this.client = client;
     }
 
-    public String getName() {
-        return name;
+    public List<ProductEntry> getProducts() {
+        return products;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProducts(List<ProductEntry> products) {
+        this.products = products;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getPlace() {
@@ -83,23 +78,28 @@ public class Facture {
         this.place = place;
     }
 
-    public Float getPrice() {
-        return price;
+    public Date getIssueDate() {
+        return issueDate;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
     }
+
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getIssuer() {
+        return issuer;
+    }
+
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
+    }
+
 }
-
-/*
-    facture_id INTEGER NOT NULL,
-    user_id INTEGER NOT NULL,
-    firm_id INTEGER NOT NULL,
-    user_firm_id INTEGER NOT NULL,
-    client_id INTEGER NOT NULL,
-    name VARCHAR NOT NULL,
-    place VARCHAR NOT NULL,
-    date DATE NOT NULL,
-    price numeric(7,2) NOT NULL,
-    CONSTRAINT facture_pk PRIMARY KEY (facture_id, user_id)*/
