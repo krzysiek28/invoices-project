@@ -25,4 +25,14 @@ public class FactureController {
 
         return "ok";
     }
+
+    @RequestMapping(value = "/facture")
+    public String showFacture(){
+        return "facture";
+    }
+
+    @RequestMapping(value = "/facturesList")
+    public String showFactureList(){
+        return "facturesList";
+    }
 }
