@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${authservice.isLoggedIn() == false}">
@@ -51,16 +51,16 @@
 <%--Main form--%>
 <div style="width:900px; margin:0 auto; margin-top: 10px;">
     <h3>Wystawianie faktury - Krok 1 - Podstawowe dane</h3>
-    <form action="/clients/addclient" method="get">
+    <form action="/createfacture/step2" method="post">
         <div class="form-row">
             <div class="col" >
                 <div class="row card" style="margin: 2px;">
 
                 <p>Klient:
                     <input id="clientid" type="hidden" name="clientid" value="-1">
-                    <input id="clientname" type="text" class="form-control" placeholder="Nazwa klienta" name="name"
+                    <input id="clientname" type="text" class="form-control" placeholder="Nazwa klienta" name="clientname"
                            required="true" onchange="resetId();" style="margin: 2px; width: 95%;">
-                    <textarea id="clientdata" name="additionalData" class="form-control"
+                    <textarea id="clientdata" name="clientdata" class="form-control"
                               placeholder="Dodadtkowe informacje" style="overflow-x:hidden; margin: 2px; width: 95%;"
                               required="true" onchange="resetId();"></textarea><br/>
                     <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
@@ -74,10 +74,10 @@
 
                     <p>Konto bankowe:
                         <input id="accountnumber" type="text" class="form-control" placeholder="Numer konta" name="accountnumber"
-                               required="true" style="margin: 2px; width: 95%;" readonly="true">
+                               required="true" style="margin: 2px; width: 95%;" readonly="true" value="example">
                         <textarea id="accountdata" name="accountdata" class="form-control"
                                   placeholder="Dodadtkowe dane konta" style="overflow-x:hidden; margin: 2px; width: 95%;"
-                                  required="true" readonly="true"></textarea><br/>
+                                  required="true" readonly="true">example</textarea><br/>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
                                 data-target="#accountModal" style="margin: 2px; width: 95%;">
                             Wybierz konto bankowe
@@ -89,17 +89,17 @@
             <div class="col card" style="margin: 2px;">
                 <p>Dane faktury:
                     <input id="invoiceNumber" type="text" class="form-control" placeholder="Numer faktury"
-                           name="invoiceNumber"
+                           name="invoicenumber"
                            required="true">
                     <input id="invoicePlace" type="text" class="form-control" placeholder="Miejsce wystawienia faktury"
-                           name="invoicePlace"
+                           name="invoiceplace"
                            required="true">
                 <p>Data wystawienia:
-                    <input id="invoiceIssueDate" type="date" class="form-control" name="invoiceIssueDate"
+                    <input id="invoiceIssueDate" type="date" class="form-control" name="invoiceissuedate"
                            required="true" onchange="checkDates();"></p>
                 </p>
                 <p>Data płatności:
-                    <input id="invoicePaymentDate" type="date" class="form-control" name="invoicePaymentDate"
+                    <input id="invoicePaymentDate" type="date" class="form-control" name="invoicepaymentdate"
                            required="true" onchange="checkDates();"></p>
                 </p>
             </div>
