@@ -22,11 +22,11 @@ import java.util.List;
 @Service
 public class FirmService {
 
-    @Autowired
-    private RestTemplate restTemplateHCCHRF;
+        @Autowired
+        private RestTemplate restTemplateHCCHRF;
 
-    @Autowired
-    UserAuthenticationService userAuthenticationService;
+        @Autowired
+        UserAuthenticationService userAuthenticationService;
 
     public List<Firm> getFirms() throws URISyntaxException, JSONException, IOException {
 

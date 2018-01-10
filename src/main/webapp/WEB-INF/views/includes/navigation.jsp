@@ -20,7 +20,7 @@
                 <a class="nav-link" href="/clients">Twoi klienci</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/bankaccounts">Twoje konta bankowe</a>
+                <a class="nav-link" href="/bankAccounts">Twoje konta bankowe</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/firms">Zarządzaj firmami</a>

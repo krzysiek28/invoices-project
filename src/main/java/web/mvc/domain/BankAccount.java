@@ -3,13 +3,13 @@ package web.mvc.domain;
 public class BankAccount {
 
     private String bankAccount;
-    private Usery user;
+    private String additionalData;
 
     BankAccount(){}
 
-    public BankAccount(String bankAccount, Usery user) {
+    public BankAccount(String bankAccount, String additionalData) {
         this.bankAccount = bankAccount;
-        this.user = user;
+        this.additionalData = additionalData;
     }
 
     public String getBankAccount() {
@@ -20,11 +20,9 @@ public class BankAccount {
         this.bankAccount = bankAccount;
     }
 
-    public Usery getUser() {
-        return user;
+    public String getAdditionalData() {
+        return additionalData;
     }
 
-    public void setUser(Usery user) {
-        this.user = user;
-    }
+    public void setAdditionalData(String additionalData) {this.additionalData=additionalData;}
 }
