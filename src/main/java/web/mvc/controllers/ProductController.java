@@ -9,12 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
+import web.mvc.domain.Client;
+import web.mvc.domain.Product;
 import web.mvc.service.ProductService;
 import web.mvc.service.UserAuthenticationService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Controller
 public class ProductController {
@@ -33,7 +38,9 @@ public class ProductController {
                                ModelMap modelMap) throws IOException, URISyntaxException, JSONException {
         try {
             modelMap.addAttribute("authservice", userAuthenticationService);
-            modelMap.addAttribute("products", productService.getFirmProducts());
+            List<Product> firmProducts = productService.getFirmProducts();
+            Collections.sort(firmProducts, Comparator.comparingInt(Product::getId));
+            modelMap.addAttribute("products", firmProducts);
             return "products";
         } catch (HttpClientErrorException e) {
             JSONObject obj = new JSONObject(e.getResponseBodyAsString());

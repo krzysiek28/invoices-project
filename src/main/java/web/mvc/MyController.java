@@ -12,10 +12,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.WebRequest;
 
-import web.mvc.service.FirmService;
-import web.mvc.service.ClientService;
-import web.mvc.service.UserAuthenticationService;
-import web.mvc.service.UserService;
+import web.mvc.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -33,6 +30,8 @@ public class MyController {
     private RestTemplate restTemplateHCCHRF;
     @Autowired
     private UserService userService;
+    @Autowired
+    BankAccountService bankAccountService;
 
 
     @Autowired
@@ -140,6 +139,7 @@ public class MyController {
         try {
             modelMap.addAttribute("clients",clientService.getFirmClients());
             modelMap.addAttribute("authservice",userAuthenticationService);
+            modelMap.addAttribute("accounts",bankAccountService.getBankAccounts());
 
         } catch (URISyntaxException e) {
             e.printStackTrace();
