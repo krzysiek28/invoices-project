@@ -74,10 +74,10 @@
 
                     <p>Konto bankowe:
                         <input id="accountnumber" type="text" class="form-control" placeholder="Numer konta" name="accountnumber"
-                               required="true" style="margin: 2px; width: 95%;" readonly="true" value="example">
+                               required="true" style="margin: 2px; width: 95%;" readonly="true">
                         <textarea id="accountdata" name="accountdata" class="form-control"
                                   placeholder="Dodadtkowe dane konta" style="overflow-x:hidden; margin: 2px; width: 95%;"
-                                  required="true" readonly="true">example</textarea><br/>
+                                  required="true" readonly="true"></textarea><br/>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
                                 data-target="#accountModal" style="margin: 2px; width: 95%;">
                             Wybierz konto bankowe
@@ -178,13 +178,13 @@
 
                         </thead>
                         <tbody>
-                        <c:forEach var="client" items="${accounts}">
+                        <c:forEach var="account" items="${accounts}">
                             <tr>
-                                <td id="account${accounts.bankAccount}">${accounts.bankAccount}</td>
-                                <td id="accountdata${accounts.bankAccount}">${accounts.additionalData}</td>
+                                <td id="account${account.bankAccount}">${account.bankAccount}</td>
+                                <td id="accountdata${account.bankAccount}">${account.additionalData}</td>
                                 <td>
-                                    <button id="accountbutton${client.id}" type="button" class="btn btn-primary btn-xs"
-                                            onclick="selectAccount(${accounts.bankAccount});" data-dismiss="modal"
+                                    <button id="accountbutton${account.bankAccount}" type="button" class="btn btn-primary btn-xs"
+                                            onclick="selectAccount(${account.bankAccount});" data-dismiss="modal"
                                             data-target="#accountModal"
                                     >wybierz
                                     </button>
@@ -249,6 +249,16 @@
             alert('Nieprawidłowy termin płatności');
             document.getElementById("invoicePaymentDate").value = document.getElementById("invoiceIssueDate").value
         }
+    }
+
+    function selectAccount(id) {
+        var selectedName = document.getElementById("account" + id).innerHTML;
+        var selectedData = document.getElementById("accountdata" + id).innerHTML;
+//        alert(id + selectedName + selectedData);
+
+        document.getElementById("accountnumber").value = selectedName;
+        document.getElementById("accountdata").value = selectedData;
+
     }
 </script>
 </body>
