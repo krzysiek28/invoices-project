@@ -11,7 +11,7 @@ public class Client {
     private Integer id;
     private String name;
     private String additionalData;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     private Firm owner;
 
     public Client() {

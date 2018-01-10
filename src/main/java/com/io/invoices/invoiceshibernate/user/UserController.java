@@ -37,7 +37,12 @@ public class UserController {
 
 	@PostMapping("/sign-up")
 	public void signUp(@RequestBody ApplicationUser user, HttpServletResponse res) {
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		if (applicationUserRepository.findByUsername(user.getUsername()) != null) {
+			throw new IllegalArgumentException("Username already exists!");
+		}
+		if (applicationUserRepository.findByEmail(user.getEmail()) != null) {
+			throw new IllegalArgumentException("User with provided email already exists!");
+		}
 		user.setUsername(user.getUsername());
 		user.setEmail(user.getEmail());
 		user.setRole(user.getRole());

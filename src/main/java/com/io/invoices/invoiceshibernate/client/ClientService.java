@@ -36,6 +36,12 @@ public class ClientService {
             throw new IllegalArgumentException("Client does not exist!");
         }
 
+        if (client.getName().equals(""))
+            throw new IllegalArgumentException("Nazwa nie może być pusta!");
+
+        if (client.getAdditionalData().equals(""))
+            throw new IllegalArgumentException("Należy podać dodatkowe dane!");
+
         Client dbClient = clientRepository.findOne(clientId);
         dbClient.setName(client.getName());
         dbClient.setAdditionalData(client.getAdditionalData());
