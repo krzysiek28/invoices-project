@@ -53,25 +53,41 @@
     <form action="/clients/addclient" method="get">
         <div class="form-row">
             <div class="col">
-                <p>Klient:</p>
-                <input id="clientid" type="hidden" name="clientid" value="-1">
-                <input id="clientname" type="text" class="form-control" placeholder="Nazwa klienta" name="name"
-                       required="true" onchange="resetId();">
-                <textarea id="clientdata" name="additionalData" class="form-control" placeholder="Dodadtkowe informacje"
-                          required="true" onchange="resetId();"></textarea>
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#clientModal">
-                    Wybierz klienta z bazy
-                </button>
+                <p>Klient:
+                    <input id="clientid" type="hidden" name="clientid" value="-1">
+                    <input id="clientname" type="text" class="form-control" placeholder="Nazwa klienta" name="name"
+                           required="true" onchange="resetId();">
+                    <textarea id="clientdata" name="additionalData" class="form-control"
+                              placeholder="Dodadtkowe informacje"
+                              required="true" onchange="resetId();"></textarea><br/>
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                            data-target="#clientModal">
+                        Wybierz klienta z bazy
+                    </button>
+                </p>
 
 
             </div>
             <div class="col">
-                <p>Dane faktury:</p>
-                <input id="invoiceNumber" type="text" class="form-control" placeholder="Numer faktury" name="name"
-                       required="true">
+                <p>Dane faktury:
+                    <input id="invoiceNumber" type="text" class="form-control" placeholder="Numer faktury"
+                           name="invoiceNumber"
+                           required="true">
+                    <input id="invoicePlace" type="text" class="form-control" placeholder="Miejsce wystawienia faktury"
+                           name="invoicePlace"
+                           required="true">
+                <p>Data wystawienia:
+                    <input id="invoiceIssueDate" type="date" class="form-control" name="invoiceIssueDate"
+                           required="true" onchange="checkDates();"></p>
+                </p>
+                <p>Data płatności:
+                    <input id="invoicePaymentDate" type="date" class="form-control" name="invoicePaymentDate"
+                           required="true" onchange="checkDates();"></p>
+                </p>
             </div>
         </div>
         <div class="form-row">
+            <p>d</p><Br/>
             <input type="submit" value="dodaj" class="btn btn-primary btn-md" style="height: 100%;">
         </div>
     </form>
@@ -107,7 +123,8 @@
                                 <td id="clientdata${client.id}">${client.additionalData}</td>
                                 <td>
                                     <button id="clientbutton${client.id}" type="button" class="btn btn-primary btn-xs"
-                                            onclick="selectClient(${client.id});" data-dismiss="modal" data-target="#clientModal"
+                                            onclick="selectClient(${client.id});" data-dismiss="modal"
+                                            data-target="#clientModal"
                                     >wybierz
                                     </button>
                                 </td>
@@ -171,19 +188,31 @@
             }
         }
     }
+
     function selectClient(id) {
-        var selectedName = document.getElementById("clientname"+id).innerHTML;
-        var selectedData = document.getElementById("clientdata"+id).innerHTML;
-        alert(id+selectedName+selectedData);
+        var selectedName = document.getElementById("clientname" + id).innerHTML;
+        var selectedData = document.getElementById("clientdata" + id).innerHTML;
+        alert(id + selectedName + selectedData);
 
         document.getElementById("clientname").value = selectedName;
         document.getElementById("clientdata").value = selectedData;
-        document.getElementById("clientid").setAttribute("value",id);
+        document.getElementById("clientid").setAttribute("value", id);
 
     }
-    function resetId() {
-        document.getElementById("clientid").setAttribute("value",-1);
 
+    function resetId() {
+        document.getElementById("clientid").setAttribute("value", -1);
+
+    }
+
+    function checkDates() {
+        var issueDate = Date.parse(document.getElementById("invoiceIssueDate").value);
+        var paymentDate = Date.parse(document.getElementById("invoicePaymentDate").value);
+
+        if (paymentDate < issueDate) {
+            alert('Nieprawidłowy termin płatności');
+            document.getElementById("invoicePaymentDate").value = document.getElementById("invoiceIssueDate").value
+        }
     }
 </script>
 </body>
