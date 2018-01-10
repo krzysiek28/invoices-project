@@ -14,7 +14,7 @@ public class Firm {
     private String place;
     private String phone;
     private String email;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     private ApplicationUser owner;
 
     public Firm() {

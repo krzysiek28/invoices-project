@@ -1,5 +1,11 @@
 package com.io.invoices.invoiceshibernate.firm;
 
+import com.io.invoices.invoiceshibernate.bankAccount.BankAccount;
+import com.io.invoices.invoiceshibernate.bankAccount.BankAccountRepository;
+import com.io.invoices.invoiceshibernate.client.Client;
+import com.io.invoices.invoiceshibernate.client.ClientRepository;
+import com.io.invoices.invoiceshibernate.product.Product;
+import com.io.invoices.invoiceshibernate.product.ProductRepository;
 import com.io.invoices.invoiceshibernate.user.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +18,15 @@ public class FirmService {
 
     @Autowired
     FirmRepository firmRepository;
+
+    @Autowired
+    ClientRepository clientRepository;
+
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
+    BankAccountRepository bankAccountRepository;
 
     @Autowired
     ApplicationUserRepository userRepository;
@@ -46,6 +61,10 @@ public class FirmService {
         if (!firmRepository.exists(firmId)) {
             throw new IllegalArgumentException("Company does not exist!");
         }
+        System.out.println(firmId);
+        productRepository.deleteProductsByOwnerId(firmId);
+        clientRepository.deleteClientsByOwnerId(firmId);
+        bankAccountRepository.deleteBankAccountsByFirmId(firmId);
 
         firmRepository.findOne(firmId).setOwner(null);
         firmRepository.delete(firmId);

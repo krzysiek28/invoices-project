@@ -2,6 +2,7 @@ package com.io.invoices.invoiceshibernate.bankAccount;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
