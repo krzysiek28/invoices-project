@@ -47,40 +47,7 @@
 </style>
 <body>
 <jsp:include page="includes/navigation.jsp"/>
-<script type="text/javascript" charset="utf-8">
-    function searchClients() {
-        // Declare variables
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("searchPhrase");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("searchTable");
-        tr = table.getElementsByTagName("tr");
 
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-    function selectClient(id) {
-        var selectedName = document.getElementById("clientname"+id).innerHTML;
-        var selectedData = document.getElementById("clientdata"+id).innerHTML;
-        document.getElementById("clientname").setAttribute("value",selectedName);
-        document.getElementById("clientdata").innerHTML = selectedData;
-        document.getElementById("clientid").setAttribute("value",id);
-
-    }
-    function resetId() {
-        document.getElementById("clientid").setAttribute("value",-1);
-
-    }
-</script>
 
 <div style="width:900px; margin:0 auto; margin-top: 10px;">
     <form action="/clients/addclient" method="get">
@@ -101,7 +68,7 @@
             <div class="col">
                 <p>Dane faktury:</p>
                 <input id="invoiceNumber" type="text" class="form-control" placeholder="Numer faktury" name="name"
-                       required="true" onchange="resetId();">
+                       required="true">
             </div>
         </div>
         <div class="form-row">
@@ -182,5 +149,42 @@
 </div>
 
 <jsp:include page="includes/bootstrap.jsp"/>
+
+<script type="text/javascript" charset="utf-8">
+    function searchClients() {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchPhrase");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("searchTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function selectClient(id) {
+        var selectedName = document.getElementById("clientname"+id).innerHTML;
+        var selectedData = document.getElementById("clientdata"+id).innerHTML;
+        alert(id+selectedName+selectedData);
+
+        document.getElementById("clientname").value = selectedName;
+        document.getElementById("clientdata").value = selectedData;
+        document.getElementById("clientid").setAttribute("value",id);
+
+    }
+    function resetId() {
+        document.getElementById("clientid").setAttribute("value",-1);
+
+    }
+</script>
 </body>
 </html>
