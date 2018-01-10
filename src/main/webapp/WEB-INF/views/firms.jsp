@@ -1,60 +1,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:if test="${authservice.isLoggedIn() == false}">
+    <c:redirect url="/"/>
+</c:if>
 
-<html lang="en">
-<head>
-    <title>Invoices</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
-</head>
+<jsp:include page="includes/header.jsp">
+    <jsp:param name="title" value="Produkty"/>
+</jsp:include>
 <body>
+<jsp:include page="includes/navigation.jsp"/>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="/logged">Twoje Faktury</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/createfacture">Stwórz fakturę </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/products">Twoje produkty</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/clients">Twoi klienci</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/bankaccounts">Twoje konta bankowe</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/firms">Zarządzaj firmami</a>
-            </li>
-        </ul>
-    </div>
-    <div class="nick" style="padding-right: 10px; color: white">
-        <c:if test="${pageContext.request.userPrincipal.name != null}">
-            <h4>You are logged as: ${pageContext.request.userPrincipal.name}</h4>
-        </c:if>
-    </div>
-    <!-- naval with buttons -->
-    <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='/logout'">Wyloguj się</button>
-    </div>
-</nav>
 
-<div>
+<div style="width:900px; margin:0 auto; margin-top: 10px;">
     <table class="table" border="1">
         <thead class="thead-dark" align="center">
         <div>
@@ -64,27 +21,22 @@
             <th>Telefon</th>
             <th>Lokalizacja</th>
             <th></th>
-            <th></th>
         </div>
 
         </thead>
         <tbody>
         <c:forEach var="firm" items="${firms}">
             <tr>
-                <td align="center">${firm.email}</td>
+                <td align="center" style="width: 20%">${firm.email}</td>
                 <td align="center">${firm.name}</td>
-                <td align="center">${firm.nip}</td>
-                <td align="center">${firm.phone}</td>
-                <td align="center">${firm.place}</td>
-                <td align="center">
+                <td align="center" style="width: 10%">${firm.nip}</td>
+                <td align="center" style="width: 10%">${firm.phone}</td>
+                <td align="center" style="width: 10%">${firm.place}</td>
+                <td style="width: 159px">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        Edytuj
+                        edytuj
                     </button>
-                </td>
-                <td align="center">
-                    <form action="/firms/deletefirm/${firm.id}" method="post">
-                        <button type="submit" class="btn btn-primary">Usuń</button>
-                    </form>
+                    <a href="/firms/deletefirm/${firm.id}" class="btn btn-primary">usuń</a>
                 </td>
             </tr>
 
@@ -95,7 +47,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Edytuj dane firmy</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -105,22 +57,22 @@
                             <form action="/firms/updatefirm/${firm.id}" method="post">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <input type="email" class="form-control" placeholder="Email" name="email">
+                                        <input type="email" class="form-control" placeholder="Email" name="email" required="true">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input type="text" class="form-control" placeholder="Nazwa" name="name">
+                                        <input type="text" class="form-control" placeholder="Nazwa" name="name" required="true">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <input type="text" class="form-control" placeholder="Nip" name="nip">
+                                        <input class="form-control" placeholder="Nip" name="nip" type="text" pattern="^((\d{3}-\d{3}-\d{2}-\d{2})|(\d{3}-\d{2}-\d{2}-\d{3}))$"  title="Wymagany format to: xxx-xxx-xx-xx lub xxx-xx-xx-xxx" required="true">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input type="text" class="form-control" placeholder="Telefon" name="phone">
+                                        <input class="form-control" placeholder="Telefon" name="phone" type="text" pattern="^(?:\(?\+?48)?(?:[-\.\(\)\s]*(\d)){9}\)?$" title="Przykładowe numery telefonów w poprawnym formacie: 123123123; 123 123 123; 123-123-123; 12 123 12 12; 12-123-12-12; +48 123 123 123; +48-123-123-123; +48123123123" required="true">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Lokalizacja" name="place">
+                                    <input type="text" class="form-control" placeholder="Lokalizacja" name="place" required="true">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
@@ -142,29 +94,29 @@
 </div>
 
 
-<div>
+<div style="width:900px; margin:0 auto; margin-top: 10px;">
     <form action="/firms/addfirm" method="post">
         <div class="form-row">
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" placeholder="Email" name="email">
+                <input class="form-control" placeholder="Email" name="email" type="email" required="true">
             </div>
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" placeholder="Nazwa" name="name">
+                <input class="form-control" placeholder="Nazwa" name="name" type="text" required="true">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" placeholder="Nip" name="nip">
+                <input class="form-control" placeholder="Nip" name="nip" type="text" pattern="^((\d{3}-\d{3}-\d{2}-\d{2})|(\d{3}-\d{2}-\d{2}-\d{3}))$"  title="Wymagany format to: xxx-xxx-xx-xx lub xxx-xx-xx-xxx" required="true">
             </div>
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" placeholder="Telefon" name="phone">
+                <input class="form-control" placeholder="Telefon" name="phone" type="text" pattern="^(?:\(?\+?48)?(?:[-\.\(\)\s]*(\d)){9}\)?$" title="Przykładowe numery telefonów w poprawnym formacie: 123123123; 123 123 123; 123-123-123; 12 123 12 12; 12-123-12-12; +48 123 123 123; +48-123-123-123; +48123123123" required="true">
             </div>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Lokalizacja" name="place">
+            <input class="form-control" placeholder="Lokalizacja" name="place" type="text" required="true">
         </div>
         <div class="col">
-            <button type="submit" class="btn btn-primary">Dodaj</button>
+            <button type="submit" class="btn btn-primary btn-block">Dodaj</button>
         </div>
     </form>
 </div>

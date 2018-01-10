@@ -1,12 +1,14 @@
 package web.mvc.controllers;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 import web.mvc.service.ProductService;
 import web.mvc.service.UserAuthenticationService;
 
@@ -28,10 +30,19 @@ public class ProductController {
 
     @RequestMapping(value = "/products")
     public String productsPage(HttpServletRequest request,
-                               ModelMap modelMap) throws IOException, URISyntaxException {
-        modelMap.addAttribute("authservice", userAuthenticationService);
-        modelMap.addAttribute("products", productService.getFirmProducts());
-        return "products";
+                               ModelMap modelMap) throws IOException, URISyntaxException, JSONException {
+        try {
+            modelMap.addAttribute("authservice", userAuthenticationService);
+            modelMap.addAttribute("products", productService.getFirmProducts());
+            return "products";
+        } catch (HttpClientErrorException e) {
+            JSONObject obj = new JSONObject(e.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/products?error=" + errorMessage;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/products";
     }
 
     @RequestMapping(value = "/products/addproduct", method = RequestMethod.POST)
@@ -40,26 +51,52 @@ public class ProductController {
                              @RequestParam("unit") String unit,
                              @RequestParam("vatRate") Float vatRate,
                              HttpServletRequest request,
-                             ModelMap modelMap) {
+                             ModelMap modelMap) throws JSONException {
         try {
             productService.addProduct(name, netUnitPrice, unit, vatRate/100);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (HttpClientErrorException e) {
+            JSONObject obj = new JSONObject(e.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/products?error=" + errorMessage;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "redirect:/products";
     }
-//
-//    @RequestMapping(value = "/products/deleteproduct/{id}", method = RequestMethod.GET)
-//    public String deleteProduct(@PathVariable("id") String id) {
-//        try {
-//            productService.deleteProductById(id);
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-//        return "redirect:/products";
-//    }
+
+    @RequestMapping(value = "/products/deleteproduct/{id}", method = RequestMethod.GET)
+    public String deleteProduct(@PathVariable("id") String id) throws JSONException {
+        try {
+            productService.deleteProductById(Integer.parseInt(id));
+        } catch (HttpClientErrorException e) {
+            JSONObject obj = new JSONObject(e.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/products?error=" + errorMessage;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/products";
+    }
+
+    @RequestMapping(value = "/products/updateproduct/{id}", method = RequestMethod.POST)
+    public String updateProduct(@RequestParam("name") String name,
+                             @RequestParam("netUnitPrice") Float netUnitPrice,
+                             @RequestParam("unit") String unit,
+                             @RequestParam("vatRate") Float vatRate,
+                             @PathVariable("id") String id,
+                             HttpServletRequest request,
+                             ModelMap modelMap) throws URISyntaxException, JSONException {
+        try {
+            productService.updateProduct(Integer.parseInt(id), name, netUnitPrice, unit, vatRate/100);
+        } catch (HttpClientErrorException e) {
+            JSONObject obj = new JSONObject(e.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/products?error=" + errorMessage;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/products";
+    }
 
 
 }

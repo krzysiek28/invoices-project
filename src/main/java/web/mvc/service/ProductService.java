@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import web.mvc.domain.Client;
 import web.mvc.domain.Product;
@@ -30,8 +31,8 @@ public class ProductService {
         this.restTemplateHCCHRF = restTemplateHCCHRF;
     }
 
-    public List<Product> getFirmProducts() throws URISyntaxException, IOException {
-        Integer companyId = 24; //get from userauthentivationserbice
+    public List<Product> getFirmProducts() throws URISyntaxException, IOException, HttpClientErrorException {
+        Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/products/"+companyId);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
@@ -43,8 +44,8 @@ public class ProductService {
                 objectMapper.getTypeFactory().constructCollectionType(List.class, Product.class));
     }
 
-    public void addProduct(String name, Float netUnitPrice, String unit, Float vatRate) throws JSONException, URISyntaxException {
-        Integer companyId = 24;
+    public void addProduct(String name, Float netUnitPrice, String unit, Float vatRate) throws JSONException, URISyntaxException, HttpClientErrorException {
+        Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/products/"+companyId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -57,6 +58,31 @@ public class ProductService {
                 .toString();
         HttpEntity<String> request = new HttpEntity<String>(productData, headers);
         ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, Component.class);
+    }
+
+    public void deleteProductById(int id) throws URISyntaxException, HttpClientErrorException {
+        Integer companyId = userAuthenticationService.getFirmId();
+        URI uri = new URI("http://localhost:8090/products/"+companyId+"/"+id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+        restTemplateHCCHRF.exchange(uri,HttpMethod.DELETE,request,String.class);
+    }
+
+    public void updateProduct(int id, String name, Float netUnitPrice, String unit, Float vatRate) throws URISyntaxException, JSONException, HttpClientErrorException {
+        Integer companyId = userAuthenticationService.getFirmId();
+        URI uri = new URI("http://localhost:8090/products/"+companyId+"/"+id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
+        String productData = new JSONObject()
+                .put("name",name)
+                .put("netUnitPrice",netUnitPrice)
+                .put("unit", unit)
+                .put("vatRate",vatRate)
+                .toString();
+        HttpEntity<String> request = new HttpEntity<String>(productData, headers);
+        ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.PUT, request, Component.class);
     }
 
 

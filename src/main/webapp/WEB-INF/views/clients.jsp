@@ -14,21 +14,26 @@
     function showEdit(id) {
         var clientId = id;
         var nameElement = document.getElementById("clientname" + id);
+        var nameElementHTML = nameElement.innerHTML;
         var dataElement = document.getElementById("clientdata" + id);
+        var dataElementHTML = dataElement.innerHTML;
         var name = nameElement.innerHTML;
         var data = dataElement.innerHTML;
         nameElement.innerHTML = "<input id=\"i" + id + "\" style=\"width: 270px\"type=\"text\" class=\"form-control\" value=\"" + name + "\" name=\"name\" required>"
         dataElement.innerHTML = "<textarea id=\"t" + id + "\"name=\"additionalData\" class=\"form-control\" required=\"true\">" + data + "</textarea>";
         var button = document.getElementById("clientbutton" + id);
-
+        var deletebutton = document.getElementById("deletebutton" + id);
+        deletebutton.setAttribute("class","btn btn-primary disabled");
+        var buttonOnclick = button.getAttribute("onclick");
         button.innerHTML = "zapisz";
-
-        setTimeout(function(){
-            button.setAttribute("type","submit");        }, 1);
 
         button.onclick = function () {
             var newName = document.getElementById("i" + id).value;
             var newData = document.getElementById("t" + id).value;
+            if (newName == "")
+                newName = name;
+            if (newData == "")
+                newData = data;
 //            alert(newName);
 //            alert(newData);
             var xhr = new XMLHttpRequest();
@@ -36,10 +41,15 @@
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             var params = "name="+newName+"&additionalData="+newData+"&id="+id;
             xhr.send(params);
-            history.go(0);
-            setTimeout(function(){
-                window.location.reload(true);
-            });
+            nameElement.innerHTML = newName;
+            dataElement.innerHTML = newData;
+            button.innerHTML = "edytuj";
+            button.setAttribute("onclick",buttonOnclick);
+            deletebutton.setAttribute("class","btn btn-primary");
+//            history.go(0);
+//            setTimeout(function(){
+//                window.location.reload(true);
+//            });
 
 
         }
@@ -63,7 +73,7 @@
             <div class="col">
             </div>
             <div class="col">
-                <input type="submit" value="dodaj" class="btn btn-info btn-md" style="height: 100%;">
+                <input type="submit" value="dodaj" class="btn btn-primary btn-md" style="height: 100%;">
             </div>
         </div>
     </form>
@@ -84,8 +94,8 @@
                 <td id="clientname${client.id}">${client.name}</td>
                 <td id="clientdata${client.id}" style="white-space: pre-line">${client.additionalData}</td>
                 <td>
-                    <a href="/clients/deleteclient/${client.id}" class="btn btn-info" role="button">usuń</a>
-                    <button id="clientbutton${client.id}" type="button" class="btn btn-info"  onclick="showEdit(${client.id});">edytuj</button>
+                    <a id="deletebutton${client.id}" href="/clients/deleteclient/${client.id}" class="btn btn-primary" role="button">usuń</a>
+                    <button id="clientbutton${client.id}" type="button" class="btn btn-primary"  onclick="showEdit(${client.id});">edytuj</button>
                 </td>
                 </form>
             </tr>

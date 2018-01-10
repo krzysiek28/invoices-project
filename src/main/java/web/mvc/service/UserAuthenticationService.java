@@ -48,6 +48,7 @@ public class UserAuthenticationService {
     public void logout() {
         this.username = null;
         this.rawToken = null;
+        this.firmId = -1;
     }
 
     public String getRawToken() {

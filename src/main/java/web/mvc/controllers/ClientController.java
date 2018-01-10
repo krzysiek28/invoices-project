@@ -14,6 +14,7 @@ import web.mvc.service.ClientService;
 import web.mvc.service.UserAuthenticationService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,22 +36,21 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/clients")
-    public String clientsPage(HttpServletRequest request, ModelMap modelMap)  {
+    public String clientsPage(HttpServletRequest request, ModelMap modelMap) throws JSONException, IOException, URISyntaxException {
         try {
             List<Client> firmClients = clientService.getFirmClients();
             Collections.sort(firmClients, Comparator.comparingInt(Client::getId));
             modelMap.addAttribute("authservice", userAuthenticationService);
             modelMap.addAttribute("clients", firmClients);
+        } catch (HttpServerErrorException exception) {
+            JSONObject obj = new JSONObject(exception.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/clients?error=" + errorMessage;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return "clients";
-    }
-
-    @RequestMapping(value = "/reclients")
-    public String clientsPage()  {
-        return "redirect:/clients";
     }
 
     @RequestMapping(value = "/clients/addclient", method = RequestMethod.POST)
@@ -60,11 +60,13 @@ public class ClientController {
                             ModelMap modelMap) throws URISyntaxException, JSONException {
         try {
             clientService.addClient(name, additionalData);
-        } catch (HttpServerErrorExcep exception) {
+        } catch (HttpServerErrorException exception) {
             JSONObject obj = new JSONObject(exception.getResponseBodyAsString());
             String errorMessage = obj.getString("message");
             return "redirect:/clients?error=" + errorMessage;
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "redirect:/clients";
     }
@@ -75,13 +77,30 @@ public class ClientController {
                              @RequestParam("id") String id,
                             HttpServletRequest request,
                             ModelMap modelMap) throws URISyntaxException, JSONException {
-        clientService.updateClient(Integer.parseInt(id),name,additionalData);
+        try {
+            clientService.updateClient(Integer.parseInt(id), name, additionalData);
+        } catch (HttpServerErrorException exception) {
+            JSONObject obj = new JSONObject(exception.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/clients?error=" + errorMessage;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "redirect:/clients";
     }
 
     @RequestMapping(value = "/clients/deleteclient/{id}", method = RequestMethod.GET)
-    public String deleteClient(@PathVariable("id") String id) throws URISyntaxException {
-        clientService.deleteClient(Integer.parseInt(id));
+    public String deleteClient(@PathVariable("id") String id) throws URISyntaxException, JSONException {
+        try {
+            clientService.deleteClient(Integer.parseInt(id));
+        } catch (HttpServerErrorException exception) {
+            JSONObject obj = new JSONObject(exception.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/clients?error=" + errorMessage;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "redirect:/clients";
     }
 }

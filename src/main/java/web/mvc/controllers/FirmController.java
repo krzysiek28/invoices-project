@@ -87,7 +87,7 @@ public class FirmController {
     }
 
 
-    @RequestMapping(value = "/firms/deletefirm/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/firms/deletefirm/{id}", method = RequestMethod.GET)
     public String updateFirm(@PathVariable("id") String id,
                              SessionStatus status) throws URISyntaxException, JSONException {
         firmService.deleteFirm(id);

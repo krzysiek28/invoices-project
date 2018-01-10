@@ -30,8 +30,8 @@ public class ClientService {
     UserAuthenticationService userAuthenticationService;
 
 
-    public List<Client> getFirmClients() throws URISyntaxException, IOException {
-        Integer companyId = 24; //get from userauthentivationserbice
+    public List<Client> getFirmClients() throws URISyntaxException, IOException, HttpClientErrorException {
+        Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/clients/"+companyId);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
@@ -45,9 +45,9 @@ public class ClientService {
                 objectMapper.getTypeFactory().constructCollectionType(List.class, Client.class));
     }
 
-    public void addClient(String name, String additionalData) throws URISyntaxException, JSONException {
+    public void addClient(String name, String additionalData) throws URISyntaxException, JSONException, HttpClientErrorException {
 
-        Integer companyId = 24;
+        Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/clients/"+companyId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -58,7 +58,7 @@ public class ClientService {
     }
 
     public void updateClient(int id, String name, String additionalData) throws URISyntaxException, JSONException, HttpClientErrorException {
-        Integer companyId = 24;
+        Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/clients/"+companyId+"/"+id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -68,8 +68,8 @@ public class ClientService {
         ResponseEntity<String> response = restTemplateHCCHRF.exchange(uri, HttpMethod.PUT, request, String.class);
     }
 
-    public void deleteClient(int clientId) throws URISyntaxException {
-        Integer companyId = 24;
+    public void deleteClient(int clientId) throws URISyntaxException, HttpClientErrorException {
+        Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/clients/"+companyId+"/"+clientId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
