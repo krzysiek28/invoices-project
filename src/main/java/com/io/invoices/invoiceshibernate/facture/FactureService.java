@@ -55,7 +55,8 @@ public class FactureService {
         dbFacture.setProducts(facture.getProducts());
         dbFacture.setPaid(facture.getPaid());
         dbFacture.setPaymentMethod(facture.getPaymentMethod());
-
+        dbFacture.setToPay(facture.getToPay());
+        dbFacture.setTotal(facture.getTotal());
         factureRepository.save(dbFacture);
     }
 

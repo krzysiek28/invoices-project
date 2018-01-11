@@ -26,9 +26,11 @@ public class Facture {
     private Date paymentDate;
     private String issuer;
     private String paymentMethod;
-    private Boolean paid;
+    private double paid;
+    private double toPay;
+    private double total;
 
-    public Facture(Firm firm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer, String paymentMethod, Boolean paid) {
+    public Facture(Firm firm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer, String paymentMethod, double paid, double toPay, double total) {
         this.firm = firm;
         this.client = client;
         this.products = products;
@@ -39,6 +41,8 @@ public class Facture {
         this.issuer = issuer;
         this.paymentMethod = paymentMethod;
         this.paid = paid;
+        this.toPay = toPay;
+        this.total = total;
     }
 
     public Facture() {
@@ -124,25 +128,29 @@ public class Facture {
         this.paymentMethod = paymentMethod;
     }
 
-    public Boolean getPaid() {
+    public double getPaid() {
         return paid;
     }
 
-    public void setPaid(Boolean paid) {
+    public void setPaid(double paid) {
         this.paid = paid;
+    }
+
+    public double getToPay() {
+        return toPay;
+    }
+
+    public void setToPay(double toPay) {
+        this.toPay = toPay;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 
 
 }
-
-/*
-    facture_id INTEGER NOT NULL,
-    user_id INTEGER NOT NULL,
-    firm_id INTEGER NOT NULL,
-    user_firm_id INTEGER NOT NULL,
-    client_id INTEGER NOT NULL,
-    name VARCHAR NOT NULL,
-    place VARCHAR NOT NULL,
-    date DATE NOT NULL,
-    price numeric(7,2) NOT NULL,
-    CONSTRAINT facture_pk PRIMARY KEY (facture_id, user_id)*/
