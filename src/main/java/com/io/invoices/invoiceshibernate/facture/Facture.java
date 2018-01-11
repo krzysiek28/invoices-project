@@ -25,9 +25,23 @@ public class Facture {
     private Date issueDate;
     private Date paymentDate;
     private String issuer;
+    private String paymentMethod;
+    private Boolean paid;
+
+    public Facture(Firm firm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer, String paymentMethod, Boolean paid) {
+        this.firm = firm;
+        this.client = client;
+        this.products = products;
+        this.number = number;
+        this.place = place;
+        this.issueDate = issueDate;
+        this.paymentDate = paymentDate;
+        this.issuer = issuer;
+        this.paymentMethod = paymentMethod;
+        this.paid = paid;
+    }
 
     public Facture() {
-
     }
 
     public Integer getId() {
@@ -100,6 +114,22 @@ public class Facture {
 
     public void setIssuer(String issuer) {
         this.issuer = issuer;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Boolean getPaid() {
+        return paid;
+    }
+
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
     }
 
 
