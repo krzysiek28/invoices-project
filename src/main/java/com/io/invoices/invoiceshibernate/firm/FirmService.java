@@ -31,6 +31,10 @@ public class FirmService {
     @Autowired
     ApplicationUserRepository userRepository;
 
+    public FirmService(FirmRepository firmRepository) {
+        this.firmRepository = firmRepository;
+    }
+
     public void addFirm(Integer ownerId, Firm firm) {
         if (!userRepository.exists(ownerId)) {
             throw new IllegalArgumentException("Company owner does not exist!");

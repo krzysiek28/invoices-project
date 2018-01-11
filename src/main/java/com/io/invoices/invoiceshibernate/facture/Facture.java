@@ -25,9 +25,29 @@ public class Facture {
     private Date issueDate;
     private Date paymentDate;
     private String issuer;
+    private String paymentMethod;
+    private Double paid;
+    private Double toPay;
+    private Double total;
 
     public Facture() {
 
+    }
+
+    public Facture(Firm firm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer, String paymentMethod, Double paid, Double toPay, Double total) {
+
+        this.firm = firm;
+        this.client = client;
+        this.products = products;
+        this.number = number;
+        this.place = place;
+        this.issueDate = issueDate;
+        this.paymentDate = paymentDate;
+        this.issuer = issuer;
+        this.paymentMethod = paymentMethod;
+        this.paid = paid;
+        this.toPay = toPay;
+        this.total = total;
     }
 
     public Integer getId() {
@@ -102,17 +122,37 @@ public class Facture {
         this.issuer = issuer;
     }
 
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Double getPaid() {
+        return paid;
+    }
+
+    public void setPaid(Double paid) {
+        this.paid = paid;
+    }
+
+    public Double getToPay() {
+        return toPay;
+    }
+
+    public void setToPay(Double toPay) {
+        this.toPay = toPay;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
 
 }
-
-/*
-    facture_id INTEGER NOT NULL,
-    user_id INTEGER NOT NULL,
-    firm_id INTEGER NOT NULL,
-    user_firm_id INTEGER NOT NULL,
-    client_id INTEGER NOT NULL,
-    name VARCHAR NOT NULL,
-    place VARCHAR NOT NULL,
-    date DATE NOT NULL,
-    price numeric(7,2) NOT NULL,
-    CONSTRAINT facture_pk PRIMARY KEY (facture_id, user_id)*/
