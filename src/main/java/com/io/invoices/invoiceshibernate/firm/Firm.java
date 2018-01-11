@@ -20,6 +20,16 @@ public class Firm {
     public Firm() {
     }
 
+    public Firm(Integer id, String name, String nip, String phone, String place, String email, ApplicationUser owner) {
+        this.id = id;
+        this.name = name;
+        this.nip = nip;
+        this.place = place;
+        this.phone = phone;
+        this.email = email;
+        this.owner = owner;
+    }
+
     public Firm(String name, String nip, String place, String phone, String email) {
         this.name = name;
         this.nip = nip;
