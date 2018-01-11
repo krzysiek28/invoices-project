@@ -14,21 +14,11 @@ public class ProductEntry {
     private Integer id;
     @OneToOne
     private Product product;
-
+    private Float quantity;
+    private int no;
     public ProductEntry(Product product, Float quantity, int no) {
         this.product = product;
         this.quantity = quantity;
-        this.no = no;
-    }
-
-    private Float quantity;
-    private int no;
-
-    public int getNo() {
-        return no;
-    }
-
-    public void setNo(int no) {
         this.no = no;
     }
 
@@ -39,6 +29,14 @@ public class ProductEntry {
     public ProductEntry(Product product, Float quantity) {
         this.product = product;
         this.quantity = quantity;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
     }
 
     public Integer getId() {

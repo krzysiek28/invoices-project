@@ -26,11 +26,16 @@ public class Facture {
     private Date paymentDate;
     private String issuer;
     private String paymentMethod;
-    private double paid;
-    private double toPay;
-    private double total;
+    private Double paid;
+    private Double toPay;
+    private Double total;
 
-    public Facture(Firm firm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer, String paymentMethod, double paid, double toPay, double total) {
+    public Facture() {
+
+    }
+
+    public Facture(Firm firm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer, String paymentMethod, Double paid, Double toPay, Double total) {
+
         this.firm = firm;
         this.client = client;
         this.products = products;
@@ -43,9 +48,6 @@ public class Facture {
         this.paid = paid;
         this.toPay = toPay;
         this.total = total;
-    }
-
-    public Facture() {
     }
 
     public Integer getId() {
@@ -128,27 +130,27 @@ public class Facture {
         this.paymentMethod = paymentMethod;
     }
 
-    public double getPaid() {
+    public Double getPaid() {
         return paid;
     }
 
-    public void setPaid(double paid) {
+    public void setPaid(Double paid) {
         this.paid = paid;
     }
 
-    public double getToPay() {
+    public Double getToPay() {
         return toPay;
     }
 
-    public void setToPay(double toPay) {
+    public void setToPay(Double toPay) {
         this.toPay = toPay;
     }
 
-    public double getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 
