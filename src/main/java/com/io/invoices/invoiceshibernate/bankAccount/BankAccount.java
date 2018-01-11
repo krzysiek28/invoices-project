@@ -19,6 +19,12 @@ public class BankAccount {
 
     }
 
+    public BankAccount(String bankAccount, String additionalData, Firm firm) {
+        this.bankAccount = bankAccount;
+        this.additionalData = additionalData;
+        this.firm = firm;
+    }
+
     public String getBankAccount() {
         return bankAccount;
     }

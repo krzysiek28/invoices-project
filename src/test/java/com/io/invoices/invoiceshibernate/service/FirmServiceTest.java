@@ -4,6 +4,7 @@ import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.firm.FirmRepository;
 import com.io.invoices.invoiceshibernate.firm.FirmService;
 import com.io.invoices.invoiceshibernate.user.ApplicationUser;
+import com.io.invoices.invoiceshibernate.user.ApplicationUserRepository;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -20,6 +23,8 @@ public class FirmServiceTest {
 
     @Mock
     private FirmRepository mockedFirmRepository;
+    @Mock
+    private ApplicationUserRepository mockedUserRepository;
     private ApplicationUser owner1, owner2;
 
     @BeforeTest
@@ -28,6 +33,7 @@ public class FirmServiceTest {
         testedObject = new FirmService(mockedFirmRepository);
         owner1 = new ApplicationUser(50,"Barbara","barbara123","barbara@gmail.com","USER_ROLE",true);
         owner2 = new ApplicationUser(51,"Bonifacy","bonifacy123","bonifacy@gmail.com","USER_ROLE",true);
+        mockedUserRepository.save(owner1);
     }
 
     private List<Firm> getFirms(){
@@ -53,4 +59,13 @@ public class FirmServiceTest {
         assertThat(foundFirms.size()).isEqualTo(result.size());
     }
 
+/*    @Test
+    public void shouldAddFirm() throws Exception{
+        Firm firm = new Firm(5,"company","323-424-13-32","+44876890234","Kraków","company@yahoo.com",owner1);
+        when(mockedUserRepository.exists(owner1.getId())).thenReturn(true);
+        when(mockedFirmRepository.save(firm)).thenReturn(firm);
+        when(mockedUserRepository.findOne(owner1.getId())).thenReturn(owner1);
+        testedObject.addFirm(owner1.getId(),firm);
+        verify(mockedFirmRepository, times(1)).save(firm);
+    }*/
 }

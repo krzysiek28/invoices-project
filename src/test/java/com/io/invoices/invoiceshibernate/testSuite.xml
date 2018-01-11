@@ -1,0 +1,17 @@
+<suite name = "TestAll">
+    <test name = "Entity tests">
+        <classes>
+            <class name = "com.io.invoices.invoiceshibernate.entity.ApplicationUserTest"/>
+            <class name = "com.io.invoices.invoiceshibernate.entity.BankAccountTest"/>
+            <class name = "com.io.invoices.invoiceshibernate.entity.ClientTest"/>
+            <class name = "com.io.invoices.invoiceshibernate.entity.FirmTest"/>
+            <class name = "com.io.invoices.invoiceshibernate.entity.ProductTest"/>
+        </classes>
+    </test>
+
+    <test>
+        <classes>
+            <class name = "com.io.invoices.invoiceshibernate.service.FirmServiceTest"/>
+        </classes>
+    </test>
+</suite>
