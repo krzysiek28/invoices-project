@@ -43,6 +43,7 @@ public class UserController {
 		if (applicationUserRepository.findByEmail(user.getEmail()) != null) {
 			throw new IllegalArgumentException("User with provided email already exists!");
 		}
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setUsername(user.getUsername());
 		user.setEmail(user.getEmail());
 		user.setRole(user.getRole());
