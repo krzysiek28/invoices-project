@@ -1,8 +1,5 @@
-package com.io.invoices.invoiceshibernate.controllers;
+package com.io.invoices.invoiceshibernate.firm;
 
-import com.io.invoices.invoiceshibernate.firm.Firm;
-import com.io.invoices.invoiceshibernate.firm.FirmService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +8,11 @@ import java.util.List;
 @RequestMapping(value = "/firms")
 public class FirmController {
 
-    @Autowired
-    private FirmService firmService;
+    private final FirmService firmService;
+
+    public FirmController(FirmService firmService) {
+        this.firmService = firmService;
+    }
 
     @RequestMapping("/{ownerId}")
     public List<Firm> getUserFirms(@PathVariable String ownerId) {

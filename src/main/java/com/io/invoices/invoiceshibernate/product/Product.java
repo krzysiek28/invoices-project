@@ -18,24 +18,7 @@ public class Product {
     private String unit;
     private String currency;
 
-    public Product(Firm owner, String name, Float netUnitPrice, Float vatRate, String unit, String currency) {
-        this.owner = owner;
-        this.name = name;
-        this.netUnitPrice = netUnitPrice;
-        this.vatRate = vatRate;
-        this.unit = unit;
-        this.currency = currency;
-    }
-
     public Product() {
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public Product(Integer id, Firm owner, String name, Float netUnitPrice, Float vatRate, String unit) {
@@ -45,6 +28,14 @@ public class Product {
         this.netUnitPrice = netUnitPrice;
         this.vatRate = vatRate;
         this.unit = unit;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Integer getId() {

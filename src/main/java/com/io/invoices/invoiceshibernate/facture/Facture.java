@@ -21,7 +21,7 @@ public class Facture {
     private Client client;
     @OneToOne
     private BankAccount bankAccount;
-    @OneToMany(fetch=FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ProductEntry> products;
     private String number;
     private String place;
@@ -37,6 +37,7 @@ public class Facture {
     public Facture() {
 
     }
+
     public Facture(Firm firm, Client client, BankAccount bankAccount, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer, String paymentMethod, Double paid, Double toPay, Double total, String currency) {
 
         this.firm = firm;
@@ -174,6 +175,5 @@ public class Facture {
     public void setTotal(Double total) {
         this.total = total;
     }
-
 
 }

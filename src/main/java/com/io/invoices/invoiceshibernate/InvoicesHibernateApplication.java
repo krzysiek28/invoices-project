@@ -9,19 +9,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InvoicesHibernateApplication implements CommandLineRunner{
+public class InvoicesHibernateApplication implements CommandLineRunner {
 
-	@Autowired
-	FirmService firmService;
-	@Autowired
-    UserService userService;
-	@Autowired
-	BankAccountService bankAccountService;
+    public static void main(String[] args) {
+        SpringApplication.run(InvoicesHibernateApplication.class, args);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(InvoicesHibernateApplication.class, args);
-	}
-
-	@Override
-	public void run(String... strings) throws Exception { }
+    @Override
+    public void run(String... strings) throws Exception {
+    }
 }

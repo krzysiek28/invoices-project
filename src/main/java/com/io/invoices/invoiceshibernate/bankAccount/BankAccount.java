@@ -13,6 +13,7 @@ public class BankAccount {
     private String additionalData;
     @ManyToOne
     private Firm firm;
+
     public BankAccount(String bankAccount, String additionalData, Firm firm) {
         this.bankAccount = bankAccount;
         this.additionalData = additionalData;
@@ -20,7 +21,6 @@ public class BankAccount {
     }
 
     public BankAccount() {
-
     }
 
     public String getBankAccount() {

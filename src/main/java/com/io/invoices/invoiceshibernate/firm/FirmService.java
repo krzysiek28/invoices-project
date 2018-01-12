@@ -1,13 +1,9 @@
 package com.io.invoices.invoiceshibernate.firm;
 
-import com.io.invoices.invoiceshibernate.bankAccount.BankAccount;
 import com.io.invoices.invoiceshibernate.bankAccount.BankAccountRepository;
-import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.client.ClientRepository;
-import com.io.invoices.invoiceshibernate.product.Product;
 import com.io.invoices.invoiceshibernate.product.ProductRepository;
 import com.io.invoices.invoiceshibernate.user.ApplicationUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,23 +12,18 @@ import java.util.List;
 @Service
 public class FirmService {
 
-    @Autowired
-    FirmRepository firmRepository;
+    private final FirmRepository firmRepository;
+    private final ClientRepository clientRepository;
+    private final ProductRepository productRepository;
+    private final BankAccountRepository bankAccountRepository;
+    private final ApplicationUserRepository userRepository;
 
-    @Autowired
-    ClientRepository clientRepository;
-
-    @Autowired
-    ProductRepository productRepository;
-
-    @Autowired
-    BankAccountRepository bankAccountRepository;
-
-    @Autowired
-    ApplicationUserRepository userRepository;
-
-    public FirmService(FirmRepository firmRepository) {
+    public FirmService(FirmRepository firmRepository, ClientRepository clientRepository, ProductRepository productRepository, BankAccountRepository bankAccountRepository, ApplicationUserRepository userRepository) {
         this.firmRepository = firmRepository;
+        this.clientRepository = clientRepository;
+        this.productRepository = productRepository;
+        this.bankAccountRepository = bankAccountRepository;
+        this.userRepository = userRepository;
     }
 
     public void addFirm(Integer ownerId, Firm firm) {
@@ -45,6 +36,10 @@ public class FirmService {
     }
 
     public List<Firm> getFirms(Integer ownerId) {
+        if (!userRepository.exists(ownerId)) {
+            throw new IllegalArgumentException("Company owner does not exist!");
+        }
+
         List<Firm> firms = new ArrayList<>();
         firmRepository.findByOwnerId(ownerId)
                 .forEach(firms::add);
@@ -52,6 +47,10 @@ public class FirmService {
     }
 
     public void updateFirm(Integer firmId, Firm firm) {
+        if (!firmRepository.exists(firmId)) {
+            throw new IllegalArgumentException("Company does not exist!");
+        }
+
         Firm dbFirm = firmRepository.findOne(firmId);
         dbFirm.setEmail(firm.getEmail());
         dbFirm.setName(firm.getName());
@@ -65,6 +64,7 @@ public class FirmService {
         if (!firmRepository.exists(firmId)) {
             throw new IllegalArgumentException("Company does not exist!");
         }
+
         System.out.println(firmId);
         productRepository.deleteProductsByOwnerId(firmId);
         clientRepository.deleteClientsByOwnerId(firmId);

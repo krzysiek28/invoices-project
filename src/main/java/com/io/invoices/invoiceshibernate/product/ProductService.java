@@ -2,18 +2,20 @@ package com.io.invoices.invoiceshibernate.product;
 
 
 import com.io.invoices.invoiceshibernate.firm.FirmRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProductService {
-    @Autowired
-    ProductRepository productRepository;
 
-    @Autowired
-    FirmRepository firmRepository;
+    private final ProductRepository productRepository;
+    private final FirmRepository firmRepository;
+
+    public ProductService(ProductRepository productRepository, FirmRepository firmRepository) {
+        this.productRepository = productRepository;
+        this.firmRepository = firmRepository;
+    }
 
     public void addProduct(Integer firmId, Product product) {
         if (!firmRepository.exists(firmId)) {
@@ -40,17 +42,22 @@ public class ProductService {
 
 
     public List<Product> getProducts(int ownerId) {
+        if (!productRepository.exists(ownerId))
+            throw new IllegalArgumentException("Bad company id!");
         return productRepository.findProductByOwnerId(ownerId);
     }
 
     public void deleteProduct(Integer productId) {
+        if (!productRepository.exists(productId))
+            throw new IllegalArgumentException("Product does not extst!");
+
         productRepository.findOne(productId).setOwner(null);
         productRepository.delete(productId);
     }
 
     public Product getProduct(int i) {
         if (!productRepository.exists(i))
-            throw new IllegalArgumentException("Produkt nie istnieje!");
+            throw new IllegalArgumentException("Product does not extst!");
         return productRepository.findOne(i);
     }
 }

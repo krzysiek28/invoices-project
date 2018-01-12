@@ -5,25 +5,33 @@ import com.io.invoices.invoiceshibernate.product.Product;
 import com.io.invoices.invoiceshibernate.product.ProductRepository;
 import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
 import com.io.invoices.invoiceshibernate.productentry.ProductEntryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.io.invoices.invoiceshibernate.user.ApplicationUser;
+import com.io.invoices.invoiceshibernate.user.ApplicationUserRepository;
+import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.io.invoices.invoiceshibernate.security.SecurityUtils.SECRET;
+import static com.io.invoices.invoiceshibernate.security.SecurityUtils.TOKEN_PREFIX;
+
 @Service
 public class FactureService {
-    @Autowired
-    FactureRepository factureRepository;
 
-    @Autowired
-    ProductRepository productRepository;
+    private final FactureRepository factureRepository;
+    private final ProductRepository productRepository;
+    private final ProductEntryRepository productEntryRepository;
+    private final FirmRepository firmRepository;
+    private final ApplicationUserRepository applicationUserRepository;
 
-    @Autowired
-    ProductEntryRepository productEntryRepository;
-
-    @Autowired
-    FirmRepository firmRepository;
+    public FactureService(FactureRepository factureRepository, ProductRepository productRepository, ProductEntryRepository productEntryRepository, FirmRepository firmRepository, ApplicationUserRepository applicationUserRepository) {
+        this.factureRepository = factureRepository;
+        this.productRepository = productRepository;
+        this.productEntryRepository = productEntryRepository;
+        this.firmRepository = firmRepository;
+        this.applicationUserRepository = applicationUserRepository;
+    }
 
     public List<Facture> getAllFactures(Integer firmId) {
         List<Facture> factures = new ArrayList<>();
@@ -46,9 +54,7 @@ public class FactureService {
                 productEntryRepository.save(productEntry);
 
                 Product product = productRepository.findOne(productEntry.getProduct().getId());
-
-
-                Product historyProduct = new Product();
+                Product historyProduct = new Product(); //historyproduct is current copy of product made to prevent future product changes to reflect on issued invoices
 
                 historyProduct.setCurrency(product.getCurrency());
                 historyProduct.setUnit(product.getUnit());
@@ -57,25 +63,24 @@ public class FactureService {
                 historyProduct.setNetUnitPrice(product.getNetUnitPrice());
                 productEntry.setProduct(historyProduct);
 
-
-
                 productRepository.save(historyProduct);
             }
         }
-
 
         facture.setFirm(firmRepository.findOne(firmId));
         factureRepository.save(facture);
     }
 
     public void deleteFacture(Integer factureId) {
+        if (!factureRepository.exists(factureId))
+            throw new IllegalArgumentException("Invoice does not exist!");
+
         factureRepository.delete(factureId);
     }
 
     public void updateFacture(int factureId, Facture facture) {
-        if (!factureRepository.exists(factureId)) {
-            throw new IllegalArgumentException("Bad facture id!");
-        }
+        if (!factureRepository.exists(factureId))
+            throw new IllegalArgumentException("Invoice does not exist!");
 
         Facture dbFacture = factureRepository.findOne(factureId);
         dbFacture.setIssueDate(facture.getIssueDate());
@@ -94,12 +99,13 @@ public class FactureService {
         factureRepository.save(dbFacture);
     }
 
-/*    public void addFacture(String ownerId, Facture facture) {
-        if (!userRepository.exists(Integer.parseInt(ownerId)))
-            throw new IllegalArgumentException("Usery does not exist!");
-
-        Usery usery = new Usery(Integer.parseInt(ownerId), "", "" ,"");
-        facture.setUsery(usery);
-        factureRepository.save(facture);
-    }*/
+    public String getIssuer(String token) {
+        String username = Jwts.parser()
+                .setSigningKey(SECRET.getBytes())
+                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                .getBody()
+                .getSubject();
+        ApplicationUser user = applicationUserRepository.findByUsername(username);
+        return user.getPersonalData();
+    }
 }

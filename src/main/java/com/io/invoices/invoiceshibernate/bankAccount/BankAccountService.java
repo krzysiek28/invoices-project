@@ -2,23 +2,27 @@ package com.io.invoices.invoiceshibernate.bankAccount;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.firm.FirmRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class BankAccountService {
-    @Autowired
-    BankAccountRepository bankAccountRepository;
 
-    @Autowired
-    FirmRepository firmRepository;
+    private final BankAccountRepository bankAccountRepository;
+    private final FirmRepository firmRepository;
+
+    public BankAccountService(BankAccountRepository bankAccountRepository, FirmRepository firmRepository) {
+        this.bankAccountRepository = bankAccountRepository;
+        this.firmRepository = firmRepository;
+    }
 
     public void addBankAccount(Integer firmId, BankAccount bankAccount) {
-        if (!firmRepository.exists(firmId)) {
+        if (!firmRepository.exists(firmId))
             throw new IllegalArgumentException("Company does not exist!");
-        }
+
+        if (!bankAccountRepository.exists(bankAccount.getBankAccount()))
+            throw new IllegalArgumentException("Bank account number already exists!");
 
         Firm owner = firmRepository.findOne(firmId);
         bankAccount.setFirm(owner);
@@ -26,12 +30,16 @@ public class BankAccountService {
     }
 
     public List<BankAccount> getBankAccounts(Integer firmId) {
+        if (!firmRepository.exists(firmId))
+            throw new IllegalArgumentException("Company does not exist!");
+
         return bankAccountRepository.findBankAccountByFirmId(firmId);
     }
 
     public void deleteAccount(String accountId) {
         if (!bankAccountRepository.exists(accountId))
             throw new IllegalArgumentException("Bank account does not exist!");
+
         bankAccountRepository.delete(accountId);
     }
 

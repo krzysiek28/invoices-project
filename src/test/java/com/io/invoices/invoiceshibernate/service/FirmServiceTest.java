@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -30,10 +29,14 @@ public class FirmServiceTest {
     @BeforeTest
     public void setTestedObject(){
         initMocks(this);
-        testedObject = new FirmService(mockedFirmRepository);
+        //when(mockedUserRepository.find)
+        testedObject = new FirmService(mockedFirmRepository, null, null, null, mockedUserRepository);
         owner1 = new ApplicationUser(50,"Barbara","barbara123","barbara@gmail.com","USER_ROLE",true);
         owner2 = new ApplicationUser(51,"Bonifacy","bonifacy123","bonifacy@gmail.com","USER_ROLE",true);
         mockedUserRepository.save(owner1);
+        when(mockedUserRepository.exists(50)).thenReturn(true);
+        when(mockedUserRepository.exists(51)).thenReturn(true);
+
     }
 
     private List<Firm> getFirms(){
@@ -48,6 +51,7 @@ public class FirmServiceTest {
     public void shouldReturnSpecificFirmsWhenOwnerIdPassed() throws Exception{
         List<Firm> firmList = getFirms();
         List<Firm> result = new ArrayList<>();
+
         firmList.forEach(e -> {
             if(e.getOwner().getId() == 50) result.add(e);
         });

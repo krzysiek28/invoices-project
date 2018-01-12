@@ -1,39 +1,34 @@
 package com.io.invoices.invoiceshibernate.pdfCreator;
 
 import com.io.invoices.invoiceshibernate.facture.Facture;
-import com.io.invoices.invoiceshibernate.product.Product;
 import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
 import com.itextpdf.text.*;
-
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.Phrase;
-import java.util.List;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class PdfCreator {
 
-    public PdfCreator(Facture facture){
-        this.facture =facture;
+    public static final String RESULT = "invoice.pdf";
+    private Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+    private Facture facture;
+
+    public PdfCreator(Facture facture) {
+        this.facture = facture;
     }
 
-
-    public static final String RESULT = "invoice.pdf";
-    Font font = new Font(Font.FontFamily.HELVETICA, 12,Font.BOLD);
-    Facture facture;
-
-    public void createPdf() throws IOException, DocumentException{
+    public void createPdf() throws IOException, DocumentException {
 
         Document document = new Document();
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(RESULT));
         document.open();
         Font colfont = new Font(Font.FontFamily.HELVETICA, 10);
 
-
-        Paragraph p2 = new Paragraph("Faktura nr FV " + facture.getIssueDate().toString(), new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD));
+        Paragraph p2 = new Paragraph("Faktura nr " + facture.getNumber().toString(), new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD));
         p2.setAlignment(Element.ALIGN_CENTER);
         document.add(p2);
 
@@ -58,7 +53,6 @@ public class PdfCreator {
         cell.setVerticalAlignment(Element.ALIGN_RIGHT);
         table.addCell(cell);
         document.add(table);
-
 
 
         table = new PdfPTable(2);
@@ -112,7 +106,7 @@ public class PdfCreator {
         table.addCell("Wartość Brutto");
         Integer nr;
         for (int i = 0; i < products.size(); i++) {
-            nr = i+1;
+            nr = i + 1;
             table.addCell(nr.toString());
             table.addCell(products.get(i).getProduct().getName());
             table.addCell(products.get(i).getQuantity().toString());
@@ -128,7 +122,7 @@ public class PdfCreator {
         table = new PdfPTable(4);
         table.setWidthPercentage(100);
         table.setHorizontalAlignment(Element.ALIGN_LEFT);
-        table.setWidths(new int[]{1, 1, 1, 1    });
+        table.setWidths(new int[]{1, 1, 1, 1});
         table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
         cell = new PdfPCell(new Phrase("Forma zapłaty:", colfont));
         cell.setBorder(Rectangle.NO_BORDER);

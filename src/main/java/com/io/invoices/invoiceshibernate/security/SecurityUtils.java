@@ -12,6 +12,7 @@ public class SecurityUtils {
 	public static final String HEADER_STRING = "Authorization";
 	public static final String SIGN_UP_URL = "/users/sign-up";
 	public static final String SIGN_IN_URL = "/users/sign-in";
+	public static final String CLIENT_ADDRESS = "http://localhost:8081";
 
 	public static String generateToken(String username) {
 		return Jwts.builder()

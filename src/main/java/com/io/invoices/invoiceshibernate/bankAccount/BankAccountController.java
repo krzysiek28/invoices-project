@@ -1,17 +1,18 @@
 package com.io.invoices.invoiceshibernate.bankAccount;
 
-import com.io.invoices.invoiceshibernate.bankAccount.BankAccount;
-import com.io.invoices.invoiceshibernate.bankAccount.BankAccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping (value = "/bankaccounts")
+@RequestMapping(value = "/bankaccounts")
 public class BankAccountController {
-    @Autowired
-    BankAccountService bankAccountService;
+    
+    private final BankAccountService bankAccountService;
+
+    public BankAccountController(BankAccountService bankAccountService) {
+        this.bankAccountService = bankAccountService;
+    }
 
     @RequestMapping("/{firmId}")
     public List<BankAccount> getBankAccounts(@PathVariable String firmId) {

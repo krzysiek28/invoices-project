@@ -5,9 +5,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface BankAccountRepository extends CrudRepository<BankAccount,String>{
+public interface BankAccountRepository extends CrudRepository<BankAccount, String> {
 
     List<BankAccount> findBankAccountByFirmId(Integer firmId);
+
     @Transactional
     long deleteBankAccountsByFirmId(Integer firmId);
 }

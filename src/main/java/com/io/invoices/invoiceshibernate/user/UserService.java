@@ -1,13 +1,11 @@
 package com.io.invoices.invoiceshibernate.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    @Autowired
-    ApplicationUserRepository userRepository;
+    private final ApplicationUserRepository userRepository;
 
     public UserService(ApplicationUserRepository userRepository) {
         this.userRepository = userRepository;
@@ -15,7 +13,7 @@ public class UserService {
 
     public ApplicationUser getUser(Integer userId) {
         if (!userRepository.exists(userId)) {
-            throw new IllegalArgumentException("Usery does not exist!");
+            throw new IllegalArgumentException("User does not exist!");
         }
 
         return userRepository.findOne(userId);

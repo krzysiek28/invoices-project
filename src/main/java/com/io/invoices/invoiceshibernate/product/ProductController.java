@@ -2,7 +2,6 @@ package com.io.invoices.invoiceshibernate.product;
 
 
 import com.io.invoices.invoiceshibernate.firm.FirmService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,11 +9,14 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/products")
 public class ProductController {
-    @Autowired
-    ProductService productService;
 
-    @Autowired
-    FirmService firmService;
+    private final ProductService productService;
+    private final FirmService firmService;
+
+    public ProductController(ProductService productService, FirmService firmService) {
+        this.productService = productService;
+        this.firmService = firmService;
+    }
 
     @RequestMapping("/{firmId}")
     public List<Product> getProducts(@PathVariable String firmId) {

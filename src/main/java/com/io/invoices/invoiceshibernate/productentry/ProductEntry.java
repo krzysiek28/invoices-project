@@ -9,7 +9,7 @@ public class ProductEntry {
     @Id
     @GeneratedValue
     private Integer id;
-    @OneToOne(fetch= FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     private Product product;
     private Float quantity;
     private int no;
