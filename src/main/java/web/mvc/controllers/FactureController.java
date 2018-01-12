@@ -1,8 +1,12 @@
 package web.mvc.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,13 +14,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
+import org.springframework.web.client.RestTemplate;
 import web.mvc.domain.Facture;
 import web.mvc.domain.Product;
 import web.mvc.domain.ProductEntry;
 import web.mvc.service.*;
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -41,6 +52,9 @@ public class FactureController {
 
     @Autowired
     BankAccountService bankAccountService;
+
+    @Autowired
+    private RestTemplate restTemplateHCCHRF;
 
     @RequestMapping(value = "/createfacture")
     public String createf(ModelMap modelMap) {
@@ -169,5 +183,25 @@ public class FactureController {
 
 
         return "facturesList";
+    }
+
+    @RequestMapping(value = "/factures/pdf/{id}")
+    public FileSystemResource showFactureList(@PathVariable String id, ModelMap modelMap) throws FileNotFoundException {
+        // Optional Accept header
+        RequestCallback requestCallback = request -> request.getHeaders()
+                .setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM, MediaType.ALL));
+
+        File file = new File("invoice.pdf");
+        OutputStream oste = new FileOutputStream(file);
+
+        ResponseExtractor<Void> responseExtractor = response -> {
+
+            IOUtils.copy(response.getBody(), oste);
+            return null;
+        };
+
+        restTemplateHCCHRF.execute(URI.create("http://localhost:8090/createPdf/"+id), HttpMethod.GET, requestCallback, responseExtractor);
+        return new FileSystemResource(file);
+
     }
 }

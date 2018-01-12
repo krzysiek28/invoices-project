@@ -195,7 +195,7 @@
                                 <td>
                                     <button id="accountbutton${account.bankAccount}" type="button"
                                             class="btn btn-primary btn-xs"
-                                            onclick="selectAccount(${account.bankAccount});" data-dismiss="modal"
+                                            onclick="selectAccount('${account.bankAccount}');" data-dismiss="modal"
                                             data-target="#accountModal"
                                     >wybierz
                                     </button>
@@ -263,6 +263,7 @@
     }
 
     function selectAccount(id) {
+        alert(id);
         var selectedName = document.getElementById("account" + id).innerHTML;
         var selectedData = document.getElementById("accountdata" + id).innerHTML;
 //        alert(id + selectedName + selectedData);

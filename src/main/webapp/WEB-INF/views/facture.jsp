@@ -12,10 +12,36 @@
         <p><c:out value="${param.error}"/></p>
     </div>
 </c:if>
+<script>
+    function getPdf(id) {
+    var f = document.createElement('form');
+    f.action='http://localhost:8090/factures/createpdf';
+    f.method='POST';
+    f.target='_blank';
+
+    var i=document.createElement('input');
+    i.type='hidden';
+    i.name='id';
+    i.value= id;
+    f.appendChild(i);
+
+    document.body.appendChild(f);
+    f.submit();}
+</script>
 
 <div class="container">
-Faktura nr
-<h3>${facture.number}</h3>
+    <div class="row">
+        <div class="col">
+            Faktura nr
+            <h3>${facture.number}</h3>
+        </div>
+        <div class="col" style="margin-top: 5px;">
+            <input type="submit" value="generuj PDF" class="btn btn-primary btn-block" style="margin-top: 10px" onclick="getPdf(${factures.id});"/>
+            <a href="/factures/deletefacture/${facture.id}" class="btn btn-primary">usuń</a>
+
+        </div>
+    </div>
+
 
 
 <div class="row">
