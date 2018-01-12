@@ -2,7 +2,6 @@ package com.io.invoices.invoiceshibernate.bankAccount;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -11,25 +10,17 @@ import javax.persistence.ManyToOne;
 public class BankAccount {
     @Id
     private String bankAccount;
-
-    public BankAccount(String bankAccount, String additionalData, Firm firm) {
-        this.bankAccount = bankAccount;
-        this.additionalData = additionalData;
-        this.firm = firm;
-    }
-
     private String additionalData;
     @ManyToOne
     private Firm firm;
-
-    public BankAccount() {
-
-    }
-
     public BankAccount(String bankAccount, String additionalData, Firm firm) {
         this.bankAccount = bankAccount;
         this.additionalData = additionalData;
         this.firm = firm;
+    }
+
+    public BankAccount() {
+
     }
 
     public String getBankAccount() {
