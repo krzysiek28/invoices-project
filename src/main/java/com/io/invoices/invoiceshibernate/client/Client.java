@@ -26,6 +26,13 @@ public class Client {
     public Client() {
     }
 
+    public Client(Integer id, String name, String additionalData, Firm owner) {
+        this.id = id;
+        this.name = name;
+        this.additionalData = additionalData;
+        this.owner = owner;
+    }
+
     public Integer getId() {
         return id;
     }

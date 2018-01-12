@@ -1,13 +1,15 @@
 package com.io.invoices.invoiceshibernate.pdfCreator;
 
 import com.io.invoices.invoiceshibernate.facture.Facture;
+import com.io.invoices.invoiceshibernate.product.Product;
+import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
 import com.itextpdf.text.*;
 
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Phrase;
-
+import java.util.List;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,8 +31,8 @@ public class PdfCreator {
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(RESULT));
         document.open();
         Font colfont = new Font(Font.FontFamily.HELVETICA, 10);
-/*
-        if(facture == null) System.out.print("null");
+
+
         Paragraph p2 = new Paragraph("Faktura nr FV " + facture.getIssueDate().toString(), new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD));
         p2.setAlignment(Element.ALIGN_CENTER);
         document.add(p2);
@@ -70,31 +72,33 @@ public class PdfCreator {
         cell = new PdfPCell(new Phrase("Nabywca", colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase(facture.getUser().getName(), colfont));
+        cell = new PdfPCell(new Phrase(facture.getFirm().getName(), colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase(facture.getUser().getName(), colfont));
+        cell = new PdfPCell(new Phrase(facture.getClient().getName(), colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("os. Złotej Jesieni 4", colfont));
-        cell.setBorder(Rectangle.NO_BORDER);
-        table.addCell(cell);
-        table.addCell(cell);
-        cell = new PdfPCell(new Phrase("31-826 Kraków", colfont));
+        cell = new PdfPCell(new Phrase(facture.getFirm().getPlace(), colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("NIP: 6751273612", colfont));
+        cell = new PdfPCell(new Phrase(facture.getClient().getAdditionalData(), colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("E-mail: abc@gmail.com", colfont));
+        cell = new PdfPCell(new Phrase("NIP:" + facture.getFirm().getNip(), colfont));
+        cell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(cell);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase("E-mail:" + facture.getFirm().getEmail(), colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
         table.addCell(cell);
         document.add(table);
-*/
-        PdfPTable table = new PdfPTable(8);
+
+        List<ProductEntry> products = facture.getProducts();
+
+        table = new PdfPTable(8);
         table.setWidthPercentage(100);
         table.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.setWidths(new int[]{2, 10, 4, 4, 4, 4, 4, 4});
@@ -106,14 +110,18 @@ public class PdfCreator {
         table.addCell("Wartość netto");
         table.addCell("Wartość VAT");
         table.addCell("Wartość Brutto");
-        table.addCell("1");
-        table.addCell("Kasztany");
-        table.addCell("2");
-        table.addCell("100");
-        table.addCell("100");
-        table.addCell("100");
-        table.addCell("100");
-        table.addCell("100");
+        Integer nr;
+        for (int i = 0; i < products.size(); i++) {
+            nr = i+1;
+            table.addCell(nr.toString());
+            table.addCell(products.get(i).getProduct().getName());
+            table.addCell(products.get(i).getQuantity().toString());
+            table.addCell(products.get(i).getProduct().getNetUnitPrice().toString());
+            table.addCell(products.get(i).getProduct().getVatRate().toString());
+            table.addCell("obliczamy");
+            table.addCell("obliczamy");
+            table.addCell("obliczamy");
+        }
         document.add(table);
 
         colfont = new Font(Font.FontFamily.HELVETICA, 10);
@@ -122,28 +130,28 @@ public class PdfCreator {
         table.setHorizontalAlignment(Element.ALIGN_LEFT);
         table.setWidths(new int[]{1, 1, 1, 1    });
         table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-        PdfPCell cell = new PdfPCell(new Phrase("Forma zapłaty:", colfont));
+        cell = new PdfPCell(new Phrase("Forma zapłaty:", colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("przelew", colfont));
+        cell = new PdfPCell(new Phrase(facture.getPaymentMethod(), colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
         cell = new PdfPCell(new Phrase("Razem:", colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("100 PLN", colfont));
+        cell = new PdfPCell(new Phrase(facture.getTotal().toString(), colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
         cell = new PdfPCell(new Phrase("Termin zapłaty:", colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("04-11-2017", colfont));
+        cell = new PdfPCell(new Phrase(facture.getPaymentDate().toString(), colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
         cell = new PdfPCell(new Phrase("Nr konta:", colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("83101010230000261395100000", colfont));
+        cell = new PdfPCell(new Phrase("wziac nr konta", colfont));
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
         document.add(table);

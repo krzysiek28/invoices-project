@@ -9,6 +9,10 @@ public class UserService {
     @Autowired
     ApplicationUserRepository userRepository;
 
+    public UserService(ApplicationUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public ApplicationUser getUser(Integer userId) {
         if (!userRepository.exists(userId)) {
             throw new IllegalArgumentException("Usery does not exist!");

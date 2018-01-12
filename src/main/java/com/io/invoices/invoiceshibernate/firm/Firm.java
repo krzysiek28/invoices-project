@@ -2,7 +2,10 @@ package com.io.invoices.invoiceshibernate.firm;
 
 import com.io.invoices.invoiceshibernate.user.ApplicationUser;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Firm {
@@ -10,6 +13,12 @@ public class Firm {
     @GeneratedValue
     private Integer id;
     private String name;
+    private String nip;
+    private String place;
+    private String phone;
+    private String email;
+    @ManyToOne
+    private ApplicationUser owner;
 
     public Firm(String name, String nip, String place, String phone, String email, ApplicationUser owner) {
         this.name = name;
@@ -20,16 +29,26 @@ public class Firm {
         this.owner = owner;
     }
 
-    private String nip;
-    private String place;
-    private String phone;
-    private String email;
-    @ManyToOne
-    private ApplicationUser owner;
-
     public Firm() {
     }
 
+    public Firm(Integer id, String name, String nip, String phone, String place, String email, ApplicationUser owner) {
+        this.id = id;
+        this.name = name;
+        this.nip = nip;
+        this.place = place;
+        this.phone = phone;
+        this.email = email;
+        this.owner = owner;
+    }
+
+    public Firm(String name, String nip, String place, String phone, String email) {
+        this.name = name;
+        this.nip = nip;
+        this.place = place;
+        this.phone = phone;
+        this.email = email;
+    }
 
     public ApplicationUser getOwner() {
         return owner;
@@ -87,11 +106,3 @@ public class Firm {
         this.email = email;
     }
 }
-/*
-    firm_id INTEGER NOT NULL,
-    name VARCHAR NOT NULL,
-    NIP VARCHAR NOT NULL,
-    place VARCHAR NOT NULL,
-    phone VARCHAR,
-    email VARCHAR,
-    CONSTRAINT firm_pk PRIMARY KEY (firm_id)*/

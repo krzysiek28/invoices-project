@@ -38,6 +38,15 @@ public class Product {
         this.currency = currency;
     }
 
+    public Product(Integer id, Firm owner, String name, Float netUnitPrice, Float vatRate, String unit) {
+        this.id = id;
+        this.owner = owner;
+        this.name = name;
+        this.netUnitPrice = netUnitPrice;
+        this.vatRate = vatRate;
+        this.unit = unit;
+    }
+
     public Integer getId() {
         return id;
     }
