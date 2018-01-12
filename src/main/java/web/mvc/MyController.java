@@ -38,6 +38,7 @@ public class MyController {
     private FirmService firmService;
 
 
+
     @RequestMapping("/logout")
     public String logout() {
         userAuthenticationService.logout();
@@ -77,7 +78,7 @@ public class MyController {
         } catch (HttpStatusCodeException exception) {
             JSONObject obj = new JSONObject(exception.getResponseBodyAsString());
             String errorMessage = obj.getString("message");
-            return "redirect:/loginPage?error=yes&message=" + errorMessage;
+            return "redirect:/loginPage?error=badcredentials&message=" + errorMessage;
 
         }
 
@@ -98,9 +99,10 @@ public class MyController {
     public String register(@RequestParam("email") String email,
                            @RequestParam("username") String username,
                            @RequestParam("password") String password,
+                           @RequestParam("personal") String personalData,
                            SessionStatus status) throws URISyntaxException, JSONException {
         try {
-            userService.register(email, username, password);
+            userService.register(email, username, password, personalData);
             status.setComplete();
         } catch (HttpStatusCodeException e) {
             JSONObject obj = new JSONObject(e.getResponseBodyAsString());
@@ -120,7 +122,7 @@ public class MyController {
             return "redirect:/registrationPage?error=yes&message=" + errorType;
         }
 
-        return "redirect:/homeLogged";
+        return "redirect:/chooseFirm";
     }
 
 
@@ -134,19 +136,6 @@ public class MyController {
 //    @RequestMapping(value = "/clients/updateclient/{id}", method = RequestMethod.PUT)
 //    public String
 
-    @RequestMapping(value = "/createfacture")
-    public String createf(ModelMap modelMap) {
-        try {
-            modelMap.addAttribute("clients",clientService.getFirmClients());
-            modelMap.addAttribute("authservice",userAuthenticationService);
-            modelMap.addAttribute("accounts",bankAccountService.getBankAccounts());
 
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "createfacture";
-    }
 
 }

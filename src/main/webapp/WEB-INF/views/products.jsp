@@ -85,12 +85,14 @@
             <div class="col-md-3"><input type="number" step="0.001" min="0" class="form-control"
                                          placeholder="Cena jednostkowa netto"
                                          name="netUnitPrice" required="true"/></div>
-            <div class="col-md-3"><input type="text" class="form-control"
+            <div class="col-md-2"><input type="text" class="form-control"
                                          placeholder="Jednostka" name="unit" required="true"/>
             </div>
-            <div class="col-md-3"><input type="number" min="0" max="100" class="form-control" placeholder="Vat"
+            <div class="col-md-2"><input type="number" min="0" max="100" class="form-control" placeholder="Vat"
                                          name="vatRate" required="true"/>
             </div>
+            <div class="col-md-2"><input type="text" class="form-control"
+                                         placeholder="Waluta" name="currency" value="PLN" required="true"/></div>
         </div>
         <div class="form-row">
             <div class="row" style="width: 100%; margin: 5px;">
@@ -111,6 +113,7 @@
             <th>Cena jednostkowa netto</th>
             <th>Jednostka</th>
             <th>% VAT</th>
+            <th>Waluta</th>
             <th style="width: 170px"></th>
         </div>
 
@@ -124,6 +127,7 @@
                 <td>
                     <fmt:formatNumber type="number" maxFractionDigits="2" value="${product.vatRate*100}"/>
                 </td>
+                <td>${product.currency}</td>
                 <td>
                     <a href="/products/deleteproduct/${product.id}" class="btn btn-primary">usuń</a>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal${product.id}">
@@ -162,6 +166,9 @@
                                                                  placeholder="Vat"
                                                                  name="vatRate" value="<fmt:formatNumber type="number" maxFractionDigits="2" value="${product.vatRate*100}"/>" required="true"/>
                                     </div>
+                                    <div class="col-md-6"><input type="text" class="form-control"
+                                                                 placeholder="Waluta" name="currency"
+                                                                 value="${product.currency}" required="true"/></div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij

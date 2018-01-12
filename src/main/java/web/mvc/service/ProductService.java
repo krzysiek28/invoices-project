@@ -44,7 +44,7 @@ public class ProductService {
                 objectMapper.getTypeFactory().constructCollectionType(List.class, Product.class));
     }
 
-    public void addProduct(String name, Float netUnitPrice, String unit, Float vatRate) throws JSONException, URISyntaxException, HttpClientErrorException {
+    public void addProduct(String name, Float netUnitPrice, String unit, Float vatRate, String currency) throws JSONException, URISyntaxException, HttpClientErrorException {
         Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/products/"+companyId);
         HttpHeaders headers = new HttpHeaders();
@@ -55,6 +55,7 @@ public class ProductService {
                 .put("netUnitPrice",netUnitPrice)
                 .put("unit", unit)
                 .put("vatRate",vatRate)
+                .put("currency",currency)
                 .toString();
         HttpEntity<String> request = new HttpEntity<String>(productData, headers);
         ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, Component.class);
@@ -69,7 +70,7 @@ public class ProductService {
         restTemplateHCCHRF.exchange(uri,HttpMethod.DELETE,request,String.class);
     }
 
-    public void updateProduct(int id, String name, Float netUnitPrice, String unit, Float vatRate) throws URISyntaxException, JSONException, HttpClientErrorException {
+    public void updateProduct(int id, String name, Float netUnitPrice, String unit, Float vatRate, String currency) throws URISyntaxException, JSONException, HttpClientErrorException {
         Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/products/"+companyId+"/"+id);
         HttpHeaders headers = new HttpHeaders();
@@ -80,9 +81,23 @@ public class ProductService {
                 .put("netUnitPrice",netUnitPrice)
                 .put("unit", unit)
                 .put("vatRate",vatRate)
+                .put("currency",currency)
                 .toString();
         HttpEntity<String> request = new HttpEntity<String>(productData, headers);
         ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.PUT, request, Component.class);
+    }
+
+    public Product getProduct(Integer id) throws URISyntaxException, IOException {
+        Integer companyId = userAuthenticationService.getFirmId();
+        URI uri = new URI("http://localhost:8090/products/"+companyId+"/"+id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        ResponseEntity<String> data = restTemplateHCCHRF.exchange(uri, HttpMethod.GET,entity,String.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return objectMapper.readValue(data.getBody(),
+                objectMapper.getTypeFactory().constructType(Product.class));
     }
 
 

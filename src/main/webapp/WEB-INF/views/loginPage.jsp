@@ -28,7 +28,12 @@
             <div class="login-form">
                 <c:url var="loginUrl" value="/loginPage" />
                 <form action="/login" method="post" class="form-horizontal">
-                    <c:if test="${param.error != null}">
+                    <c:if test="${param.error == 'loginfirst'}">
+                        <div class="alert alert-danger">
+                            <p>Najpierw się zaloguj</p>
+                        </div>
+                    </c:if>
+                    <c:if test="${param.error == 'badcredentials'}">
                         <div class="alert alert-danger">
                             <p>Niepoprawna nazwa użytkownika lub hasło</p>
                         </div>

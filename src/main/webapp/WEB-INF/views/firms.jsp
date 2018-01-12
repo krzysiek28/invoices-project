@@ -31,7 +31,7 @@
                 <td align="center">${firm.name}</td>
                 <td align="center" style="width: 10%">${firm.nip}</td>
                 <td align="center" style="width: 10%">${firm.phone}</td>
-                <td align="center" style="width: 10%">${firm.place}</td>
+                <td align="center" style="width: 10%; white-space: pre-line">${firm.place}</td>
                 <td style="width: 159px">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         edytuj
@@ -57,22 +57,23 @@
                             <form action="/firms/updatefirm/${firm.id}" method="post">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <input type="email" class="form-control" placeholder="Email" name="email" required="true">
+                                        <input type="email" class="form-control" placeholder="Email" name="email" value="${firm.email}" required="true">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input type="text" class="form-control" placeholder="Nazwa" name="name" required="true">
+                                        <input type="text" class="form-control" placeholder="Nazwa" name="name" value="${firm.name}" required="true">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <input class="form-control" placeholder="Nip" name="nip" type="text" pattern="^((\d{3}-\d{3}-\d{2}-\d{2})|(\d{3}-\d{2}-\d{2}-\d{3}))$"  title="Wymagany format to: xxx-xxx-xx-xx lub xxx-xx-xx-xxx" required="true">
+                                        <input class="form-control" placeholder="Nip" name="nip" type="text" pattern="^((\d{3}-\d{3}-\d{2}-\d{2})|(\d{3}-\d{2}-\d{2}-\d{3}))$"  title="Wymagany format to: xxx-xxx-xx-xx lub xxx-xx-xx-xxx" value="${firm.nip}" required="true">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input class="form-control" placeholder="Telefon" name="phone" type="text" pattern="^(?:\(?\+?48)?(?:[-\.\(\)\s]*(\d)){9}\)?$" title="Przykładowe numery telefonów w poprawnym formacie: 123123123; 123 123 123; 123-123-123; 12 123 12 12; 12-123-12-12; +48 123 123 123; +48-123-123-123; +48123123123" required="true">
+                                        <input class="form-control" placeholder="Telefon" name="phone" type="text" pattern="^(?:\(?\+?48)?(?:[-\.\(\)\s]*(\d)){9}\)?$" title="Przykładowe numery telefonów w poprawnym formacie: 123123123; 123 123 123; 123-123-123; 12 123 12 12; 12-123-12-12; +48 123 123 123; +48-123-123-123; +48123123123" value="${firm.phone}" required="true">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Lokalizacja" name="place" required="true">
+                                    <textarea name="place" class="form-control" placeholder="Lokalizacja"
+                                              required="true">${firm.place}</textarea>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
@@ -113,7 +114,8 @@
             </div>
         </div>
         <div class="form-group">
-            <input class="form-control" placeholder="Lokalizacja" name="place" type="text" required="true">
+            <textarea name="place" class="form-control" placeholder="Lokalizacja"
+                      required="true"></textarea>
         </div>
         <div class="col">
             <button type="submit" class="btn btn-primary btn-block">Dodaj</button>

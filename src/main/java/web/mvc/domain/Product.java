@@ -7,16 +7,30 @@ public class Product {
     private Float netUnitPrice;
     private Float vatRate;
     private String unit;
+    private String currency;
 
-    public Product(Usery usery, String name, Float netUnitPrice, Float vatRate, String unit) {
+    public Product(Usery usery, String name, Float netUnitPrice, Float vatRate, String unit, String currency) {
         this.usery = usery;
         this.name = name;
         this.netUnitPrice = netUnitPrice;
         this.vatRate = vatRate;
         this.unit = unit;
+        this.currency = currency;
+    }
+
+    public Product(int id) {
+        this.id = id;
     }
 
     public Product() {
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Integer getId() {

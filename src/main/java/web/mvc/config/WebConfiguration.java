@@ -12,11 +12,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.MappedInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import web.mvc.service.UserAuthenticationService;
 
 import javax.annotation.PostConstruct;
 
@@ -26,6 +29,22 @@ import javax.annotation.PostConstruct;
 @PropertySource("classpath:application.properties")
 
 public class WebConfiguration extends WebMvcConfigurerAdapter {
+
+    @Autowired
+    UserAuthenticationService userAuthenticationService;
+
+    @Bean
+    public MappedInterceptor myInterceptor()
+    {
+        String[] exclude = new String[6];
+        exclude[0] = "/";
+        exclude[1] = "/loginPage";
+        exclude[2] = "/login";
+        exclude[3] = "/registrationPage";
+        exclude[4] = "/addUser";
+        exclude[5] = "/static/**";
+        return new MappedInterceptor(null,exclude, new RdrInterceptor(userAuthenticationService));
+    }
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {

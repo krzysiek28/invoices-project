@@ -28,7 +28,7 @@ public class UserService {
         String requestJson = "{\"username\": \"" + username + "\",\"password\": \"" + password + "\"}";
         HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
 
-        ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, Component.class);
+        ResponseEntity<String> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, String.class);
         String key = response.getHeaders().get("Authorization").get(0).toString();
         System.out.println(response.getBody());
         userAuthenticationService.setToken(key);
@@ -40,18 +40,20 @@ public class UserService {
         userAuthenticationService.logout();
     }
 
-    public void register(String email, String username, String password) throws URISyntaxException, HttpClientErrorException {
+    public void register(String email, String username, String password, String personalData) throws URISyntaxException, HttpClientErrorException, JSONException {
 
         URI uri = new URI("http://localhost:8090/users/sign-up");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String requestJson =
-                "{" +
-                        "\"email\": \"" + email + "\"," +
-                        "\"enabled\": \"true\"," +
-                        "\"username\": \"" + username + "\"," +
-                        "\"password\": \"" + password + "\"," +
-                        "\"role\":\"USER_ROLE\"}";
+        String requestJson = new JSONObject()
+                .put("email",email)
+                .put("enabled","true")
+                .put("username", username)
+                .put("password", password)
+                .put("role", "USER_ROLE")
+                .put("personalData", personalData)
+                .toString();
+
         HttpEntity<String> request = new HttpEntity<String>(requestJson, headers);
 
         ResponseEntity<Component> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST,request, Component.class);

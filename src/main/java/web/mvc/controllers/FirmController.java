@@ -38,6 +38,8 @@ public class FirmController {
             userService.setUserId();
             modelMap.addAttribute("firms", firmService.getFirms());
             modelMap.addAttribute("authservice",userAuthenticationService);
+            if (firmService.getFirms().isEmpty())
+                return "redirect:/firms";
         }
         return "chooseFirm";
     }
@@ -47,7 +49,7 @@ public class FirmController {
         userAuthenticationService.setFirmId(Integer.parseInt(id));
 
 
-        return "homeLogged";
+        return "redirect:/facturesList";
     }
 
     @RequestMapping(value = "/firms")

@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="/logged">Twoje Faktury</a>
+                <a class="nav-link" href="/facturesList">Twoje Faktury</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/createfacture">Stwórz fakturę </a>
@@ -24,6 +24,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/firms">Zarządzaj firmami</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/chooseFirm">Zmień firmę</a>
             </li>
         </ul>
     </div>

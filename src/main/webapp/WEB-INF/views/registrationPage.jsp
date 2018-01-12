@@ -47,22 +47,27 @@
 
                     <div class="input-group input-sm">
                         <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" required>
+                        <input type="text" class="form-control" id="personal" name="personal" placeholder="Dane osobowe" required>
                     </div>
                     <br/>
                     <div class="input-group input-sm">
                         <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Adres email" required>
+                    </div>
+                    <br/>
+                    <div class="input-group input-sm">
+                        <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Nazwa użytkownika" required>
                     </div>
                     <br/>
                     <div class="input-group input-sm">
                         <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Hasło" required>
                     </div>
                     <br/>
                     <div class="form-actions">
                         <input type="submit"
-                               class="btn btn-block btn-primary btn-default" value="Create account">
+                               class="btn btn-block btn-primary btn-default" value="Utwórz konto">
                     </div>
                 </form>
             </div>

@@ -51,32 +51,36 @@
 <%--Main form--%>
 <div style="width:900px; margin:0 auto; margin-top: 10px;">
     <h3>Wystawianie faktury - Krok 1 - Podstawowe dane</h3>
-    <form action="/createfacture/step2" method="post">
+    <form action="/createfacture/step1" method="post">
         <div class="form-row">
-            <div class="col" >
+            <div class="col">
                 <div class="row card" style="margin: 2px;">
 
-                <p>Klient:
-                    <input id="clientid" type="hidden" name="clientid" value="-1">
-                    <input id="clientname" type="text" class="form-control" placeholder="Nazwa klienta" name="clientname"
-                           required="true" onchange="resetId();" style="margin: 2px; width: 95%;">
-                    <textarea id="clientdata" name="clientdata" class="form-control"
-                              placeholder="Dodadtkowe informacje" style="overflow-x:hidden; margin: 2px; width: 95%;"
-                              required="true" onchange="resetId();"></textarea><br/>
-                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
-                            data-target="#clientModal" style="margin: 2px; width: 95%;">
-                        Wybierz klienta z bazy
-                    </button>
-                </p>
+                    <p>Klient:
+                        <input id="clientid" type="hidden" name="clientid" value="-1">
+                        <input id="clientname" type="text" class="form-control" placeholder="Nazwa klienta"
+                               name="clientname"
+                               required="true" onchange="resetId();" style="margin: 2px; width: 95%;">
+                        <textarea id="clientdata" name="clientdata" class="form-control"
+                                  placeholder="Dodadtkowe informacje"
+                                  style="overflow-x:hidden; margin: 2px; width: 95%;"
+                                  required="true" onchange="resetId();"></textarea><br/>
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                                data-target="#clientModal" style="margin: 2px; width: 95%;">
+                            Wybierz klienta z bazy
+                        </button>
+                    </p>
 
                 </div>
                 <div class="row card" style="margin: 2px;">
 
                     <p>Konto bankowe:
-                        <input id="accountnumber" type="text" class="form-control" placeholder="Numer konta" name="accountnumber"
+                        <input id="accountnumber" type="text" class="form-control" placeholder="Numer konta"
+                               name="accountnumber"
                                required="true" style="margin: 2px; width: 95%;" readonly="true">
                         <textarea id="accountdata" name="accountdata" class="form-control"
-                                  placeholder="Dodadtkowe dane konta" style="overflow-x:hidden; margin: 2px; width: 95%;"
+                                  placeholder="Dodadtkowe dane konta"
+                                  style="overflow-x:hidden; margin: 2px; width: 95%;"
                                   required="true" readonly="true"></textarea><br/>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
                                 data-target="#accountModal" style="margin: 2px; width: 95%;">
@@ -96,16 +100,22 @@
                            required="true">
                 <p>Data wystawienia:
                     <input id="invoiceIssueDate" type="date" class="form-control" name="invoiceissuedate"
-                           required="true" onchange="checkDates();"></p>
-                </p>
-                <p>Data płatności:
+                           required="true" onchange="checkDates();">
+                    Data płatności:
                     <input id="invoicePaymentDate" type="date" class="form-control" name="invoicepaymentdate"
                            required="true" onchange="checkDates();"></p>
+                <label for="invoiceCurrency">Waluta:</label>
+                <input id="invoiceCurrency" type="text" class="form-control" placeholder="Waluta" value="PLN"
+                       name="currency" required="true">
                 </p>
+
+
+
             </div>
         </div>
         <div class="form-row card" style="margin: 5px;">
-                <input type="submit" value="Przejdź do kolejnego kroku" class="btn btn-primary btn-block" style= width: 98%; height: 98%;">
+            <input type="submit" value="Przejdź do kolejnego kroku" class="btn btn-primary btn-block"
+                   style="width: 98%; height: 98%;">
         </div>
     </form>
 </div>
@@ -183,7 +193,8 @@
                                 <td id="account${account.bankAccount}">${account.bankAccount}</td>
                                 <td id="accountdata${account.bankAccount}">${account.additionalData}</td>
                                 <td>
-                                    <button id="accountbutton${account.bankAccount}" type="button" class="btn btn-primary btn-xs"
+                                    <button id="accountbutton${account.bankAccount}" type="button"
+                                            class="btn btn-primary btn-xs"
                                             onclick="selectAccount(${account.bankAccount});" data-dismiss="modal"
                                             data-target="#accountModal"
                                     >wybierz

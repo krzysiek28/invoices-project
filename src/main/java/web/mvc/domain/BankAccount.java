@@ -5,7 +5,7 @@ public class BankAccount {
     private String bankAccount;
     private String additionalData;
 
-    BankAccount(){}
+    public BankAccount(){}
 
     public BankAccount(String bankAccount, String additionalData) {
         this.bankAccount = bankAccount;
