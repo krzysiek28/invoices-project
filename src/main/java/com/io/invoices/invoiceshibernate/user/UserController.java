@@ -48,6 +48,7 @@ public class UserController {
 		user.setEmail(user.getEmail());
 		user.setRole(user.getRole());
 		user.setEnabled(user.getEnabled());
+		user.setPersonalData(user.getPersonalData());
 		applicationUserRepository.save(user);
 		res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + SecurityUtils.generateToken(user.getUsername()));
 	}

@@ -10,6 +10,16 @@ public class Firm {
     @GeneratedValue
     private Integer id;
     private String name;
+
+    public Firm(String name, String nip, String place, String phone, String email, ApplicationUser owner) {
+        this.name = name;
+        this.nip = nip;
+        this.place = place;
+        this.phone = phone;
+        this.email = email;
+        this.owner = owner;
+    }
+
     private String nip;
     private String place;
     private String phone;
@@ -20,13 +30,6 @@ public class Firm {
     public Firm() {
     }
 
-    public Firm(String name, String nip, String place, String phone, String email) {
-        this.name = name;
-        this.nip = nip;
-        this.place = place;
-        this.phone = phone;
-        this.email = email;
-    }
 
     public ApplicationUser getOwner() {
         return owner;

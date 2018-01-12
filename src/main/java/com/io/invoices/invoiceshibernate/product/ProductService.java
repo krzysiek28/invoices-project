@@ -34,6 +34,7 @@ public class ProductService {
         dbProduct.setNetUnitPrice(product.getNetUnitPrice());
         dbProduct.setVatRate(product.getVatRate());
         dbProduct.setUnit(product.getUnit());
+        dbProduct.setCurrency(product.getCurrency());
         productRepository.save(dbProduct);
     }
 
@@ -45,5 +46,11 @@ public class ProductService {
     public void deleteProduct(Integer productId) {
         productRepository.findOne(productId).setOwner(null);
         productRepository.delete(productId);
+    }
+
+    public Product getProduct(int i) {
+        if (!productRepository.exists(i))
+            throw new IllegalArgumentException("Produkt nie istnieje!");
+        return productRepository.findOne(i);
     }
 }

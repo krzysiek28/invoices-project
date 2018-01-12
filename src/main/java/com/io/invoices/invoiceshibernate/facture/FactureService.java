@@ -1,6 +1,10 @@
 package com.io.invoices.invoiceshibernate.facture;
 
 import com.io.invoices.invoiceshibernate.firm.FirmRepository;
+import com.io.invoices.invoiceshibernate.product.Product;
+import com.io.invoices.invoiceshibernate.product.ProductRepository;
+import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
+import com.io.invoices.invoiceshibernate.productentry.ProductEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +15,12 @@ import java.util.List;
 public class FactureService {
     @Autowired
     FactureRepository factureRepository;
+
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
+    ProductEntryRepository productEntryRepository;
 
     @Autowired
     FirmRepository firmRepository;
@@ -31,6 +41,28 @@ public class FactureService {
         if (!firmRepository.exists(firmId)) {
             throw new IllegalArgumentException("Bad company id!");
         }
+        if (facture.getProducts() != null) {
+            for (ProductEntry productEntry : facture.getProducts()) {
+                productEntryRepository.save(productEntry);
+
+                Product product = productRepository.findOne(productEntry.getProduct().getId());
+
+
+                Product historyProduct = new Product();
+
+                historyProduct.setCurrency(product.getCurrency());
+                historyProduct.setUnit(product.getUnit());
+                historyProduct.setVatRate(product.getVatRate());
+                historyProduct.setName(product.getName());
+                historyProduct.setNetUnitPrice(product.getNetUnitPrice());
+                productEntry.setProduct(historyProduct);
+
+
+
+                productRepository.save(historyProduct);
+            }
+        }
+
 
         facture.setFirm(firmRepository.findOne(firmId));
         factureRepository.save(facture);
@@ -48,6 +80,7 @@ public class FactureService {
         Facture dbFacture = factureRepository.findOne(factureId);
         dbFacture.setIssueDate(facture.getIssueDate());
         dbFacture.setClient(facture.getClient());
+        dbFacture.setBankAccount(facture.getBankAccount());
         dbFacture.setIssuer(facture.getIssuer());
         dbFacture.setNumber(facture.getNumber());
         dbFacture.setPaymentDate(facture.getPaymentDate());
@@ -57,6 +90,7 @@ public class FactureService {
         dbFacture.setPaymentMethod(facture.getPaymentMethod());
         dbFacture.setToPay(facture.getToPay());
         dbFacture.setTotal(facture.getTotal());
+        dbFacture.setCurrency(facture.getCurrency());
         factureRepository.save(dbFacture);
     }
 

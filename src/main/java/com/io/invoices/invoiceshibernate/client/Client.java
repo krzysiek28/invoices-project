@@ -2,7 +2,10 @@ package com.io.invoices.invoiceshibernate.client;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Client {
@@ -13,6 +16,12 @@ public class Client {
     private String additionalData;
     @ManyToOne
     private Firm owner;
+
+    public Client(String name, String additionalData, Firm owner) {
+        this.name = name;
+        this.additionalData = additionalData;
+        this.owner = owner;
+    }
 
     public Client() {
     }

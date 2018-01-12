@@ -3,6 +3,10 @@ package com.io.invoices.invoiceshibernate.facture;
 import com.io.invoices.invoiceshibernate.facture.Facture;
 import com.io.invoices.invoiceshibernate.facture.FactureService;
 import com.io.invoices.invoiceshibernate.pdfCreator.PdfCreator;
+import com.io.invoices.invoiceshibernate.user.ApplicationUser;
+import com.io.invoices.invoiceshibernate.user.ApplicationUserRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,12 +19,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 
+import static com.io.invoices.invoiceshibernate.security.SecurityUtils.SECRET;
+import static com.io.invoices.invoiceshibernate.security.SecurityUtils.TOKEN_PREFIX;
+
 @RestController
 @RequestMapping("/factures")
 public class FactureController {
     @Autowired
     FactureService factureService;
 
+    @Autowired
+    ApplicationUserRepository  applicationUserRepository;
     @RequestMapping("/{firmId}")
     public List<Facture> getAllFactures(@PathVariable String firmId) {
         return factureService.getAllFactures(Integer.parseInt(firmId));
@@ -30,7 +39,14 @@ public class FactureController {
     public Facture getFacture(@PathVariable String factureId) {return factureService.getFacture(Integer.parseInt(factureId));}
 
     @RequestMapping(method = RequestMethod.POST, value = "/{firmId}")
-    public void addFacture(@RequestBody Facture facture, @PathVariable String firmId) {
+    public void addFacture(@RequestHeader("Authorization") String token, @RequestBody Facture facture, @PathVariable String firmId) {
+        String username = Jwts.parser()
+                .setSigningKey(SECRET.getBytes())
+                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                .getBody()
+                .getSubject();
+        ApplicationUser user = applicationUserRepository.findByUsername(username);
+        facture.setIssuer(user.getPersonalData());
         factureService.addFacture(Integer.parseInt(firmId), facture);
     }
 

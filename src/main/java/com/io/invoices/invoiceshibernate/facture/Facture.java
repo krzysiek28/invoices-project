@@ -1,5 +1,6 @@
 package com.io.invoices.invoiceshibernate.facture;
 
+import com.io.invoices.invoiceshibernate.bankAccount.BankAccount;
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
@@ -18,7 +19,9 @@ public class Facture {
     private Firm firm;
     @OneToOne
     private Client client;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne
+    private BankAccount bankAccount;
+    @OneToMany(fetch=FetchType.EAGER)
     private List<ProductEntry> products;
     private String number;
     private String place;
@@ -29,15 +32,16 @@ public class Facture {
     private Double paid;
     private Double toPay;
     private Double total;
+    private String currency;
 
     public Facture() {
 
     }
-
-    public Facture(Firm firm, Client client, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer, String paymentMethod, Double paid, Double toPay, Double total) {
+    public Facture(Firm firm, Client client, BankAccount bankAccount, List<ProductEntry> products, String number, String place, Date issueDate, Date paymentDate, String issuer, String paymentMethod, Double paid, Double toPay, Double total, String currency) {
 
         this.firm = firm;
         this.client = client;
+        this.bankAccount = bankAccount;
         this.products = products;
         this.number = number;
         this.place = place;
@@ -48,6 +52,23 @@ public class Facture {
         this.paid = paid;
         this.toPay = toPay;
         this.total = total;
+        this.currency = currency;
+    }
+
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Integer getId() {

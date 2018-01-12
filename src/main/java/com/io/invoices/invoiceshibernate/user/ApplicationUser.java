@@ -12,7 +12,7 @@ public class ApplicationUser {
     @Id
     @GeneratedValue
     private Integer id;
-    @Column(unique=true)
+    @Column(unique = true)
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
@@ -20,9 +20,28 @@ public class ApplicationUser {
     private String email;
     @JsonIgnoreProperties
     private String role;
+    private String personalData;
     private Boolean enabled;
 
+    public ApplicationUser(String username, String password, String email, String role, String personalData, Boolean enabled) {
+
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.personalData = personalData;
+        this.enabled = enabled;
+    }
+
     public ApplicationUser() {
+    }
+
+    public String getPersonalData() {
+        return personalData;
+    }
+
+    public void setPersonalData(String personalData) {
+        this.personalData = personalData;
     }
 
     public Integer getId() {

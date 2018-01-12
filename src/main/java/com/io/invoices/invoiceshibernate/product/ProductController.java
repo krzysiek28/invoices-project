@@ -36,4 +36,9 @@ public class ProductController {
         productService.updateProduct(Integer.parseInt(productId), product);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/{firmId}/{productId}")
+    public Product getProduct(@PathVariable String productId) {
+        return productService.getProduct(Integer.parseInt(productId));
+    }
+
 }
