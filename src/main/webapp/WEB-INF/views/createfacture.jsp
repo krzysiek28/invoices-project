@@ -263,7 +263,7 @@
     }
 
     function selectAccount(id) {
-        alert(id);
+       // alert(id);
         var selectedName = document.getElementById("account" + id).innerHTML;
         var selectedData = document.getElementById("accountdata" + id).innerHTML;
 //        alert(id + selectedName + selectedData);

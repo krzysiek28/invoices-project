@@ -80,7 +80,7 @@
     <form action="/bankAccounts/addBankAccount" method="post">
         <div class="form-row">
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" placeholder="Konto bankowe" name="bankAccount" required="true">
+                <input type="text" class="form-control" placeholder="Konto bankowe" name="bankAccount" pattern="^(([a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{4}[0-9]{7}([a-zA-Z0-9]?){0,16})|([0-9]{26}))$" title="Podaj polski numer konta bankowego (26 cyfr) lub międzynarodowy numer IBAN" required="true">
             </div>
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" placeholder="Dodatkowe dane" name="additionalData" required="true">
