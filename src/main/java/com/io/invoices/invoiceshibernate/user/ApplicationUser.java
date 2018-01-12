@@ -36,7 +36,6 @@ public class ApplicationUser {
     public ApplicationUser() {
     }
 
-<<<<<<<HEAD
 
     public ApplicationUser(Integer id, String username, String password, String email, String role, Boolean enabled) {
         this.id = id;
