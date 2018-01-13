@@ -25,7 +25,7 @@ public class ClientService {
     }
 
     public List<Client> getAllClients(Integer ownerId) {
-        if (!clientRepository.exists(ownerId))
+        if (!firmRepository.exists(ownerId))
             throw new IllegalArgumentException("Bad company id!");
 
         List<Client> allClients = new ArrayList<>();

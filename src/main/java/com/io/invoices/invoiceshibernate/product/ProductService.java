@@ -42,7 +42,7 @@ public class ProductService {
 
 
     public List<Product> getProducts(int ownerId) {
-        if (!productRepository.exists(ownerId))
+        if (!firmRepository.exists(ownerId))
             throw new IllegalArgumentException("Bad company id!");
         return productRepository.findProductByOwnerId(ownerId);
     }

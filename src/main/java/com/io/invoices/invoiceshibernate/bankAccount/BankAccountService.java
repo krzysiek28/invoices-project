@@ -19,10 +19,10 @@ public class BankAccountService {
 
     public void addBankAccount(Integer firmId, BankAccount bankAccount) {
         if (!firmRepository.exists(firmId))
-            throw new IllegalArgumentException("Company does not exist!");
+            throw new IllegalArgumentException("Firma o podanym id nie istnieje!");
 
-        if (!bankAccountRepository.exists(bankAccount.getBankAccount()))
-            throw new IllegalArgumentException("Bank account number already exists!");
+        if (bankAccountRepository.exists(bankAccount.getBankAccount()))
+            throw new IllegalArgumentException("Ten numer konta bankowego już istnieje w bazie");
 
         Firm owner = firmRepository.findOne(firmId);
         bankAccount.setFirm(owner);

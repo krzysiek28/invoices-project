@@ -30,7 +30,7 @@ public class FirmServiceTest {
     public void setTestedObject(){
         initMocks(this);
         //when(mockedUserRepository.find)
-        testedObject = new FirmService(mockedFirmRepository, null, null, null, mockedUserRepository);
+        testedObject = new FirmService(mockedFirmRepository, null, null, null, mockedUserRepository, null);
         owner1 = new ApplicationUser(50,"Barbara","barbara123","barbara@gmail.com","USER_ROLE",true);
         owner2 = new ApplicationUser(51,"Bonifacy","bonifacy123","bonifacy@gmail.com","USER_ROLE",true);
         mockedUserRepository.save(owner1);

@@ -1,5 +1,9 @@
 package com.io.invoices.invoiceshibernate.facture;
 
+import com.io.invoices.invoiceshibernate.bankAccount.BankAccount;
+import com.io.invoices.invoiceshibernate.bankAccount.BankAccountRepository;
+import com.io.invoices.invoiceshibernate.client.Client;
+import com.io.invoices.invoiceshibernate.client.ClientRepository;
 import com.io.invoices.invoiceshibernate.firm.FirmRepository;
 import com.io.invoices.invoiceshibernate.product.Product;
 import com.io.invoices.invoiceshibernate.product.ProductRepository;
@@ -20,13 +24,17 @@ import static com.io.invoices.invoiceshibernate.security.SecurityUtils.TOKEN_PRE
 public class FactureService {
 
     private final FactureRepository factureRepository;
+    private final ClientRepository clientRepository;
+    private final BankAccountRepository bankAccountRepository;
     private final ProductRepository productRepository;
     private final ProductEntryRepository productEntryRepository;
     private final FirmRepository firmRepository;
     private final ApplicationUserRepository applicationUserRepository;
 
-    public FactureService(FactureRepository factureRepository, ProductRepository productRepository, ProductEntryRepository productEntryRepository, FirmRepository firmRepository, ApplicationUserRepository applicationUserRepository) {
+    public FactureService(FactureRepository factureRepository, ClientRepository clientRepository, BankAccountRepository bankAccountRepository, ProductRepository productRepository, ProductEntryRepository productEntryRepository, FirmRepository firmRepository, ApplicationUserRepository applicationUserRepository) {
         this.factureRepository = factureRepository;
+        this.clientRepository = clientRepository;
+        this.bankAccountRepository = bankAccountRepository;
         this.productRepository = productRepository;
         this.productEntryRepository = productEntryRepository;
         this.firmRepository = firmRepository;
@@ -49,6 +57,23 @@ public class FactureService {
         if (!firmRepository.exists(firmId)) {
             throw new IllegalArgumentException("Bad company id!");
         }
+
+        Client client = clientRepository.findOne(facture.getClient().getId());
+        Client historyClient = new Client();
+        historyClient.setName(client.getName());
+        historyClient.setAdditionalData(client.getAdditionalData());
+        clientRepository.save(historyClient);
+        facture.setClient(historyClient);
+
+        BankAccount bankAccount = bankAccountRepository.findOne(facture.getBankAccount().getBankAccount());
+        BankAccount historyAccount = new BankAccount();
+        String historyString = bankAccount.getBankAccount() + " ";
+        historyAccount.setBankAccount(historyString);
+        historyAccount.setAdditionalData(bankAccount.getAdditionalData());
+        bankAccountRepository.save(historyAccount);
+        facture.setBankAccount(historyAccount);
+
+
         if (facture.getProducts() != null) {
             for (ProductEntry productEntry : facture.getProducts()) {
                 productEntryRepository.save(productEntry);

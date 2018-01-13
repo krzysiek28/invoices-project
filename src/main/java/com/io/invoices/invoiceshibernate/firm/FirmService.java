@@ -2,6 +2,7 @@ package com.io.invoices.invoiceshibernate.firm;
 
 import com.io.invoices.invoiceshibernate.bankAccount.BankAccountRepository;
 import com.io.invoices.invoiceshibernate.client.ClientRepository;
+import com.io.invoices.invoiceshibernate.facture.FactureRepository;
 import com.io.invoices.invoiceshibernate.product.ProductRepository;
 import com.io.invoices.invoiceshibernate.user.ApplicationUserRepository;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,15 @@ public class FirmService {
     private final ProductRepository productRepository;
     private final BankAccountRepository bankAccountRepository;
     private final ApplicationUserRepository userRepository;
+    private final FactureRepository factureRepository;
 
-    public FirmService(FirmRepository firmRepository, ClientRepository clientRepository, ProductRepository productRepository, BankAccountRepository bankAccountRepository, ApplicationUserRepository userRepository) {
+    public FirmService(FirmRepository firmRepository, ClientRepository clientRepository, ProductRepository productRepository, BankAccountRepository bankAccountRepository, ApplicationUserRepository userRepository, FactureRepository factureRepository) {
         this.firmRepository = firmRepository;
         this.clientRepository = clientRepository;
         this.productRepository = productRepository;
         this.bankAccountRepository = bankAccountRepository;
         this.userRepository = userRepository;
+        this.factureRepository = factureRepository;
     }
 
     public void addFirm(Integer ownerId, Firm firm) {
@@ -66,6 +69,7 @@ public class FirmService {
         }
 
         System.out.println(firmId);
+        factureRepository.deleteFacturesByFirmId(firmId);
         productRepository.deleteProductsByOwnerId(firmId);
         clientRepository.deleteClientsByOwnerId(firmId);
         bankAccountRepository.deleteBankAccountsByFirmId(firmId);
