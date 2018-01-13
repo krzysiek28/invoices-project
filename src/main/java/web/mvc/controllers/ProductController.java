@@ -45,6 +45,8 @@ public class ProductController {
         } catch (HttpClientErrorException e) {
             JSONObject obj = new JSONObject(e.getResponseBodyAsString());
             String errorMessage = obj.getString("message");
+            if (errorMessage.contains("company"))
+                return "redirect:/chooseFirm?error="+errorMessage;
             return "redirect:/products?error=" + errorMessage;
         } catch (Exception e) {
             e.printStackTrace();

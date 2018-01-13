@@ -253,12 +253,18 @@
     }
 
     function checkDates() {
-        var issueDate = Date.parse(document.getElementById("invoiceIssueDate").value);
-        var paymentDate = Date.parse(document.getElementById("invoicePaymentDate").value);
+        var issueDate = document.getElementById("invoiceIssueDate").value;
+        var paymentDate = document.getElementById("invoicePaymentDate").value;
 
-        if (paymentDate < issueDate) {
-            alert('Nieprawidłowy termin płatności');
-            document.getElementById("invoicePaymentDate").value = document.getElementById("invoiceIssueDate").value
+        console.log(issueDate.length);
+        console.log(paymentDate.length);
+
+        if (paymentDate.length >= issueDate.length) {
+            if (Date.parse(paymentDate) < Date.parse(issueDate) ) {
+                alert('Nieprawidłowy termin płatności');
+                document.getElementById("invoicePaymentDate").value = null;
+            }
+
         }
     }
 

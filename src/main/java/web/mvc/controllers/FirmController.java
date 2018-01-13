@@ -39,7 +39,7 @@ public class FirmController {
             modelMap.addAttribute("firms", firmService.getFirms());
             modelMap.addAttribute("authservice",userAuthenticationService);
             if (firmService.getFirms().isEmpty())
-                return "redirect:/firms";
+                return "redirect:/firms?error=Dodaj firme aby kontynuowac";
         }
         return "chooseFirm";
     }

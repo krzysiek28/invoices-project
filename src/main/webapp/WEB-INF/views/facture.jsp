@@ -5,6 +5,42 @@
 <jsp:include page="includes/header.jsp">
     <jsp:param name="title" value="Faktury"/>
 </jsp:include>
+<script>
+    function pdf(id) {
+        var token = "${authservice.rawToken}";
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8090/pdf/get/'+id, true);
+        xhr.setRequestHeader("Authorization", "Bearer "+token);
+
+        xhr.responseType = 'blob';
+        let formData = new FormData(this);
+        xhr.send(formData);
+
+        xhr.onload = function(e) {
+            if (this.status == 200) {
+                // Create a new Blob object using the
+                //response data of the onload object
+                var blob = new Blob([this.response], {type: 'image/pdf'});
+                //Create a link element, hide it, direct
+                //it towards the blob, and then 'click' it programatically
+                let a = document.createElement("a");
+                a.style = "display: none";
+                document.body.appendChild(a);
+                //Create a DOMString representing the blob
+                //and point the link element towards it
+                let url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = 'invoice_${facture.number}.pdf';
+                //programatically click the link to trigger the download
+                a.click();
+                //release the reference to the file by revoking the Object URL
+                window.URL.revokeObjectURL(url);
+            }else{
+                alert(this.status);
+            }
+        };
+    }
+</script>
 <body>
 <jsp:include page="includes/navigation.jsp"/>
 <c:if test="${param.error != null}">
@@ -12,22 +48,7 @@
         <p><c:out value="${param.error}"/></p>
     </div>
 </c:if>
-<script>
-    function getPdf(id) {
-    var f = document.createElement('form');
-    f.action='http://localhost:8090/factures/createpdf';
-    f.method='POST';
-    f.target='_blank';
 
-    var i=document.createElement('input');
-    i.type='hidden';
-    i.name='id';
-    i.value= id;
-    f.appendChild(i);
-
-    document.body.appendChild(f);
-    f.submit();}
-</script>
 
 <div class="container">
     <div class="row">
@@ -35,11 +56,17 @@
             Faktura nr
             <h3>${facture.number}</h3>
         </div>
-        <div class="col" style="margin-top: 5px;">
-            <input type="submit" value="generuj PDF" class="btn btn-primary btn-block" style="margin-top: 10px" onclick="getPdf(${factures.id});"/>
-            <a href="/factures/deletefacture/${facture.id}" class="btn btn-primary">usuń</a>
+        <div class="row" style="margin-top: 5px;">
+            <div class="col">
+                <input type="submit" value="generuj PDF" class="btn btn-primary"  onclick="pdf(${facture.id})" >
 
+            </div>
+            <div class="col">
+                <a href="/deletefacture/${facture.id}" class="btn btn-primary" >usuń</a>
+
+            </div>
         </div>
+
     </div>
 
 
@@ -92,8 +119,8 @@
     <td> <fmt:formatNumber type="number" maxFractionDigits="4" value="${productEntry.quantity}"/></td>
     <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${productEntry.product.netUnitPrice}"/> ${productEntry.product.currency}</td>
     <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${productEntry.product.vatRate}"/></td>
-    <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${productEntry.netprice}"/> ${productEntry.product.currency}</td>
-    <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${productEntry.vat}"/> ${productEntry.product.currency}</td>
+    <td><fmt:formatNumber type="number" maxFractionDigits="4" value="${productEntry.netprice}"/> ${productEntry.product.currency}</td>
+    <td><fmt:formatNumber type="number" maxFractionDigits="4" value="${productEntry.vat}"/> ${productEntry.product.currency}</td>
     <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${productEntry.grossprice}"/> ${productEntry.product.currency}</td>
 </tr>
 </c:forEach>

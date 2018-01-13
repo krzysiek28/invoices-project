@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="includes/header.jsp">
     <jsp:param name="title" value="Faktury"/>
@@ -23,7 +24,7 @@
                     <small class="text-muted">wystawiono ${facture.issueDate}<br/>płatność do ${facture.paymentDate}</small>
                 </div>
                 <p class="mb-1">${facture.client.name}</p>
-                <small class="text-muted">${facture.total} ${facture.currency}</small>
+                <small class="text-muted"><fmt:formatNumber type="number" maxFractionDigits="2" value="${facture.total}"/> ${facture.currency}</small>
             </a>
         </c:forEach>
     </div>

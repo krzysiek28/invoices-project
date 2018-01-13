@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.MappedInterceptor;
@@ -43,8 +42,25 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         exclude[3] = "/registrationPage";
         exclude[4] = "/addUser";
         exclude[5] = "/static/**";
-        return new MappedInterceptor(null,exclude, new RdrInterceptor(userAuthenticationService));
+        return new MappedInterceptor(null,exclude, new LoginInterceptor(userAuthenticationService));
     }
+
+    @Bean
+    public MappedInterceptor myFirmInterceptor()
+    {
+        String[] exclude = new String[9];
+        exclude[0] = "/";
+        exclude[1] = "/loginPage";
+        exclude[2] = "/login";
+        exclude[3] = "/registrationPage";
+        exclude[4] = "/addUser";
+        exclude[5] = "/static/**";
+        exclude[6] = "/chooseFirm/**";
+        exclude[7] = "/chooseFirm/**/**";
+        exclude[8] = "/firms/**";
+        return new MappedInterceptor(null,exclude, new FirmInterceptor(userAuthenticationService));
+    }
+
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {

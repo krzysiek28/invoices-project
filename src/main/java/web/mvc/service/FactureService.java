@@ -63,6 +63,15 @@ public class FactureService {
         HttpEntity<String> request = new HttpEntity<String>(factureString, headers);
         ResponseEntity<String> response = restTemplateHCCHRF.exchange(uri, HttpMethod.POST, request, String.class);
     }
+
+    public void deleteFacture(int id) throws URISyntaxException {
+        Integer companyId = userAuthenticationService.getFirmId();
+        URI uri = new URI("http://localhost:8090/factures/"+companyId+"/"+id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer "+userAuthenticationService.getRawToken());
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+        restTemplateHCCHRF.exchange(uri,HttpMethod.DELETE,request,String.class);
+    }
 }
 
 

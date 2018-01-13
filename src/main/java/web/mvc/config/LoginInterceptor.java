@@ -9,21 +9,22 @@ import web.mvc.service.UserAuthenticationService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RdrInterceptor  implements HandlerInterceptor {
+public class LoginInterceptor implements HandlerInterceptor {
 
     public final UserAuthenticationService userAuthenticationService;
 
-    public RdrInterceptor(UserAuthenticationService userAuthenticationService) {
+    public LoginInterceptor(UserAuthenticationService userAuthenticationService) {
         this.userAuthenticationService = userAuthenticationService;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         if (userAuthenticationService.isLoggedIn()) {
+
             return true;
         } else {
             System.out.println("user not logged in");
-            httpServletResponse.sendRedirect("/loginPage?error=loginfirst&message=Zaloguj sie...");
+            httpServletResponse.sendRedirect("/loginPage?error=loginfirst");
             return false;
         }
     }

@@ -12,6 +12,11 @@
 
 
 <div style="width:900px; margin:0 auto; margin-top: 10px;">
+    <c:if test="${param.error != null}">
+        <div  style="width:900px; margin:0 auto; margin-top: 10px; margin-bottom: 10px;"class="alert alert-danger">
+            <p><c:out value="${param.error}"/></p>
+        </div>
+    </c:if>
     <table class="table" border="1">
         <thead class="thead-dark" align="center">
         <div>

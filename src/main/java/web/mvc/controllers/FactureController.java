@@ -157,6 +157,8 @@ public class FactureController {
             modelMap.addAttribute("firm", facture.getFirm());
             modelMap.addAttribute("bankaccount", facture.getBankAccount());
             modelMap.addAttribute("productentries", facture.getProducts());
+            modelMap.addAttribute("authservice", userAuthenticationService);
+
 
 
         } catch (URISyntaxException e) {
@@ -203,5 +205,17 @@ public class FactureController {
         restTemplateHCCHRF.execute(URI.create("http://localhost:8090/createPdf/"+id), HttpMethod.GET, requestCallback, responseExtractor);
         return new FileSystemResource(file);
 
+    }
+
+    @RequestMapping(value = "/deletefacture/{id}")
+    public String deleteFacture(@PathVariable String id) {
+        try {
+            factureService.deleteFacture(Integer.parseInt(id));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+
+        return "redirect:/facturesList";
     }
 }
