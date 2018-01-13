@@ -217,7 +217,9 @@ public class PdfCreator {
         cell.setBorder(Rectangle.NO_BORDER);
         table.addCell(cell);
 
-        document.add(table);
+
+
+       document.add(table);
 
         // step 5
         document.close();
