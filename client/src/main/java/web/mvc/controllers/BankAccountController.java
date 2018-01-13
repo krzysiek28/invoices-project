@@ -39,6 +39,8 @@ public class BankAccountController {
         } catch (HttpServerErrorException exception) {
             JSONObject obj = new JSONObject(exception.getResponseBodyAsString());
             String errorMessage = obj.getString("message");
+            if (errorMessage.contains("company"))
+                return "redirect:/chooseFirm?error="+errorMessage;
             return "redirect:/bankAccounts?error=" + errorMessage;
         } catch (Exception e) {
             e.printStackTrace();

@@ -26,6 +26,7 @@
             <th>Dodatkowe informacje</th>
             <th></th>
         </div>
+<c:if test="${param.load == 'false'}">
 
         </thead>
         <tbody>
@@ -96,6 +97,6 @@
         </div>
     </form>
 </div>
-
+</c:if>
 </body>
 </html>
