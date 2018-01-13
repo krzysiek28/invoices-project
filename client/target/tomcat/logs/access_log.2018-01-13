@@ -60,3 +60,16 @@
 0:0:0:0:0:0:0:1 - - [13/Jan/2018:12:50:52 +0100] "GET /facturesList HTTP/1.1" 200 5024 http-bio-8091-exec-6 49
 0:0:0:0:0:0:0:1 - - [13/Jan/2018:12:50:54 +0100] "GET /facture/99 HTTP/1.1" 200 7769 http-bio-8091-exec-9 376
 0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:15:22 +0100] "GET /facture/99 HTTP/1.1" 200 7769 http-bio-8091-exec-2 1024
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:16 +0100] "GET / HTTP/1.1" 200 3286 http-bio-8091-exec-1 1657
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:16 +0100] "GET /static/images/img1.jpg HTTP/1.1" 200 106977 http-bio-8091-exec-5 105
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:16 +0100] "GET /static/images/img2.jpg HTTP/1.1" 200 54467 http-bio-8091-exec-2 58
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:16 +0100] "GET /static/images/img4.jpg HTTP/1.1" 200 28716 http-bio-8091-exec-3 60
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:18 +0100] "GET /loginPage HTTP/1.1" 200 2262 http-bio-8091-exec-8 499
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:19 +0100] "GET /static/css/bootstrap.css HTTP/1.1" 200 178247 http-bio-8091-exec-7 26
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:19 +0100] "GET /static/css/logStyle.css HTTP/1.1" 200 1412 http-bio-8091-exec-9 39
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:23 +0100] "POST /login HTTP/1.1" 302 - http-bio-8091-exec-9 908
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:24 +0100] "GET /chooseFirm HTTP/1.1" 200 3770 http-bio-8091-exec-9 1661
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:26 +0100] "GET /chooseFirm/51 HTTP/1.1" 302 - http-bio-8091-exec-9 8
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:26 +0100] "GET /facturesList HTTP/1.1" 200 5024 http-bio-8091-exec-9 759
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:27 +0100] "GET /facturesList HTTP/1.1" 200 5024 http-bio-8091-exec-8 62
+0:0:0:0:0:0:0:1 - - [13/Jan/2018:13:33:28 +0100] "GET /facture/99 HTTP/1.1" 200 7769 http-bio-8091-exec-1 506
