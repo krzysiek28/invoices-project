@@ -23,6 +23,15 @@ public class ApplicationUser {
     private String personalData;
     private Boolean enabled;
 
+    /**
+     * constructor creates ApplicationUser object
+     * @param username
+     * @param password
+     * @param email
+     * @param role param which spring security requires
+     * @param personalData
+     * @param enabled param which spring security requires
+     */
     public ApplicationUser(String username, String password, String email, String role, String personalData, Boolean enabled) {
 
         this.username = username;
