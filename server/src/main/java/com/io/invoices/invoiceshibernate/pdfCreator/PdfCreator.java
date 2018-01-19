@@ -3,6 +3,7 @@ package com.io.invoices.invoiceshibernate.pdfCreator;
 import com.io.invoices.invoiceshibernate.facture.Facture;
 import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -14,8 +15,11 @@ import java.util.List;
 public class PdfCreator {
 
     public static final String RESULT = "invoice.pdf";
-    private Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+    //private Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+    Font font = FontFactory.getFont("resources/arial.ttf", "Cp1250", BaseFont.EMBEDDED);
     private Facture facture;
+
+    //
 
     public PdfCreator(Facture facture) {
         this.facture = facture;
@@ -26,9 +30,21 @@ public class PdfCreator {
         Document document = new Document();
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(RESULT));
         document.open();
-        Font colfont = new Font(Font.FontFamily.HELVETICA, 10);
-        Font colfontb = new Font(Font.FontFamily.HELVETICA, 10,Font.BOLD);
-        Font bankfont = new Font(Font.FontFamily.HELVETICA, 8);
+//        Font colfont = new Font(Font.FontFamily.HELVETICA, 10);
+//        Font colfontb = new Font(Font.FontFamily.HELVETICA, 10,Font.BOLD);
+//        Font bankfont = new Font(Font.FontFamily.HELVETICA, 8);
+
+        //Font colfont = FontFactory.getFont("resources/arial.ttf", "UTF-8", BaseFont.CACHED, 10);
+       // Font colfontb = FontFactory.getFont("resources/arial.ttf", "Cp1250", BaseFont.CACHED, 10,Font.BOLD);
+       // Font bankfont = FontFactory.getFont("resources/arial.ttf", "Cp1250", BaseFont.CACHED, 8);
+
+        BaseFont helvetica = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.EMBEDDED);
+        Font colfont=new Font(helvetica,10);
+        Font colfontb=new Font(helvetica,10, Font.BOLD);
+
+        Font bankfont=new Font(helvetica,8);
+
+
 
 
         Paragraph p2 = new Paragraph("Faktura nr " + facture.getNumber().toString(), new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD));

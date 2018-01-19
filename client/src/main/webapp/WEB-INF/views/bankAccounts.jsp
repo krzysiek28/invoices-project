@@ -26,7 +26,7 @@
             <th>Dodatkowe informacje</th>
             <th></th>
         </div>
-<c:if test="${param.load == 'false'}">
+<c:if test="${param.error == null}">
 
         </thead>
         <tbody>

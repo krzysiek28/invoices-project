@@ -10,7 +10,10 @@ import java.io.IOException;
 import static com.io.invoices.invoiceshibernate.security.SecurityUtils.HEADER_STRING;
 import static com.io.invoices.invoiceshibernate.security.SecurityUtils.TOKEN_PREFIX;
 
-
+/**
+ * UserController is controller which is responsible for
+ * handle all requests user related
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -19,6 +22,12 @@ public class UserController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
 
+    /**
+     *
+     * @param applicationUserRepository
+     * @param bCryptPasswordEncoder class responsible for encrytping passwords
+     * @param userService
+     */
     public UserController(ApplicationUserRepository applicationUserRepository,
                           BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService) {
         this.applicationUserRepository = applicationUserRepository;
@@ -26,6 +35,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * method which allows user to sign up
+     * method checks if user with same data exsist
+     * if not create new user
+     *
+     * @param user json with all user data
+     * @param res http response
+     */
     @PostMapping("/sign-up")
     public void signUp(@RequestBody ApplicationUser user, HttpServletResponse res) {
         if (applicationUserRepository.findByUsername(user.getUsername()) != null) {
@@ -44,12 +61,23 @@ public class UserController {
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + SecurityUtils.generateToken(user.getUsername()));
     }
 
+    /**
+     * method finds and returns user by username
+     * @param username
+     * @return
+     */
     @RequestMapping("/{username}")
     public ApplicationUser getUserByUsername(@PathVariable String username) {
         ApplicationUser user = userService.getUserByUsername(username);
         return user;
     }
 
+    /**
+     * method finds and reuturns user by id
+     *
+     * @param userId
+     * @return
+     */
     @RequestMapping("/id/{userId}")
     public ApplicationUser getUser(@PathVariable String userId) {
         return userService.getUser(Integer.parseInt(userId));
