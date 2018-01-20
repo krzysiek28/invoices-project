@@ -2,6 +2,8 @@ package web.mvc.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpMethod;
@@ -10,10 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
@@ -217,5 +217,19 @@ public class FactureController {
 
 
         return "redirect:/facturesList";
+    }
+
+
+    @ExceptionHandler({ HttpServerErrorException.class})
+    public String handleException(HttpServerErrorException ex) {
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(ex.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/facturesList?error="+errorMessage;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return"redirect:/facturesList?error=Nieoczekiwany błąd!";
     }
 }

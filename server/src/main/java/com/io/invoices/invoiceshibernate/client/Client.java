@@ -1,6 +1,7 @@
 package com.io.invoices.invoiceshibernate.client;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
+import org.jsoup.Jsoup;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -65,4 +66,14 @@ public class Client {
         this.owner = owner;
     }
 
+    public boolean isCorrect() {
+        if (this.getName().isEmpty() || this.getAdditionalData().isEmpty())
+            return false;
+        return true;
+    }
+
+    public void stripTags() {
+        this.setName(Jsoup.parse(this.getName()).text());
+        this.setAdditionalData(Jsoup.parse(this.getAdditionalData()).text());
+    }
 }

@@ -91,11 +91,19 @@ public class FactureBuilderService {
         double total = 0.0;
         for (ProductEntry product : products) {
             Product unitproduct = productService.getProduct(product.getProduct().getId());
-            product.setNetprice(unitproduct.getNetUnitPrice()*product.getQuantity());
-            product.setVat(unitproduct.getVatRate()*product.getNetprice());
-            product.setGrossprice(product.getNetprice()+product.getVat());
+            product.setNetprice(
+                    new Float(Math.round((unitproduct.getNetUnitPrice()*product.getQuantity()) * 100.0) / 100.0)
+            );
+            product.setVat( new Float(
+                            Math.round(unitproduct.getVatRate()*product.getNetprice() * 100.0) /100.0
+
+                    )
+            );
+            product.setGrossprice(new Float(
+                    Math.round(product.getNetprice()+product.getVat() * 100.0) / 100.0
+            ));
             total += product.getGrossprice();
         }
-        facture.setTotal((float) total);
+        facture.setTotal( new Float( Math.round(total * 100.0) / 100.0 ));
     }
 }

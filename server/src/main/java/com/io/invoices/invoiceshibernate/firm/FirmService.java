@@ -5,6 +5,7 @@ import com.io.invoices.invoiceshibernate.client.ClientRepository;
 import com.io.invoices.invoiceshibernate.facture.FactureRepository;
 import com.io.invoices.invoiceshibernate.product.ProductRepository;
 import com.io.invoices.invoiceshibernate.user.ApplicationUserRepository;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,16 +32,21 @@ public class FirmService {
 
     public void addFirm(Integer ownerId, Firm firm) {
         if (!userRepository.exists(ownerId)) {
-            throw new IllegalArgumentException("Company owner does not exist!");
+            throw new IllegalArgumentException("Niepoprawny wlasciciel firmy!");
         }
 
         firm.setOwner(userRepository.findOne(ownerId));
+
+        firm.stripTags();
+        if (!firm.isCorrect())
+            throw new IllegalArgumentException("Podano niepoprawne dane!");
+
         firmRepository.save(firm);
     }
 
     public List<Firm> getFirms(Integer ownerId) {
         if (!userRepository.exists(ownerId)) {
-            throw new IllegalArgumentException("Company owner does not exist!");
+            throw new IllegalArgumentException("Niepoprawny wlasciciel firmy!");
         }
 
         List<Firm> firms = new ArrayList<>();
@@ -51,21 +57,26 @@ public class FirmService {
 
     public void updateFirm(Integer firmId, Firm firm) {
         if (!firmRepository.exists(firmId)) {
-            throw new IllegalArgumentException("Company does not exist!");
+            throw new IllegalArgumentException("Podana firma nie istnieje!");
         }
 
+        firm.stripTags();
+        if (!firm.isCorrect())
+            throw new IllegalArgumentException("Podano niepoprawne dane!");
+
         Firm dbFirm = firmRepository.findOne(firmId);
-        dbFirm.setEmail(firm.getEmail());
-        dbFirm.setName(firm.getName());
-        dbFirm.setNip(firm.getNip());
-        dbFirm.setPhone(firm.getPhone());
         dbFirm.setPlace(firm.getPlace());
+        dbFirm.setPhone(firm.getPhone());
+        dbFirm.setNip(firm.getNip());
+        dbFirm.setName(firm.getName());
+        dbFirm.setEmail(firm.getEmail());
+
         firmRepository.save(dbFirm);
     }
 
     public void deleteFirm(Integer firmId) {
         if (!firmRepository.exists(firmId)) {
-            throw new IllegalArgumentException("Company does not exist!");
+            throw new IllegalArgumentException("Podana firma nie istnieje!");
         }
 
         System.out.println(firmId);

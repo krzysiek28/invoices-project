@@ -1,6 +1,7 @@
 package com.io.invoices.invoiceshibernate.product;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
+import org.jsoup.Jsoup;
 
 import javax.persistence.*;
 
@@ -86,11 +87,16 @@ public class Product {
         this.unit = unit;
     }
 
-}
+    public void stipTags() {
+        this.setName(Jsoup.parse(this.getName()).text());
+        this.setCurrency(Jsoup.parse(this.getCurrency()).text());
+        this.setUnit(Jsoup.parse(this.getUnit()).text());
+    }
 
-/*
-    product_id INTEGER NOT NULL,
-    user_id INTEGER NOT NULL,
-    name VARCHAR NOT NULL,
-    CONSTRAINT product_pk PRIMARY KEY (product_id, user_id)
-*/
+    public boolean isCorrect() {
+        if (this.getName().isEmpty() || this.getCurrency().isEmpty() || this.getUnit().isEmpty() || (this.getNetUnitPrice() < 0) || (this.getVatRate() < 0) || (this.getVatRate() > 100))
+            return false;
+        return true;
+    }
+
+}

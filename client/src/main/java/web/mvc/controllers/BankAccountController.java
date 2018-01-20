@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,7 @@ public class BankAccountController {
         } catch (HttpServerErrorException exception) {
             JSONObject obj = new JSONObject(exception.getResponseBodyAsString());
             String errorMessage = obj.getString("message");
-            if (errorMessage.contains("company"))
+            if (errorMessage.contains("firma"))
                 return "redirect:/chooseFirm?error="+errorMessage;
             return "redirect:/bankAccounts?error=" + errorMessage;
         } catch (Exception e) {
@@ -92,5 +93,18 @@ public class BankAccountController {
             e.printStackTrace();
         }
         return "redirect:/bankAccounts";
+    }
+
+    @ExceptionHandler({ HttpServerErrorException.class})
+    public String handleException(HttpServerErrorException ex) {
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(ex.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/bankAccounts?error="+errorMessage;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return"redirect:/bankAccounts?error=Nieoczekiwany błąd!";
     }
 }

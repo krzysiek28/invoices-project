@@ -106,4 +106,17 @@ public class ClientController {
         }
         return "redirect:/clients";
     }
+
+    @ExceptionHandler({ HttpServerErrorException.class})
+    public String handleException(HttpServerErrorException ex) {
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(ex.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/clients?error="+errorMessage;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return"redirect:/clients?error=Nieoczekiwany błąd!";
+    }
 }

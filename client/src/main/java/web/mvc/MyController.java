@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.WebRequest;
@@ -123,6 +124,19 @@ public class MyController {
         }
 
         return "redirect:/chooseFirm";
+    }
+
+    @ExceptionHandler({ HttpServerErrorException.class})
+    public String handleException(HttpServerErrorException ex) {
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(ex.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/chooseFirm?error="+errorMessage;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return"redirect:/chooseFirm?error=Nieoczekiwany błąd!";
     }
 
 

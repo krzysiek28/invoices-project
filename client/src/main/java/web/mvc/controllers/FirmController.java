@@ -2,13 +2,12 @@ package web.mvc.controllers;
 
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.client.HttpServerErrorException;
 import web.mvc.service.FirmService;
 import web.mvc.service.UserAuthenticationService;
 import web.mvc.service.UserService;
@@ -23,6 +22,7 @@ public class FirmController {
     private UserAuthenticationService userAuthenticationService;
     private FirmService firmService;
     private UserService userService;
+
 
     public FirmController(UserAuthenticationService userAuthenticationService,
                             FirmService firmService, UserService userService) {
@@ -98,5 +98,18 @@ public class FirmController {
         status.setComplete();
 
         return "redirect:/firms";
+    }
+
+    @ExceptionHandler({ HttpServerErrorException.class})
+    public String handleException(HttpServerErrorException ex) {
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(ex.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/firms?error="+errorMessage;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return"redirect:/firms?error=Nieoczekiwany błąd!";
     }
 }

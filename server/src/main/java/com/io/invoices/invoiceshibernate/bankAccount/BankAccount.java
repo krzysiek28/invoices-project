@@ -1,6 +1,7 @@
 package com.io.invoices.invoiceshibernate.bankAccount;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
+import org.jsoup.Jsoup;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,6 +19,12 @@ public class BankAccount {
         this.bankAccount = bankAccount;
         this.additionalData = additionalData;
         this.firm = firm;
+    }
+
+    public boolean equals(BankAccount o) {
+        if (o.getBankAccount().equals(this.getBankAccount()))
+            return true;
+        return false;
     }
 
     public BankAccount() {
@@ -45,5 +52,16 @@ public class BankAccount {
 
     public void setFirm(Firm firm) {
         this.firm = firm;
+    }
+
+    public boolean isCorrect() {
+        if (this.getBankAccount().isEmpty() || this.getAdditionalData().isEmpty())
+            return false;
+        return true;
+    }
+
+    public void stripTags() {
+        this.setBankAccount(Jsoup.parse(this.getBankAccount()).text());
+        this.setAdditionalData(Jsoup.parse(this.getAdditionalData()).text());
     }
 }

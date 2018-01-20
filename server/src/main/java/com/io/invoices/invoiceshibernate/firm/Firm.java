@@ -1,6 +1,7 @@
 package com.io.invoices.invoiceshibernate.firm;
 
 import com.io.invoices.invoiceshibernate.user.ApplicationUser;
+import org.jsoup.Jsoup;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -105,4 +106,19 @@ public class Firm {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void stripTags() {
+        this.setPlace(Jsoup.parse(this.getPlace()).text());
+        this.setPhone(Jsoup.parse(this.getPhone()).text());
+        this.setNip(Jsoup.parse(this.getNip()).text());
+        this.setName(Jsoup.parse(this.getName()).text());
+        this.setEmail(Jsoup.parse(this.getEmail()).text());
+    }
+
+    public boolean isCorrect() {
+        if (this.getPlace().isEmpty() || this.getPhone().isEmpty() || this.getNip().isEmpty() || this.getName().isEmpty() || this.getEmail().isEmpty())
+            return false;
+        return true;
+    }
 }
+

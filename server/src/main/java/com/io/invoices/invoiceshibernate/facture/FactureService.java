@@ -12,6 +12,7 @@ import com.io.invoices.invoiceshibernate.productentry.ProductEntryRepository;
 import com.io.invoices.invoiceshibernate.user.ApplicationUser;
 import com.io.invoices.invoiceshibernate.user.ApplicationUserRepository;
 import io.jsonwebtoken.Jwts;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -55,8 +56,12 @@ public class FactureService {
 
     public void addFacture(Integer firmId, Facture facture) {
         if (!firmRepository.exists(firmId)) {
-            throw new IllegalArgumentException("Bad company id!");
+            throw new IllegalArgumentException("Niepoprawne id firmy!");
         }
+
+        facture.stripTags();
+        if (!facture.isCorrect())
+            throw new IllegalArgumentException("Podano niepoprawne dane!");
 
         Client client = clientRepository.findOne(facture.getClient().getId());
         Client historyClient = new Client();
@@ -98,14 +103,19 @@ public class FactureService {
 
     public void deleteFacture(Integer factureId) {
         if (!factureRepository.exists(factureId))
-            throw new IllegalArgumentException("Invoice does not exist!");
+            throw new IllegalArgumentException("Faktura o podanym id nie istnieje!");
 
         factureRepository.delete(factureId);
     }
 
     public void updateFacture(int factureId, Facture facture) {
         if (!factureRepository.exists(factureId))
-            throw new IllegalArgumentException("Invoice does not exist!");
+            throw new IllegalArgumentException("Faktura o podanym id nie istnieje!");
+
+        facture.stripTags();
+        if (!facture.isCorrect())
+            throw new IllegalArgumentException("Podano niepoprawne dane!");
+
 
         Facture dbFacture = factureRepository.findOne(factureId);
         dbFacture.setIssueDate(facture.getIssueDate());

@@ -13,7 +13,7 @@ public class UserService {
 
     public ApplicationUser getUser(Integer userId) {
         if (!userRepository.exists(userId)) {
-            throw new IllegalArgumentException("User does not exist!");
+            throw new IllegalArgumentException("Uzytkownik nie istnieje");
         }
 
         return userRepository.findOne(userId);
@@ -25,7 +25,7 @@ public class UserService {
 
     public void updateUser(Integer userId, ApplicationUser usery) {
         if (!userRepository.exists(userId)) {
-            throw new IllegalArgumentException("User with provided id does not exist!");
+            throw new IllegalArgumentException("Uzytkownik nie istnieje!");
         }
 
         ApplicationUser dbUser = userRepository.findOne(userId);
@@ -38,7 +38,7 @@ public class UserService {
 
     public void deleteUser(Integer userId) {
         if (!userRepository.exists(userId)) {
-            throw new IllegalArgumentException("User does not exist!");
+            throw new IllegalArgumentException("Uzytkownik nie istnieje!");
         }
 
         userRepository.delete(userId);

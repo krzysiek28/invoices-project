@@ -4,6 +4,7 @@ import com.io.invoices.invoiceshibernate.bankAccount.BankAccount;
 import com.io.invoices.invoiceshibernate.client.Client;
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
+import org.jsoup.Jsoup;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -176,4 +177,16 @@ public class Facture {
         this.total = total;
     }
 
+    public void stripTags() {
+        this.setCurrency(Jsoup.parse(this.getCurrency()).text());
+        this.setNumber(Jsoup.parse(this.getNumber()).text());
+        this.setPaymentMethod(Jsoup.parse(this.getPaymentMethod()).text());
+        this.setPlace(Jsoup.parse(this.getPlace()).text());
+    }
+
+    public boolean isCorrect() {
+        if (this.getCurrency().isEmpty() || this.getNumber().isEmpty() || this.getPaymentMethod().isEmpty() || this.getPlace().isEmpty())
+            return false;
+        return true;
+    }
 }

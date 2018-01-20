@@ -2,6 +2,7 @@ package com.io.invoices.invoiceshibernate.bankAccount;
 
 import com.io.invoices.invoiceshibernate.firm.Firm;
 import com.io.invoices.invoiceshibernate.firm.FirmRepository;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,28 +27,37 @@ public class BankAccountService {
 
         Firm owner = firmRepository.findOne(firmId);
         bankAccount.setFirm(owner);
+        bankAccount.stripTags();
+        if (!bankAccount.isCorrect())
+            throw new IllegalArgumentException("Podano niepoprawne dane!");
+
         bankAccountRepository.save(bankAccount);
     }
 
     public List<BankAccount> getBankAccounts(Integer firmId) {
         if (!firmRepository.exists(firmId))
-            throw new IllegalArgumentException("Company does not exist!");
+            throw new IllegalArgumentException("Podana firma nie istnieje!");
 
         return bankAccountRepository.findBankAccountByFirmId(firmId);
     }
 
     public void deleteAccount(String accountId) {
         if (!bankAccountRepository.exists(accountId))
-            throw new IllegalArgumentException("Bank account does not exist!");
+            throw new IllegalArgumentException("Podane konto nie istnieje!");
 
         bankAccountRepository.delete(accountId);
     }
 
     public void updateAccount(String accountId, BankAccount account) {
         if (!bankAccountRepository.exists(accountId))
-            throw new IllegalArgumentException("Bank account does not exist!");
+            throw new IllegalArgumentException("Podane konto nie istnieje!");
 
         BankAccount dbBankAccount = bankAccountRepository.findOne(accountId);
+
+        account.stripTags();
+        if(!account.isCorrect())
+            throw new IllegalArgumentException("Podano niepoprawne dane!");
+
         dbBankAccount.setBankAccount(account.getBankAccount());
         dbBankAccount.setAdditionalData(account.getAdditionalData());
         bankAccountRepository.save(dbBankAccount);

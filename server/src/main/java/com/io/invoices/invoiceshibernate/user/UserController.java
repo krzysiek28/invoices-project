@@ -1,6 +1,7 @@
 package com.io.invoices.invoiceshibernate.user;
 
 import com.io.invoices.invoiceshibernate.security.SecurityUtils;
+import org.jsoup.Jsoup;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,11 +53,11 @@ public class UserController {
             throw new IllegalArgumentException("User with provided email already exists!");
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setUsername(user.getUsername());
-        user.setEmail(user.getEmail());
+        user.setUsername(Jsoup.parse(user.getUsername()).text());
+        user.setEmail(Jsoup.parse(user.getEmail()).text());
         user.setRole(user.getRole());
         user.setEnabled(user.getEnabled());
-        user.setPersonalData(user.getPersonalData());
+        user.setPersonalData(Jsoup.parse(user.getPersonalData()).text());
         applicationUserRepository.save(user);
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + SecurityUtils.generateToken(user.getUsername()));
     }

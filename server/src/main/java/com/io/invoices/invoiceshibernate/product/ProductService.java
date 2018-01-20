@@ -2,6 +2,7 @@ package com.io.invoices.invoiceshibernate.product;
 
 
 import com.io.invoices.invoiceshibernate.firm.FirmRepository;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +20,14 @@ public class ProductService {
 
     public void addProduct(Integer firmId, Product product) {
         if (!firmRepository.exists(firmId)) {
-            throw new IllegalArgumentException("Bad company id!");
+            throw new IllegalArgumentException("Niepoprawne id firmy.");
         }
+
+        product.stipTags();
+        if (!product.isCorrect()) {
+            throw new IllegalArgumentException("Podano niepoprawne dane!");
+        }
+
 
         product.setOwner(firmRepository.findOne(firmId));
         productRepository.save(product);
@@ -28,7 +35,12 @@ public class ProductService {
 
     public void updateProduct(Integer productId, Product product) {
         if (!productRepository.exists(productId)) {
-            throw new IllegalArgumentException("Product does not exist!");
+            throw new IllegalArgumentException("Produkt/usługa nie istnieje!");
+        }
+
+        product.stipTags();
+        if (!product.isCorrect()) {
+            throw new IllegalArgumentException("Podano niepoprawne dane!");
         }
 
         Product dbProduct = productRepository.findOne(productId);
@@ -43,13 +55,13 @@ public class ProductService {
 
     public List<Product> getProducts(int ownerId) {
         if (!firmRepository.exists(ownerId))
-            throw new IllegalArgumentException("Bad company id!");
+            throw new IllegalArgumentException("Niepoprawne id firmy.");
         return productRepository.findProductByOwnerId(ownerId);
     }
 
     public void deleteProduct(Integer productId) {
         if (!productRepository.exists(productId))
-            throw new IllegalArgumentException("Product does not extst!");
+            throw new IllegalArgumentException("Produkt/usługa nie istnieje!");
 
         productRepository.findOne(productId).setOwner(null);
         productRepository.delete(productId);
@@ -57,7 +69,7 @@ public class ProductService {
 
     public Product getProduct(int i) {
         if (!productRepository.exists(i))
-            throw new IllegalArgumentException("Product does not extst!");
+            throw new IllegalArgumentException("Produkt/usługa nie istnieje!");
         return productRepository.findOne(i);
     }
 }
