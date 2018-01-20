@@ -95,12 +95,12 @@ public class FactureBuilderService {
                     new Float(Math.round((unitproduct.getNetUnitPrice()*product.getQuantity()) * 100.0) / 100.0)
             );
             product.setVat( new Float(
-                            Math.round(unitproduct.getVatRate()*product.getNetprice() * 100.0) /100.0
+                            Math.round((unitproduct.getVatRate()/100.0)*product.getNetprice() * 100.0) /100.0
 
                     )
             );
             product.setGrossprice(new Float(
-                    Math.round(product.getNetprice()+product.getVat() * 100.0) / 100.0
+                    Math.round((product.getNetprice()+product.getVat()) * 100.0) / 100.0
             ));
             total += product.getGrossprice();
         }

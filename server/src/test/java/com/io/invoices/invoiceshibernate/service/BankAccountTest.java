@@ -34,7 +34,7 @@ public class BankAccountTest {
     public void setTestedObject(){
         initMocks(this);
         testedService = new BankAccountService(mockedBankRepository, mockedFirmRepository);
-        testedController = new BankAccountController(testedService);
+        testedController = new BankAccountController(testedService,null);
 
         Firm firm = new Firm();
         firm.setId(1);
@@ -48,7 +48,7 @@ public class BankAccountTest {
 
     @Test
     public void shouldReturnBankAccounts() throws Exception{
-        List<BankAccount> bankAccounts = testedController.getBankAccounts("1");
+        List<BankAccount> bankAccounts = testedController.getBankAccounts("1",null);
 
 
         assertThat(bankAccounts).element(0).hasFieldOrPropertyWithValue("bankAccount","1234");

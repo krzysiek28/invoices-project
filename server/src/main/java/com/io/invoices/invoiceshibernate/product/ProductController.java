@@ -2,6 +2,9 @@ package com.io.invoices.invoiceshibernate.product;
 
 
 import com.io.invoices.invoiceshibernate.firm.FirmService;
+import com.io.invoices.invoiceshibernate.security.AuthorizationFilter;
+import com.io.invoices.invoiceshibernate.security.ResourceType;
+import com.io.invoices.invoiceshibernate.security.UnauthorizedException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,15 +19,17 @@ public class ProductController {
 
     private final ProductService productService;
     private final FirmService firmService;
+    private final AuthorizationFilter authorizationFilter;
 
     /**
-     *
-     * @param productService
+     *  @param productService
      * @param firmService
+     * @param authorizationFilter
      */
-    public ProductController(ProductService productService, FirmService firmService) {
+    public ProductController(ProductService productService, FirmService firmService, AuthorizationFilter authorizationFilter) {
         this.productService = productService;
         this.firmService = firmService;
+        this.authorizationFilter = authorizationFilter;
     }
 
     /**
@@ -34,7 +39,8 @@ public class ProductController {
      * @return
      */
     @RequestMapping("/{firmId}")
-    public List<Product> getProducts(@PathVariable String firmId) {
+    public List<Product> getProducts(@PathVariable String firmId, @RequestHeader("Authorization") String token) throws UnauthorizedException {
+        authorizationFilter.isAuthorizedTo(token,firmId, ResourceType.FIRM);
         return productService.getProducts(Integer.parseInt(firmId));
     }
 
@@ -46,7 +52,8 @@ public class ProductController {
      * @param firmId
      */
     @RequestMapping(method = RequestMethod.POST, value = "/{firmId}")
-    public void addProduct(@RequestBody Product product, @PathVariable String firmId) {
+    public void addProduct(@RequestBody Product product, @PathVariable String firmId, @RequestHeader("Authorization") String token) throws UnauthorizedException {
+        authorizationFilter.isAuthorizedTo(token,firmId,ResourceType.FIRM);
         productService.addProduct(Integer.parseInt(firmId), product);
     }
 
@@ -57,7 +64,8 @@ public class ProductController {
      * @param productId
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "/{firmId}/{productId}")
-    public void deleteProduct(@PathVariable String productId) {
+    public void deleteProduct(@PathVariable String productId, @RequestHeader("Authorization") String token) throws UnauthorizedException {
+        authorizationFilter.isAuthorizedTo(token,productId,ResourceType.PRODUCT);
         productService.deleteProduct(Integer.parseInt(productId));
     }
 
@@ -67,7 +75,8 @@ public class ProductController {
      * @param productId
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/{firmId}/{productId}")
-    public void updateProduct(@RequestBody Product product, @PathVariable String productId) {
+    public void updateProduct(@RequestBody Product product, @PathVariable String productId, @RequestHeader("Authorization") String token) throws UnauthorizedException {
+        authorizationFilter.isAuthorizedTo(token,productId,ResourceType.PRODUCT);
         productService.updateProduct(Integer.parseInt(productId), product);
     }
 
@@ -79,7 +88,8 @@ public class ProductController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, value = "/{firmId}/{productId}")
-    public Product getProduct(@PathVariable String productId) {
+    public Product getProduct(@PathVariable String productId, @RequestHeader("Authorization") String token) throws UnauthorizedException {
+        authorizationFilter.isAuthorizedTo(token,productId,ResourceType.PRODUCT);
         return productService.getProduct(Integer.parseInt(productId));
     }
 

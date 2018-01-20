@@ -125,7 +125,7 @@
                 <td>${product.netUnitPrice}</td>
                 <td>${product.unit}</td>
                 <td>
-                    <fmt:formatNumber type="number" maxFractionDigits="2" value="${product.vatRate*100}"/>
+                    <fmt:formatNumber type="number" maxFractionDigits="2" value="${product.vatRate}"/>
                 </td>
                 <td>${product.currency}</td>
                 <td>
