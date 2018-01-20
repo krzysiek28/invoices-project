@@ -58,10 +58,12 @@ public class ProductController {
                              @RequestParam("unit") String unit,
                              @RequestParam("vatRate") Float vatRate,
                              @RequestParam("currency") String currency,
+                             @RequestParam("vatInfo") String vatInfo,
                              HttpServletRequest request,
                              ModelMap modelMap) throws JSONException {
         try {
-            productService.addProduct(name, netUnitPrice, unit, vatRate, currency);
+            System.out.println(vatInfo);
+            productService.addProduct(name, netUnitPrice, unit, vatRate, currency,vatInfo);
         } catch (HttpClientErrorException e) {
             JSONObject obj = new JSONObject(e.getResponseBodyAsString());
             String errorMessage = obj.getString("message");
@@ -92,12 +94,13 @@ public class ProductController {
                              @RequestParam("unit") String unit,
                              @RequestParam("vatRate") Float vatRate,
                                 @RequestParam("currency") String currency,
+                                @RequestParam("vatInfo") String vatInfo,
                              @PathVariable("id") String id,
                              HttpServletRequest request,
                              ModelMap modelMap) throws URISyntaxException, JSONException {
         try {
-
-            productService.updateProduct(Integer.parseInt(id), name, netUnitPrice, unit, vatRate/100, currency);
+            System.out.println(vatInfo);
+            productService.updateProduct(Integer.parseInt(id), name, netUnitPrice, unit, vatRate, currency,vatInfo);
         } catch (HttpClientErrorException e) {
             JSONObject obj = new JSONObject(e.getResponseBodyAsString());
             String errorMessage = obj.getString("message");

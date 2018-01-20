@@ -44,7 +44,7 @@ public class ProductService {
                 objectMapper.getTypeFactory().constructCollectionType(List.class, Product.class));
     }
 
-    public void addProduct(String name, Float netUnitPrice, String unit, Float vatRate, String currency) throws JSONException, URISyntaxException, HttpClientErrorException {
+    public void addProduct(String name, Float netUnitPrice, String unit, Float vatRate, String currency,String vatInfo) throws JSONException, URISyntaxException, HttpClientErrorException {
         Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/products/"+companyId);
         HttpHeaders headers = new HttpHeaders();
@@ -55,6 +55,7 @@ public class ProductService {
                 .put("netUnitPrice",netUnitPrice)
                 .put("unit", unit)
                 .put("vatRate",vatRate)
+                .put("vatInfo", vatInfo)
                 .put("currency",currency)
                 .toString();
         HttpEntity<String> request = new HttpEntity<String>(productData, headers);
@@ -70,7 +71,7 @@ public class ProductService {
         restTemplateHCCHRF.exchange(uri,HttpMethod.DELETE,request,String.class);
     }
 
-    public void updateProduct(int id, String name, Float netUnitPrice, String unit, Float vatRate, String currency) throws URISyntaxException, JSONException, HttpClientErrorException {
+    public void updateProduct(int id, String name, Float netUnitPrice, String unit, Float vatRate, String currency, String vatInfo) throws URISyntaxException, JSONException, HttpClientErrorException {
         Integer companyId = userAuthenticationService.getFirmId();
         URI uri = new URI("http://localhost:8090/products/"+companyId+"/"+id);
         HttpHeaders headers = new HttpHeaders();
@@ -81,6 +82,7 @@ public class ProductService {
                 .put("netUnitPrice",netUnitPrice)
                 .put("unit", unit)
                 .put("vatRate",vatRate)
+                .put("vatInfo", vatInfo)
                 .put("currency",currency)
                 .toString();
         HttpEntity<String> request = new HttpEntity<String>(productData, headers);

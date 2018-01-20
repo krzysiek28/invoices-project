@@ -6,6 +6,7 @@ public class Product {
     private String name;
     private Float netUnitPrice;
     private Float vatRate;
+    private String vatInfo;
     private String unit;
     private String currency;
 
@@ -17,12 +18,19 @@ public class Product {
         this.unit = unit;
         this.currency = currency;
     }
-
     public Product(int id) {
         this.id = id;
     }
 
     public Product() {
+    }
+
+    public String getVatInfo() {
+        return vatInfo;
+    }
+
+    public void setVatInfo(String vatInfo) {
+        this.vatInfo = vatInfo;
     }
 
     public String getCurrency() {

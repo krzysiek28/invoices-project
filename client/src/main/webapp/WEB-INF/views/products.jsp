@@ -74,12 +74,26 @@
             }
         }
     }
+
+    function checkVat() {
+        var val = document.getElementsByName("vatRate").item(0).value;
+        if (val != 23) {
+            var vatin = prompt("Niestandardowa stawka VAT, jeżeli stawka > 0 podaj kod vat, jeżeli stawka = 0 wybierz 0% dla stawki 0%, zw dla 'zwolniony z VAT', np dla 'nie podlega opodatkowaniu'", "");
+
+            if (person == null || person == "") {
+                document.getElementsByName("vatRate").item(0).value = 23;
+            } else {
+                document.getElementById("vatInfo").value = vatin;
+
+            }
+        }
+    }
 </script>
 
 <div style="width:900px; margin:0 auto; margin-top: 40px;">
     <form action="/products/addproduct" method="post">
         <div class="form-row">
-
+            <input id="vatInfo" type="hidden" name="vatInfo" value="">
             <div class="col-md-3"><input type="text" class="form-control"
                                          placeholder="Nazwa produktu" name="name" required="true"/></div>
             <div class="col-md-3"><input type="number" step="0.001" min="0" class="form-control"
@@ -96,7 +110,7 @@
         </div>
         <div class="form-row">
             <div class="row" style="width: 100%; margin: 5px;">
-                <input class="btn btn-primary btn-block" type="submit" value="dodaj">
+                <input class="btn btn-primary btn-block" type="submit" value="dodaj" onclick="checkVat()">
             </div>
         </div>
 
@@ -126,6 +140,7 @@
                 <td>${product.unit}</td>
                 <td>
                     <fmt:formatNumber type="number" maxFractionDigits="2" value="${product.vatRate}"/>
+                    ${product.vatInfo}
                 </td>
                 <td>${product.currency}</td>
                 <td>

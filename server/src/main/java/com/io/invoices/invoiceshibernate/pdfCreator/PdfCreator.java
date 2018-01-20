@@ -1,6 +1,7 @@
 package com.io.invoices.invoiceshibernate.pdfCreator;
 
 import com.io.invoices.invoiceshibernate.facture.Facture;
+import com.io.invoices.invoiceshibernate.product.Product;
 import com.io.invoices.invoiceshibernate.productentry.ProductEntry;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
@@ -153,6 +154,42 @@ public class PdfCreator {
         document.add(table);
         document.add( Chunk.NEWLINE );
 
+
+        table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+        table.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.setWidths(new int[]{1,1});
+
+        Double totalNet = 0.0;
+        Double totalVat = 0.0;
+
+        for(ProductEntry product : products) {
+            totalNet += product.getNetprice();
+            totalVat += product.getVat();
+        }
+
+        totalNet = Math.round(totalNet * 100.0) / 100.0;
+        totalVat = Math.round(totalVat * 100.0) / 100.0;
+
+        table.addCell(emptycell);
+        cell = new PdfPCell(new Phrase("Razem netto: "+ totalNet.toString() + " " + facture.getCurrency(), colfont));
+        table.addCell(cell);
+
+//        cell = new PdfPCell(new Phrase("", bankfont));
+//        cell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(emptycell);
+        cell = new PdfPCell(new Phrase("Razem VAT: " + totalVat.toString() + " " + facture.getCurrency(), colfont));
+        table.addCell(cell);
+
+
+        table.addCell(emptycell);
+        cell = new PdfPCell(new Phrase("Razem brutto: "+facture.getTotal() + " " + facture.getCurrency(), colfont));
+        table.addCell(cell);
+        document.add(table);
+
+        document.add( Chunk.NEWLINE );
+
+
         colfont = new Font(Font.FontFamily.HELVETICA, 10);
         table = new PdfPTable(4);
         table.setWidthPercentage(100);
@@ -201,6 +238,14 @@ public class PdfCreator {
         //table.addCell(emptycell);
         //table.addCell(emptycell);
         document.add(table);
+
+
+
+
+
+
+
+
         document.add( Chunk.NEWLINE );
         document.add( Chunk.NEWLINE );
         document.add( Chunk.NEWLINE );

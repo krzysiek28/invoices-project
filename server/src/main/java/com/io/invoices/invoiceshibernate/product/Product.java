@@ -16,12 +16,12 @@ public class Product {
     private String name;
     private Float netUnitPrice;
     private Float vatRate;
+    private String vatInfo;
     private String unit;
     private String currency;
 
     public Product() {
     }
-
     public Product(Integer id, Firm owner, String name, Float netUnitPrice, Float vatRate, String unit) {
         this.id = id;
         this.owner = owner;
@@ -29,6 +29,14 @@ public class Product {
         this.netUnitPrice = netUnitPrice;
         this.vatRate = vatRate;
         this.unit = unit;
+    }
+
+    public String getVatInfo() {
+        return vatInfo;
+    }
+
+    public void setVatInfo(String vatInfo) {
+        this.vatInfo = vatInfo;
     }
 
     public String getCurrency() {
