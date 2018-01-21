@@ -7,5 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UnauthorizedException extends Exception {
     public UnauthorizedException(String message) {
         super(message);
+        this.printStackTrace();
     }
 }

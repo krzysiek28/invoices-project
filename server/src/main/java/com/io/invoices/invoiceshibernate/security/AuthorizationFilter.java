@@ -88,7 +88,7 @@ public class AuthorizationFilter {
 
     private void productAuth(int userId, int productId) throws UnauthorizedException {
         Product one = productRepository.findOne(productId);
-        if ((one == null) || (!one.getOwner().getId().equals(userId)))
+        if ((one == null) || (!one.getOwner().getOwner().getId().equals(userId)))
             throw new UnauthorizedException("Nie masz praw dostepu do podanego produktu!");
     }
 

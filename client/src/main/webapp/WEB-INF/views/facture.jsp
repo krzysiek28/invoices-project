@@ -118,7 +118,10 @@
     <td>${productEntry.product.name}</td>
     <td> <fmt:formatNumber type="number" maxFractionDigits="4" value="${productEntry.quantity}"/></td>
     <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${productEntry.product.netUnitPrice}"/> ${productEntry.product.currency}</td>
-    <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${productEntry.product.vatRate}"/></td>
+    <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${productEntry.product.vatRate}"/>%
+
+        <c:if test="${(productEntry.product.vatInfo != null) && (productEntry.product.vatInfo != '')}">[${productEntry.product.vatInfo}]</c:if>
+    </td>
     <td><fmt:formatNumber type="number" maxFractionDigits="4" value="${productEntry.netprice}"/> ${productEntry.product.currency}</td>
     <td><fmt:formatNumber type="number" maxFractionDigits="4" value="${productEntry.vat}"/> ${productEntry.product.currency}</td>
     <td><fmt:formatNumber type="number" maxFractionDigits="2" value="${productEntry.grossprice}"/> ${productEntry.product.currency}</td>

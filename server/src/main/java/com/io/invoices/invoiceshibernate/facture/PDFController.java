@@ -1,6 +1,9 @@
 package com.io.invoices.invoiceshibernate.facture;
 
 import com.io.invoices.invoiceshibernate.pdfCreator.PdfCreator;
+import com.io.invoices.invoiceshibernate.security.AuthorizationFilter;
+import com.io.invoices.invoiceshibernate.security.ResourceType;
+import com.io.invoices.invoiceshibernate.security.UnauthorizedException;
 import org.dom4j.DocumentException;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,15 +20,18 @@ import static com.io.invoices.invoiceshibernate.security.SecurityUtils.CLIENT_AD
 public class PDFController {
 
     private final FactureService factureService;
+    private final AuthorizationFilter authorizationFilter;
 
-    public PDFController(FactureService factureService) {
+    public PDFController(FactureService factureService, AuthorizationFilter authorizationFilter) {
         this.factureService = factureService;
+        this.authorizationFilter = authorizationFilter;
     }
 
     @CrossOrigin(origins = CLIENT_ADDRESS)
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    public void createPdf(@PathVariable String id, HttpServletResponse response) throws IOException, DocumentException, com.itextpdf.text.DocumentException {
+    public void createPdf(@PathVariable String id, HttpServletResponse response, @RequestHeader("Authorization") String token) throws IOException, DocumentException, com.itextpdf.text.DocumentException, UnauthorizedException {
 
+        authorizationFilter.isAuthorizedTo(token, id, ResourceType.FACTURE);
         PdfCreator pdfCreator = new PdfCreator(factureService.getFacture(Integer.parseInt(id)));
         pdfCreator.createPdf();
 

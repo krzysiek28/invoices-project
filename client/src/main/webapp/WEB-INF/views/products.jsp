@@ -78,9 +78,12 @@
     function checkVat() {
         var val = document.getElementsByName("vatRate").item(0).value;
         if (val != 23) {
-            var vatin = prompt("Niestandardowa stawka VAT, jeżeli stawka > 0 podaj kod vat, jeżeli stawka = 0 wybierz 0% dla stawki 0%, zw dla 'zwolniony z VAT', np dla 'nie podlega opodatkowaniu'", "");
-
-            if (person == null || person == "") {
+            if (val == 0) {
+                var vatin = prompt("Niestandardowa stawka VAT, wybierz\n 0% dla stawki 0%\n zw dla 'zwolniony z VAT'\n np dla 'nie podlega opodatkowaniu'", "");
+            } else {
+                var vatin = prompt("Niestandardowa stawka VAT, wpisz kod klasyfikacji", "");
+            }
+            if (vatin == null || vatin == "") {
                 document.getElementsByName("vatRate").item(0).value = 23;
             } else {
                 document.getElementById("vatInfo").value = vatin;
@@ -140,7 +143,8 @@
                 <td>${product.unit}</td>
                 <td>
                     <fmt:formatNumber type="number" maxFractionDigits="2" value="${product.vatRate}"/>
-                    ${product.vatInfo}
+                    <c:if test="${(product.vatInfo != null) && product.vatInfo != ''}">[${product.vatInfo}]</c:if>
+
                 </td>
                 <td>${product.currency}</td>
                 <td>

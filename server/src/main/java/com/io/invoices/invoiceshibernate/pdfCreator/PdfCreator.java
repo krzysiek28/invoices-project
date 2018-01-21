@@ -141,12 +141,18 @@ public class PdfCreator {
         Integer nr;
         for (int i = 0; i < products.size(); i++) {
             nr = i + 1;
+
+            String vatInfo = "";
+
+            if ((products.get(i).getProduct().getVatInfo() != null) && (!products.get(i).getProduct().getVatInfo().isEmpty()))
+                vatInfo = "["+products.get(i).getProduct().getVatInfo()+"]";
+
             table.addCell(new Phrase(nr.toString(),colfont));
             table.addCell(new Phrase(products.get(i).getProduct().getName(),colfont));
             table.addCell(new Phrase(products.get(i).getQuantity().toString(),colfont));
             table.addCell(new Phrase(products.get(i).getProduct().getUnit(),colfont));
             table.addCell(new Phrase(products.get(i).getProduct().getNetUnitPrice().toString()+products.get(i).getProduct().getCurrency(),colfont));
-            table.addCell(new Phrase(products.get(i).getProduct().getVatRate().toString()+" %",colfont));
+            table.addCell(new Phrase(products.get(i).getProduct().getVatRate().toString()+"% " + vatInfo,colfont));
             table.addCell(new Phrase(products.get(i).getNetprice().toString()+products.get(i).getProduct().getCurrency(),colfont));
             table.addCell(new Phrase(products.get(i).getVat().toString()+products.get(i).getProduct().getCurrency(),colfont));
             table.addCell(new Phrase(products.get(i).getGrossprice().toString()+products.get(i).getProduct().getCurrency(),colfont));
@@ -190,7 +196,6 @@ public class PdfCreator {
         document.add( Chunk.NEWLINE );
 
 
-        colfont = new Font(Font.FontFamily.HELVETICA, 10);
         table = new PdfPTable(4);
         table.setWidthPercentage(100);
         table.setHorizontalAlignment(Element.ALIGN_LEFT);

@@ -91,6 +91,7 @@ public class FactureService {
                 historyProduct.setVatRate(product.getVatRate());
                 historyProduct.setName(product.getName());
                 historyProduct.setNetUnitPrice(product.getNetUnitPrice());
+                historyProduct.setVatInfo(product.getVatInfo());
                 productEntry.setProduct(historyProduct);
 
                 productRepository.save(historyProduct);
@@ -131,6 +132,7 @@ public class FactureService {
         dbFacture.setToPay(facture.getToPay());
         dbFacture.setTotal(facture.getTotal());
         dbFacture.setCurrency(facture.getCurrency());
+
         factureRepository.save(dbFacture);
     }
 

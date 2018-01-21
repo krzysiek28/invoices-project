@@ -13,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.*;
 import web.mvc.domain.Facture;
 import web.mvc.domain.Product;
 import web.mvc.domain.ProductEntry;
@@ -222,6 +219,19 @@ public class FactureController {
 
     @ExceptionHandler({ HttpServerErrorException.class})
     public String handleException(HttpServerErrorException ex) {
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(ex.getResponseBodyAsString());
+            String errorMessage = obj.getString("message");
+            return "redirect:/facturesList?error="+errorMessage;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return"redirect:/facturesList?error=Nieoczekiwany błąd!";
+    }
+
+    @ExceptionHandler({ HttpClientErrorException.class})
+    public String handleException(HttpClientErrorException ex) {
         JSONObject obj = null;
         try {
             obj = new JSONObject(ex.getResponseBodyAsString());
